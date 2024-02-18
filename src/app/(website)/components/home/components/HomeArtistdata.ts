@@ -1,0 +1,58 @@
+export const HomeArtistData = [
+  {
+    id: 1,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist1.jpg",
+    title: "photographer",
+  },
+  {
+    id: 2,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist2.jpg",
+    title: "photographer",
+  },
+  {
+    id: 3,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist3.jpg",
+    title: "photographer",
+  },
+  {
+    id: 4,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist4.jpg",
+    title: "photographer",
+  },
+  {
+    id: 5,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist5.jpg",
+    title: "photographer",
+  },
+  {
+    id: 6,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist6.jpg",
+    title: "photographer",
+  },
+  {
+    id: 7,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist7.jpg",
+    title: "photographer",
+  },
+  {
+    id: 8,
+    slug: "John Doe",
+    name: "John Doe",
+    img: "/assets/images/home/artist8.jpg",
+    title: "photographer",
+  },
+];
