@@ -45,7 +45,7 @@ const Navbar = () => {
           <div className="hidden lg:flex gap-3 ">
             <div className="flex items-center gap-3 ">
               <Link
-                href="#"
+                href="/cart"
                 className="flex w-12 h-12  flex-col items-center justify-center gap-1.5  "
               >
                 <svg

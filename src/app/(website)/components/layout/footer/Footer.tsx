@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { NavbarData } from "../header/NavbarData";
 
 const Footer = () => {
   return (
@@ -7,30 +8,15 @@ const Footer = () => {
       <footer className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="flex flex-col items-center border-t pt-6">
           <nav className="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-2 md:justify-start md:gap-6">
-            <Link
-              href=""
-              className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
-            >
-              Home
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
-            >
-              Gallery
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
-            >
-              About
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
-            >
-              Upload
-            </Link>
+            {NavbarData.map((item, index) => (
+              <Link
+                href={item.href}
+                className="text-gray-500 transition duration-100 hover:text-indigo-500 active:text-indigo-600"
+                key={index}
+              >
+                {item.title}
+              </Link>
+            ))}
           </nav>
 
           <div className="flex gap-4">

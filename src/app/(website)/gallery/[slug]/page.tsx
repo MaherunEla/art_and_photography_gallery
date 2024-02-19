@@ -85,9 +85,9 @@ const page = () => {
             <div className="my-8">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  $15.00
+                  ৳15.00
                 </span>
-                <span className="mb-0.5 text-red-500 line-through">$30.00</span>
+                <span className="mb-0.5 text-red-500 line-through">৳30.00</span>
               </div>
 
               <span className="text-sm text-gray-500">
