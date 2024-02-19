@@ -6,6 +6,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/1.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/2.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/3.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/4.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/5.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/6.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ export const HomeGalleryData = [
     img: "/assets/images/home/7.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
   {
     id: 8,
@@ -62,5 +69,6 @@ export const HomeGalleryData = [
     img: "/assets/images/home/8.jpg",
     price: "$15.00",
     discount: "$30.00",
+    author: "John Doe",
   },
 ];

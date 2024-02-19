@@ -1,12 +1,16 @@
+"use client";
 import Link from "next/link";
 import React from "react";
+import { NavbarData } from "./NavbarData";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const currentRoute = usePathname();
   return (
     <div className="bg-white pb-6 sm:pb-8 lg:pb-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <header className="mb-8 flex items-center justify-between py-4 md:mb-12 md:py-8 xl:mb-16">
-          <a
+          <Link
             href="/"
             className="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl"
             aria-label="logo"
@@ -22,38 +26,56 @@ const Navbar = () => {
               <path d="M96 0V47L48 94H0V47L48 0H96Z" />
             </svg>
             Aesthete
-          </a>
+          </Link>
 
           <nav className="hidden gap-12 lg:flex">
-            <Link href="" className="text-lg font-semibold text-indigo-500">
-              Home
-            </Link>
-            <Link
-              href="#"
-              className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500 active:text-indigo-700"
-            >
-              Gallery
-            </Link>
-            <Link
-              href="#"
-              className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500 active:text-indigo-700"
-            >
-              About
-            </Link>
-            <Link
-              href="#"
-              className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500 active:text-indigo-700"
-            >
-              Upload
-            </Link>
+            {NavbarData.map((item, index) => (
+              <Link
+                href={item.href}
+                className={`text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500  ${
+                  currentRoute === item.href ? "text-indigo-700" : " "
+                }`}
+                key={index}
+              >
+                {item.title}
+              </Link>
+            ))}
           </nav>
 
-          <Link
-            href="#"
-            className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base lg:inline-block"
-          >
-            Log In
-          </Link>
+          <div className="hidden lg:flex gap-3 ">
+            <div className="flex items-center gap-3 ">
+              <Link
+                href="#"
+                className="flex w-12 h-12  flex-col items-center justify-center gap-1.5  "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8 text-gray-800"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
+
+                <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
+                  0
+                </span>
+              </Link>
+            </div>
+
+            <Link
+              href="#"
+              className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base lg:inline-block"
+            >
+              Log In
+            </Link>
+          </div>
 
           <button
             type="button"
