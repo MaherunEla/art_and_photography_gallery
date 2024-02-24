@@ -14,9 +14,4 @@ export const NavbarData = [
     href: "/about",
     title: "About",
   },
-  {
-    id: 4,
-    href: "/upload",
-    title: "Upload",
-  },
 ];
