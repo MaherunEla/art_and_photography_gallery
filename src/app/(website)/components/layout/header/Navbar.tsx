@@ -65,7 +65,7 @@ const Navbar = () => {
                   />
                 </svg>
 
-                <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
+                <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px] text-center rounded-full grid place-items-center text-white">
                   0
                 </span>
               </Link>
