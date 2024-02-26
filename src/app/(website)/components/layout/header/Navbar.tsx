@@ -72,7 +72,7 @@ const Navbar = () => {
             </div>
 
             <Link
-              href="#"
+              href="/login"
               className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
             >
               Log In
@@ -156,7 +156,7 @@ const Navbar = () => {
           </div>
 
           <Link
-            href="#"
+            href="/login"
             className=" rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base lg:inline-block"
           >
             Log In

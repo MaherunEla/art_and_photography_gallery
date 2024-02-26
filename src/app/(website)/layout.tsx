@@ -4,6 +4,9 @@ import "@/app/styles/globals.css";
 import Navbar from "./components/layout/header/Navbar";
 import Footer from "./components/layout/footer/Footer";
 import GetLatestUpdate from "./components/shared/GetLatestUpdate";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormProvider, useForm } from "react-hook-form";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
+
         {children}
+
         <GetLatestUpdate />
         <Footer />
       </body>
