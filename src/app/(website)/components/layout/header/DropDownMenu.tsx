@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import Link from "next/link";
 
 import { FaRegUser } from "react-icons/fa";
 import { GrGallery } from "react-icons/gr";
@@ -40,11 +41,11 @@ export function DropdownMenuDemo() {
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <FaRegUser size={15} />
-            Profile
+            <Link href="/profile/h">Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <MdOutlineCloudUpload size={15} />
-            Upload
+            <Link href="/upload/h">Upload</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <GrGallery size={15} />

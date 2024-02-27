@@ -91,7 +91,7 @@ const Footer = () => {
         </div>
 
         <div className="py-8 text-center text-sm text-gray-400">
-          © 2021 - Present Aesthete. All rights reserved.
+          © 2024 - Present Aesthete. All rights reserved.
         </div>
       </footer>
     </div>
