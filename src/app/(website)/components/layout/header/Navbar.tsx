@@ -3,6 +3,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { NavbarData } from "./NavbarData";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import { DropdownMenuDemo } from "./DropDownMenu";
 
 const Navbar = () => {
   const currentRoute = usePathname();
@@ -77,6 +79,9 @@ const Navbar = () => {
             >
               Log In
             </Link>
+            <div>
+              <DropdownMenuDemo />
+            </div>
           </div>
 
           <button
