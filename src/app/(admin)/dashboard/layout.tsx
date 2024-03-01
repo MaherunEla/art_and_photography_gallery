@@ -18,8 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Sidebarpage />
-        {children}
+        <div className="flex">
+          <div className="hidden lg:flex flex-col">
+            <Sidebarpage />
+          </div>
+
+          <div className="flex-1">{children}</div>
+        </div>
       </body>
     </html>
   );

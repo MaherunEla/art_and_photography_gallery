@@ -40,7 +40,7 @@ const Loginpage = () => {
                     isChecked ? "bg-[#e11d48] text-white" : "text-black"
                   }`}
                 >
-                  Author
+                  Artist
                 </span>
               </div>
             </label>

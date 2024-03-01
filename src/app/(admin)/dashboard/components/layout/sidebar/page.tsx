@@ -6,7 +6,7 @@ import Link from "next/link";
 const Sidebarpage = () => {
   return (
     <div>
-      <nav className="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-80">
+      <nav className="fixed top-0 left-0 w-full h-full border-r bg-white space-y-8 sm:w-80 ">
         <div className="flex flex-col h-full">
           <div className="h-20 flex items-center px-8">
             <Link
@@ -43,7 +43,7 @@ const Sidebarpage = () => {
               ))}
             </ul>
             <div>
-              {/* <ul className="px-4 pb-4 text-sm font-medium">
+              <ul className="px-4 pb-4 text-sm font-medium">
                 {navsFooter.map((item, idx) => (
                   <li key={idx}>
                     <a
@@ -57,7 +57,7 @@ const Sidebarpage = () => {
                     </a>
                   </li>
                 ))}
-              </ul> */}
+              </ul>
               <div className="py-10 px-4 border-t">
                 <div className="flex items-center gap-x-4 relative">
                   <Image

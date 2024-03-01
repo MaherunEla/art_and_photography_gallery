@@ -1,7 +1,11 @@
 import React from "react";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <div className="w-full  flex flex-col items-center justify-center p-4">
+      page
+    </div>
+  );
 };
 
 export default page;

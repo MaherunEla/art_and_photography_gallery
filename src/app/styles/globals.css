@@ -64,6 +64,9 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+  .tabh {
+    @apply font-medium text-gray-900;
+  }
 }
 .container {
   margin: 0 auto;

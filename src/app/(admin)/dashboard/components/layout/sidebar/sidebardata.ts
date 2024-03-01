@@ -28,29 +28,24 @@ export const navigation = [
     name: "Sales",
     icon: BsStack,
   },
+];
+
+export const navsFooter = [
   {
     href: "",
     name: "Revenue",
     icon: FaChartLine,
   },
   {
-    href: "javascript:void(0)",
+    href: "/dashboard/artist",
     name: "Artists",
     icon: BsPeopleFill,
   },
   {
-    href: "javascript:void(0)",
+    href: "/dashboard/users",
     name: "Users",
     icon: FaUserCircle,
   },
-  {
-    href: "javascript:void(0)",
-    name: "Report",
-    icon: BiSolidReport,
-  },
-];
-
-export const navsFooter = [
   {
     href: "javascript:void(0)",
     name: "Report",
