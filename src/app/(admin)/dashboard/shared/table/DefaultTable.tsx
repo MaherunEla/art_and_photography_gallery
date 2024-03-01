@@ -26,9 +26,9 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
   );
 
   return (
-    <div className="container">
+    <div className="container flex flex-col items-center ">
       <table
-        className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400  "
+        className="w-[700px] text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400  "
         id="order"
       >
         <thead className="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
