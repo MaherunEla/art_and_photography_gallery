@@ -67,6 +67,42 @@
   .tabh {
     @apply font-medium text-gray-900;
   }
+  .form {
+    @apply w-full h-[295px] p-[10px] border border-[#D7DFE9] bg-gray-50 rounded-[4px] flex flex-col items-center justify-center cursor-pointer;
+  }
+  .progrss {
+    @apply w-full h-[100px] bg-gray-50 p-3 border border-[#D7DFE9] rounded-[4px] flex flex-col gap-[12px];
+  }
+  .progressfile {
+    @apply flex gap-3;
+  }
+  .progress-bar {
+    @apply w-full h-[5px] bg-[#D7DFE9] flex-shrink-0 border border-[#D7DFE9] rounded-[5px];
+  }
+  .progrsspercentage {
+    @apply w-[162.549px] h-[5px] rounded-[5px] border border-[#455468] bg-[#455468];
+  }
+  .propercent {
+    @apply text-[12px] font-medium  leading-[20px] -mt-8 -ml-8;
+  }
+  .progrssarea {
+    @apply flex h-[20px] items-center  gap-3;
+  }
+  .imagearea {
+    @apply p-[10] w-[44px] h-[44px] bg-white flex items-center justify-center;
+  }
+  .image {
+    @apply w-[24px] h-[24px] relative;
+  }
+  .filenamearea {
+    @apply flex items-start w-full justify-between;
+  }
+  .filename {
+    @apply text-[#2D3643] text-base font-medium leading-[24px];
+  }
+  .total {
+    @apply text-[12px] font-normal text-[#8897AE];
+  }
 }
 .container {
   margin: 0 auto;
