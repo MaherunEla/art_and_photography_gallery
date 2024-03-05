@@ -49,11 +49,11 @@ export function DropdownMenuDemo() {
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <GrGallery size={15} />
-            My Gallery
+            <Link href="/mygallery/h">My Gallery</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <RiLuggageCartLine size={15} />
-            Orders
+            <Link href="/order/h">Orders</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
