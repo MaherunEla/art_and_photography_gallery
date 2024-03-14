@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import Progress from "../components/Progress";
 import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
@@ -36,10 +38,21 @@ const Uploadpage = () => {
     url: string | null;
   };
 
-  const onSubmit = (data: any) => {
-    console.log({ data });
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const onSubmit = async (data: FormValues) => {
+    console.log("Form submitted...", data);
+    axios
+      .post("http://localhost:3000/api/upload", data)
+      .then((res) => {
+        console.log({ res });
+        queryClient.invalidateQueries({ queryKey: ["update-data"] });
+        toast({
+          title: "Category Add successfully  ",
+        });
+      })
+      .catch((err) => console.log({ err }));
   };
-
   const uploadImages = async (file: File): Promise<url> => {
     try {
       const options = {

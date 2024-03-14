@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/components/ui/use-toast";
 const signupformSchema = z.object({
   name: z.string().min(1, "Name is required"),
 
@@ -41,10 +44,22 @@ const Signuppage = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(signupformSchema),
   });
-
-  const onSubmit = (data: any) => {
-    console.log({ data });
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const onSubmit = async (data: FormValues) => {
+    console.log("Form submitted...", data);
+    axios
+      .post("http://localhost:3000/api/signup", data)
+      .then((res) => {
+        console.log({ res });
+        queryClient.invalidateQueries({ queryKey: ["signup-data"] });
+        toast({
+          title: "Signup Add successfully  ",
+        });
+      })
+      .catch((err) => console.log({ err }));
   };
+
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 ">
