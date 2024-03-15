@@ -10,7 +10,7 @@ export const HomeGalleryData = [
   },
   {
     id: 2,
-    slug: "Captive Mind",
+    slug: "captivemind",
     title: "Captive Mind",
     img: "/assets/images/home/2.jpg",
     price: "৳15.00",
@@ -19,7 +19,7 @@ export const HomeGalleryData = [
   },
   {
     id: 3,
-    slug: "A path",
+    slug: "apath",
     title: "A path",
     img: "/assets/images/home/3.jpg",
     price: "৳15.00",
@@ -28,7 +28,7 @@ export const HomeGalleryData = [
   },
   {
     id: 4,
-    slug: "Beautifull path",
+    slug: "beautifullpath",
     title: "Beautifull path",
     img: "/assets/images/home/4.jpg",
     price: "৳15.00",
@@ -37,7 +37,7 @@ export const HomeGalleryData = [
   },
   {
     id: 5,
-    slug: "Water Color",
+    slug: "watercolor",
     title: "Water Color",
     img: "/assets/images/home/5.jpg",
     price: "৳15.00",
@@ -46,7 +46,7 @@ export const HomeGalleryData = [
   },
   {
     id: 6,
-    slug: "Sea Beach",
+    slug: "seabeach",
     title: "Sea Beach",
     img: "/assets/images/home/6.jpg",
     price: "৳15.00",
@@ -55,7 +55,7 @@ export const HomeGalleryData = [
   },
   {
     id: 7,
-    slug: "Sea Side",
+    slug: "seaside",
     title: "Sea Side",
     img: "/assets/images/home/7.jpg",
     price: "৳15.00",
@@ -64,7 +64,7 @@ export const HomeGalleryData = [
   },
   {
     id: 8,
-    slug: "Boat",
+    slug: "boat",
     title: "Boat",
     img: "/assets/images/home/8.jpg",
     price: "৳15.00",

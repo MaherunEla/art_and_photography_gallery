@@ -1,15 +1,30 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarData } from "./NavbarData";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { DropdownMenuDemo } from "./DropDownMenu";
+import { useAppDispatch, useAppSelector } from "@/app/redux_store/store";
+import { addAllCart } from "@/app/redux_store/cartAddSlice";
 
 const Navbar = () => {
   const currentRoute = usePathname();
 
+  const dispatch = useAppDispatch();
+  const cart = useAppSelector((state) => state?.cart?.products);
+
+  useEffect(() => {
+    const products = JSON.parse(localStorage.getItem("cart")!);
+
+    console.log({ products });
+    if (products) {
+      dispatch(addAllCart(products));
+    }
+  }, []);
+
   const [navbar, setnavbar] = useState(false);
+  console.log("Cart", cart?.length);
   return (
     <div className="bg-white pb-6 sm:pb-8 lg:pb-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
@@ -68,7 +83,7 @@ const Navbar = () => {
                 </svg>
 
                 <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
-                  0
+                  {cart?.length}
                 </span>
               </Link>
             </div>
@@ -155,7 +170,7 @@ const Navbar = () => {
               </svg>
 
               <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
-                0
+                {cart?.length}
               </span>
             </Link>
           </div>
