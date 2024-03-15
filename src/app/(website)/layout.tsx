@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { Toaster } from "@/components/ui/toaster";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "react-redux";
+import { store } from "../redux_store/store";
 
 const inter = Inter({ subsets: ["latin"] });
 const queryClient = new QueryClient();
@@ -27,13 +29,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
-          <Navbar />
+          <Provider store={store}>
+            <Navbar />
 
-          {children}
+            {children}
 
-          <GetLatestUpdate />
-          <Toaster />
-          <Footer />
+            <GetLatestUpdate />
+            <Toaster />
+            <Footer />
+          </Provider>
         </QueryClientProvider>
       </body>
     </html>
