@@ -21,7 +21,7 @@ const Navbar = () => {
     if (products) {
       dispatch(addAllCart(products));
     }
-  }, []);
+  }, [dispatch]);
 
   const [navbar, setnavbar] = useState(false);
   console.log("Cart", cart?.length);

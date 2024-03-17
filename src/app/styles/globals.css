@@ -103,7 +103,11 @@
   .total {
     @apply text-[12px] font-normal text-[#8897AE];
   }
+  .magnifier-image {
+    @apply w-[200px] h-[200px] border-2 border-solid border-white;
+  }
 }
+
 .container {
   margin: 0 auto;
   width: calc(100% - 24px);

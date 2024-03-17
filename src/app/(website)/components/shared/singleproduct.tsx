@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { addCart } from "@/app/redux_store/cartAddSlice";
 import { useAppDispatch } from "@/app/redux_store/store";
 import { AdProduct } from "@/types";
@@ -20,21 +20,71 @@ const Singleproduct = ({ Gallery }: Props) => {
     author: Gallery?.author,
     description: Gallery?.description,
   };
-  const dispatch = useAppDispatch();
+  //const dispatch = useAppDispatch();
+  //for zoom image
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [showMangnifier, setShowMagnifier] = useState(false);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  //Function to handle mouse hovers over the image
+
+  const handleMouseHover = (e: any) => {
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
+
+    //Calculate the position (x,y) as a percentage based on cursor location
+
+    const x = ((e.pageX - left) / width) * 100;
+
+    const y = ((e.pageX - top) / height) * 100;
+
+    setPosition({ x, y });
+
+    // Update cursorPosition to store the current mouse cursor coordinates relative to the image
+
+    setCursorPosition({ x: e.pageX - left, y: e.pageY - top });
+  };
+
   if (!Gallery) return <div>Not Found</div>;
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
-      <div className="mx-auto max-w-screen-xl px-4 md:px-8">
-        <div className="grid gap-8 grid-cols-2">
-          <div className="relative  overflow-hidden rounded-lg bg-gray-100 ">
+      <div className="mx-auto max-w-screen-xl px-4 md:px-8  ">
+        <div className="grid gap-8 grid-cols-2  ">
+          <div
+            className="relative  overflow-hidden rounded-lg bg-gray-100 "
+            onMouseEnter={() => setShowMagnifier(true)}
+            onMouseLeave={() => setShowMagnifier(false)}
+            onMouseMove={handleMouseHover}
+          >
             <Image
               src={product?.img}
               loading="lazy"
               alt="Photo by Himanshu Dewangan"
-              className="h-full w-full object-cover object-center"
+              className=" h-full w-full object-cover object-center"
               fill
             />
+            {showMangnifier && (
+              <div
+                style={{
+                  position: "absolute",
+                  //Position the magnifier near the cursor
+
+                  left: `${cursorPosition.x - 100}px`,
+                  top: `${cursorPosition.y - 100}px`,
+
+                  //Make sure the magnifier does't interfere with mouse events
+                  pointerEvents: "none",
+                }}
+              >
+                <div
+                  className="magnifier-image"
+                  style={{
+                    backgroundImage: `url(${product?.img})`,
+                    backgroundPosition: `${position.x}% ${position.y}%`,
+                  }}
+                />
+              </div>
+            )}
 
             {/* <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
             sale
