@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import React from "react";
-import { HomeGalleryData } from "../../components/home/components/HomeGallery";
+import { HomeGalleryData } from "../../../../../components/HomeGallery";
 import { Product } from "@/types";
 import Singleproduct from "../../components/shared/singleproduct";
 const Itempage = () => {

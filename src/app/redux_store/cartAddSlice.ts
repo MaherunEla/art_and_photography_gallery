@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { HomeGalleryData } from "../(website)/components/home/components/HomeGallery";
+import { HomeGalleryData } from "../../../components/HomeGallery";
 import { AdProduct } from "@/types";
 
 const slice = createSlice({

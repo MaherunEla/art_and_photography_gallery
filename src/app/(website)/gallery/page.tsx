@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { HomeGalleryData } from "../components/home/components/HomeGallery";
+import { HomeGalleryData } from "../../../../components/HomeGallery";
 
 const Gallerypage = () => {
   return (
@@ -105,7 +105,7 @@ const Gallerypage = () => {
 
                 <div className="flex flex-col items-end">
                   <span className="font-bold text-gray-600 lg:text-lg">
-                    {item.discount}
+                    ৳{item.discount.toFixed(2)}
                   </span>
                 </div>
               </div>

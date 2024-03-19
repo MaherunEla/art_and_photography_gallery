@@ -18,7 +18,7 @@ export type Artists = {
 };
 
 export interface Product {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   img: any;
@@ -28,7 +28,7 @@ export interface Product {
 }
 
 export interface AdProduct {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   description: string;
