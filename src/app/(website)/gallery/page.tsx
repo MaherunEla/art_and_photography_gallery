@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { HomeGalleryData } from "../../../../components/HomeGallery";
+import { HomeGalleryData } from "../components/home/components/HomeGallery";
 
 const Gallerypage = () => {
   return (
