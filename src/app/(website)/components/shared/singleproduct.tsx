@@ -16,11 +16,11 @@ const Singleproduct = ({ Gallery }: Props) => {
     img: Gallery?.img,
     price: Gallery?.price,
     discount: Gallery?.discount,
-    quantity: Gallery?.quantity,
+    quantity: 1,
     author: Gallery?.author,
     description: Gallery?.description,
   };
-  //const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   //for zoom image
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [showMangnifier, setShowMagnifier] = useState(false);
@@ -57,7 +57,7 @@ const Singleproduct = ({ Gallery }: Props) => {
             onMouseMove={handleMouseHover}
           >
             <Image
-              src={product?.img}
+              src={Gallery?.img}
               loading="lazy"
               alt="Photo by Himanshu Dewangan"
               className=" h-full w-full object-cover object-center"
@@ -79,7 +79,7 @@ const Singleproduct = ({ Gallery }: Props) => {
                 <div
                   className="magnifier-image"
                   style={{
-                    backgroundImage: `url(${product?.img})`,
+                    backgroundImage: `url(${Gallery?.img})`,
                     backgroundPosition: `${position.x}% ${position.y}%`,
                   }}
                 />
@@ -114,10 +114,10 @@ const Singleproduct = ({ Gallery }: Props) => {
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
               <span className="mb-0.5 inline-block text-gray-500">
-                {product?.author}
+                {Gallery?.author}
               </span>
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-                {product?.title}
+                {Gallery?.title}
               </h2>
             </div>
 
@@ -145,16 +145,16 @@ const Singleproduct = ({ Gallery }: Props) => {
                 Description
               </div>
 
-              <p className="text-gray-500">{product?.description}</p>
+              <p className="text-gray-500">{Gallery?.description}</p>
             </div>
 
             <div className="my-8">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  {product?.discount}
+                  {Gallery?.discount}
                 </span>
                 <span className="mb-0.5 text-red-500 line-through">
-                  {product?.price}
+                  {Gallery?.price}
                 </span>
               </div>
 
@@ -186,7 +186,7 @@ const Singleproduct = ({ Gallery }: Props) => {
             <div className="flex gap-2.5">
               <button
                 onClick={() => {
-                  // dispatch(addCart(product));
+                  dispatch(addCart(product));
                 }}
                 className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
               >

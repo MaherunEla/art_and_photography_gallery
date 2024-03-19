@@ -16,10 +16,11 @@ const Carttablepage = () => {
 
   const cart = useAppSelector((state) => state?.cart?.products);
   console.log(cart);
-  const total = cart.reduce(
+  const total: number = cart.reduce(
     (sum, item) => sum + item.discount * item.quantity,
     0
   );
+
   const handleCarttable = async () => {
     console.log("cart data", cart);
     const data = {
@@ -79,7 +80,7 @@ const Carttablepage = () => {
 
                   <div>
                     <span className="mb-1 block font-bold text-gray-800 md:text-lg">
-                      {item.discount}
+                      ৳{item.discount.toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -124,7 +125,7 @@ const Carttablepage = () => {
 
                   <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
                     <span className="block font-bold text-gray-800 md:text-lg">
-                      ৳{item.discount * item.quantity}
+                      ৳{(item.discount * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -151,7 +152,9 @@ const Carttablepage = () => {
                 <span className="text-lg font-bold">Total</span>
 
                 <span className="flex flex-col items-end">
-                  <span className="text-lg font-bold">{total} ৳</span>
+                  <span className="text-lg font-bold">
+                    {total.toFixed(2)} ৳
+                  </span>
                   <span className="text-sm text-gray-500">including VAT</span>
                 </span>
               </div>
