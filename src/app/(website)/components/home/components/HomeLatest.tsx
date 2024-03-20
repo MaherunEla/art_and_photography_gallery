@@ -24,7 +24,7 @@ const HomeLatest = () => {
           {HomeGalleryData.map((item, index) => (
             <div key={index}>
               <Link
-                href="#"
+                href={`/gallery/${item.slug}`}
                 className="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-gray-100 lg:mb-3 "
               >
                 <div className="h-full w-full related">
@@ -52,10 +52,10 @@ const HomeLatest = () => {
 
                 <div className="flex items-end gap-2">
                   <span className="font-bold text-gray-800 lg:text-lg">
-                    {item.price}
+                    ৳{item.price.toFixed(2)}
                   </span>
                   <span className="mb-0.5 text-red-500 line-through">
-                    {item.discount}
+                    ৳{item.discount.toFixed(2)}
                   </span>
                 </div>
               </div>

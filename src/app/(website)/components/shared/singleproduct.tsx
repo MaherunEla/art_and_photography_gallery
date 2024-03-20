@@ -151,10 +151,10 @@ const Singleproduct = ({ Gallery }: Props) => {
             <div className="my-8">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  {Gallery?.discount}
+                  ৳{Gallery?.discount.toFixed(2)}
                 </span>
                 <span className="mb-0.5 text-red-500 line-through">
-                  {Gallery?.price}
+                  ৳{Gallery?.price.toFixed(2)}
                 </span>
               </div>
 
