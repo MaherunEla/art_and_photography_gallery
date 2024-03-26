@@ -27,7 +27,8 @@ import { RiLuggageCartLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 
 export function DropdownMenuDemo(user: any) {
-  console.log("Image", user?.user?.image);
+  console.log("Image", user?.user?.email);
+
   const defaultImage = "/assets/images/home/defaultimage.jpg";
   // const session = await getServerSession(options);
   return (
@@ -49,15 +50,15 @@ export function DropdownMenuDemo(user: any) {
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <FaRegUser size={15} />
-            <Link href="/profile/h">Profile</Link>
+            <Link href={`/profile/${user?.user?.email}`}>Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <MdOutlineCloudUpload size={15} />
-            <Link href="/upload/h">Upload</Link>
+            <Link href={`/upload/${user?.user?.email}`}>Upload</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <GrGallery size={15} />
-            <Link href="/mygallery/h">My Gallery</Link>
+            <Link href={`/mygallery/${user?.user?.email}`}>My Gallery</Link>
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <RiLuggageCartLine size={15} />

@@ -8,6 +8,7 @@ import Image from "next/image";
 import Progress from "../components/Progress";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
+import { useParams } from "next/navigation";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
@@ -37,18 +38,20 @@ const Uploadpage = () => {
     success: number;
     url: string | null;
   };
+  const params = useParams();
+  console.log("param", params);
 
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const onSubmit = async (data: FormValues) => {
     console.log("Form submitted...", data);
     axios
-      .post("http://localhost:3000/api/upload", data)
+      .post(`http://localhost:3000/api/upload/${params.id}`, data)
       .then((res) => {
         console.log({ res });
-        queryClient.invalidateQueries({ queryKey: ["update-data"] });
+        queryClient.invalidateQueries({ queryKey: ["upload-data"] });
         toast({
-          title: "Category Add successfully  ",
+          title: " Upload successfully  ",
         });
       })
       .catch((err) => console.log({ err }));
