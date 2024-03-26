@@ -1,14 +1,33 @@
+"use client";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import React from "react";
 
-const page = () => {
+const Profilepage = () => {
+  const params = useParams();
+  console.log("param", params);
+
+  const fetchProfile = () => {
+    return axios.get(`/api/signup/${params.id}`);
+  };
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["Profile-data"],
+    queryFn: fetchProfile,
+  });
+
+  console.log(data?.data.email);
+  const defaultImage = "/assets/images/home/defaultimage.jpg";
+
   return (
     <div className="bg-gradient-to-r from-indigo-100 py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px]  mx-auto relative">
           <Image
-            src="/assets/images/home/admin.jpg"
+            src={defaultImage}
             fill
             className="rounded-full border-4 border-gray-300"
             alt=""
@@ -29,7 +48,7 @@ const page = () => {
               Name
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              Maherun Nessa Ela
+              {data?.data.name}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -37,7 +56,7 @@ const page = () => {
               Contact
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              01630688008
+              {data?.data.contact}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -45,7 +64,7 @@ const page = () => {
               Email
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              meherunela2002@gamil.com
+              {data?.data.email}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -53,7 +72,7 @@ const page = () => {
               Occupation
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              Photographer
+              {data?.data.occupation}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -70,4 +89,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Profilepage;
