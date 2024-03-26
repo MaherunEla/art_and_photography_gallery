@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 const signupformSchema = z.object({
   name: z.string().min(1, "Name is required"),
 
@@ -18,6 +19,7 @@ const signupformSchema = z.object({
     .string()
     .min(1, "Email is required")
     .email({ message: "Invalid Email address" }),
+  password: z.string().min(8, "Password is required"),
   occupation: z.string().min(1, "occupation is required"),
 });
 
@@ -145,6 +147,22 @@ const Signuppage = () => {
 
           <div className="sm:col-span-2 px-5">
             <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+              Password
+            </label>
+            <input
+              type="text"
+              {...register("password")}
+              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+            />
+            {errors.password && (
+              <p className="text-red-600">
+                {errors.password.message as string}
+              </p>
+            )}
+          </div>
+
+          <div className="sm:col-span-2 px-5">
+            <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
               Occupation
             </label>
             <input
@@ -159,7 +177,16 @@ const Signuppage = () => {
             )}
           </div>
 
-          <div className="flex items-center justify-between sm:col-span-2 px-5">
+          <div className="flex flex-col items-center justify-between sm:col-span-2 px-5 gap-3">
+            <p>
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
+                Log In
+              </Link>
+            </p>
             <button
               type="submit"
               className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"

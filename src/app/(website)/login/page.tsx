@@ -1,17 +1,30 @@
 "use client";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Loginpage = () => {
+  const router = useRouter();
+  const { data, status } = useSession();
+
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "authenticated") {
+    router.push("/");
+  }
+
   return (
     <div className="w-full  flex flex-col items-center justify-center p-4">
-      <div className="max-w-sm w-full text-gray-600 space-y-8 border border-gray-200 px-4 py-10 rounded-md">
+      <div className="max-w-sm w-full text-gray-600 space-y-8 border border-gray-200 px-4 py-10 lg:px-8 rounded-md">
         <div className="text-center">
           <div className="mt-6 space-y-2">
             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
@@ -47,8 +60,56 @@ const Loginpage = () => {
           </div>
         </div>
 
+        <form
+          action="http://localhost:3000/api/auth/callback/credentials"
+          method="POST"
+          className="mt-8 space-y-5"
+        >
+          <input
+            type="hidden"
+            name="csrfToken"
+            value="7822bdd177c28728328501675dd732c23f3c5db75bf00a6c553f78171ae6c4c0"
+          />
+          <div>
+            <label className="font-medium">Username:</label>
+            <input
+              name="username"
+              id="input-username-for-credentials-provider"
+              type="text"
+              placeholder=""
+              className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+            />
+          </div>
+          <div>
+            <label className="font-medium">Password:</label>
+            <input
+              name="password"
+              id="input-password-for-credentials-provider"
+              type="password"
+              placeholder=""
+              className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+            />
+          </div>
+          <button
+            className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+            type="submit"
+          >
+            Log In
+          </button>
+        </form>
+
+        <div className="relative">
+          <span className="block w-full h-px bg-gray-300"></span>
+          <p className="inline-block w-fit text-sm bg-white px-2 absolute -top-2 inset-x-0 mx-auto">
+            Or continue with
+          </p>
+        </div>
+
         <div className="space-y-4 text-sm font-medium">
-          <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
+          <button
+            onClick={() => signIn("google")}
+            className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100"
+          >
             <svg
               className="w-5 h-5"
               viewBox="0 0 48 48"
@@ -82,7 +143,10 @@ const Loginpage = () => {
             Continue with Google
           </button>
 
-          <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100">
+          <button
+            onClick={() => signIn("github")}
+            className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg hover:bg-gray-50 duration-150 active:bg-gray-100"
+          >
             <svg
               className="w-5 h-5"
               viewBox="0 0 48 48"
@@ -134,7 +198,8 @@ const Loginpage = () => {
             Continue with Github
           </button>
         </div>
-        <div className="text-center">
+
+        {/* <div className="text-center">
           <p className="">
             Don&apos;t have an account?{" "}
             <Link
@@ -144,7 +209,7 @@ const Loginpage = () => {
               Sign up
             </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

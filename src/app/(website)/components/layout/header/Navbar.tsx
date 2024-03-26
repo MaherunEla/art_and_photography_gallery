@@ -2,13 +2,18 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { NavbarData } from "./NavbarData";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import Image from "next/image";
 import { DropdownMenuDemo } from "./DropDownMenu";
 import { useAppDispatch, useAppSelector } from "@/app/redux_store/store";
 import { addAllCart } from "@/app/redux_store/cartAddSlice";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
+
+  console.log({ status });
+
   const currentRoute = usePathname();
 
   const dispatch = useAppDispatch();
@@ -87,16 +92,27 @@ const Navbar = () => {
                 </span>
               </Link>
             </div>
+            {session ? (
+              <>
+                {/* <button
+                  onClick={() => signOut()}
+                  className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
+                >
+                  Log Out
+                </button> */}
 
-            <Link
-              href="/login"
-              className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
-            >
-              Log In
-            </Link>
-            <div>
-              <DropdownMenuDemo />
-            </div>
+                <div>
+                  <DropdownMenuDemo user={session?.user} />
+                </div>
+              </>
+            ) : (
+              <Link
+                href="/signup"
+                className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
+              >
+                Sign Up
+              </Link>
+            )}
           </div>
 
           <button

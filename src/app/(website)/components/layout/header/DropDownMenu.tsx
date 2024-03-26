@@ -1,3 +1,4 @@
+import { options } from "@/app/api/auth/[...nextauth]/options";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,6 +14,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOut } from "next-auth/react";
+// import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,16 +26,21 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import { RiLuggageCartLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 
-export function DropdownMenuDemo() {
+export function DropdownMenuDemo(user: any) {
+  console.log("Image", user?.user?.image);
+  const defaultImage = "/assets/images/home/defaultimage.jpg";
+  // const session = await getServerSession(options);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Image
-          src="/assets/images/home/admin.jpg"
+          src={user?.user?.image || (defaultImage as any)}
+          //src=""
           width={50}
           height={50}
           className="rounded-full border-4 border-gray-300"
           alt=""
+          // alt={session?.user?.name ?? "Profile Pic"}
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -57,7 +65,10 @@ export function DropdownMenuDemo() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
-        <DropdownMenuItem className="flex items-center gap-1 font-semibold">
+        <DropdownMenuItem
+          onClick={() => signOut()}
+          className="flex items-center gap-1 font-semibold cursor-pointer"
+        >
           <TbLogout size={15} />
           Log out
         </DropdownMenuItem>
