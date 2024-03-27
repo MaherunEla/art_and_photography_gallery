@@ -1,12 +1,13 @@
 "use client";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { TbMoodEdit } from "react-icons/tb";
 import { z } from "zod";
 
@@ -33,13 +34,15 @@ type FormValues = z.infer<typeof signupformSchema>;
 
 const Profileeditpage = () => {
   const params = useParams();
+  const encodedEmail = params.id as string;
+  const decodedEmail = decodeURIComponent(encodedEmail);
   console.log("param", params);
 
   const fetchProfile = () => {
     return axios.get(`/api/signup/${params.id}`);
   };
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["Profile-data"],
+    queryKey: ["signup-data"],
     queryFn: fetchProfile,
   });
 
@@ -47,7 +50,7 @@ const Profileeditpage = () => {
 
   const form = useForm<FormValues>({
     defaultValues: async () => {
-      const { data } = await axios.get(`/api/signup/${params.id}`);
+      const { data } = await axios.get(`/api/signup/${decodedEmail}`);
       return data;
     },
     resolver: zodResolver(signupformSchema),
@@ -56,11 +59,56 @@ const Profileeditpage = () => {
   const {
     handleSubmit,
     register,
+    control,
+    setValue,
     formState: { errors },
   } = form;
 
-  const onSubmit = (data: any) => {
-    console.log({ data });
+  const uploadImages = async (
+    file: File
+  ): Promise<{ success: number; url: string | null }> => {
+    try {
+      let formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "my-uploads");
+
+      const res = await axios.post(
+        "https://api.cloudinary.com/v1_1/djfwg1dfa/image/upload",
+        formData
+      );
+      console.log({ res });
+
+      return {
+        success: 1,
+        url: res.data.secure_url,
+      };
+    } catch (error) {
+      console.error({ error });
+      return {
+        success: 1,
+        url: null,
+      };
+    }
+  };
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const onSubmit = async (data: FormValues) => {
+    console.log("Form submitted...", data);
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/api/signup/${decodedEmail}`,
+        data
+      );
+      console.log({ res });
+      refetch();
+      queryClient.invalidateQueries({ queryKey: ["signup-data"] });
+      toast({
+        title: "Updated successfully",
+      });
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      // Handle error gracefully
+    }
   };
   return (
     <div className="bg-gradient-to-r from-indigo-100 py-6 sm:py-8 lg:py-12">
@@ -70,7 +118,7 @@ const Profileeditpage = () => {
       >
         <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px]  mx-auto relative">
           <Image
-            src={data?.data.image}
+            src={form.getValues("image")}
             fill
             className="rounded-full border-4 border-gray-300"
             alt=""
@@ -79,6 +127,27 @@ const Profileeditpage = () => {
         <div className="flex items-center justify-center ">
           <div className=" w-[50px] h-[50px] md:w-[60px] md:h-[60px] flex items-center justify-center absolute -mt-[50px] ml-[150px] md:-mt-[100px] md:ml-[250px] lg:-mt-[140px] lg:ml-[340px]  bg-white border rounded-full">
             <TbMoodEdit size={40} />
+            <Controller
+              name="image"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="file-input opacity-0 w-full h-full absolute "
+                  onChange={async (e: any) => {
+                    const file = e.target.files[0];
+                    const res: any = await uploadImages(file);
+                    console.log("res", res);
+                    setValue("image", res.url);
+                    field.onChange(res.url);
+                  }}
+                />
+              )}
+            />
+            {errors.image && (
+              <p className="error">{errors.image.message as string}</p>
+            )}
           </div>
         </div>
 
@@ -165,6 +234,14 @@ const Profileeditpage = () => {
                 {errors.socialaccountl.message as string}
               </p>
             )}
+          </div>
+          <div className="flex items-center justify-between sm:col-span-2">
+            <button
+              type="submit"
+              className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+            >
+              Update
+            </button>
           </div>
         </div>
       </form>

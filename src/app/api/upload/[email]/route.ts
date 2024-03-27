@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 export const GET = async (req: any, { params }: any) => {
   const uploads = await prisma.upload.findMany({
     where: {
-      userEmail: params.id as string,
+      userEmail: params?.email as string,
     },
   });
   return NextResponse.json(uploads);
