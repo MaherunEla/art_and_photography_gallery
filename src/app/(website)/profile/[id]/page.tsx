@@ -15,7 +15,7 @@ const Profilepage = () => {
   };
 
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["Profile-data"],
+    queryKey: ["signup-data"],
     queryFn: fetchProfile,
   });
 
@@ -27,7 +27,7 @@ const Profilepage = () => {
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
         <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px]  mx-auto relative">
           <Image
-            src={defaultImage}
+            src={data?.data.image || defaultImage}
             fill
             className="rounded-full border-4 border-gray-300"
             alt=""
@@ -36,7 +36,7 @@ const Profilepage = () => {
 
         <div className="flex items-center justify-center pt-5">
           <Link
-            href={`/profile/edit/${params.id}`}
+            href={`/profile/edit/${data?.data.email}`}
             className="rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:text-white md:text-base md:inline-block"
           >
             Edit Profile

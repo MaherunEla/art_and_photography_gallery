@@ -30,7 +30,7 @@ const Mygallerypage = () => {
         <div className="mb-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:mb-8 md:grid-cols-4 md:gap-6 xl:gap-8">
           {data?.data.map((item: any, index: any) => (
             <Link
-              href={`/mygallery/edit/${item.userEmail}`}
+              href={`/mygallery/edit/${item.id}`}
               key={index}
               className="group relative flex h-48 items-end overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-80"
             >

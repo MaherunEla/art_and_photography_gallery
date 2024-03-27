@@ -7,6 +7,9 @@ import Image from "next/image";
 
 import axios from "axios";
 import Progress from "@/app/(website)/upload/components/Progress";
+import { useParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { useToast } from "@/components/ui/use-toast";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
@@ -20,25 +23,29 @@ const uploadformSchema = z.object({
 
 type FormValues = z.infer<typeof uploadformSchema>;
 const Uploadpage = () => {
+  const params = useParams();
+
+  const form = useForm<FormValues>({
+    defaultValues: async () => {
+      const { data } = await axios.get(`/api/upload/edit/${params.id}`);
+      console.log({ data });
+      return data;
+    },
+    resolver: zodResolver(uploadformSchema),
+  });
   const {
     handleSubmit,
     register,
     control,
     setValue,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(uploadformSchema),
-  });
+  } = form;
 
   const [File, setFile] = useState({});
 
   type url = {
     success: number;
     url: string | null;
-  };
-
-  const onSubmit = (data: any) => {
-    console.log({ data });
   };
 
   const uploadImages = async (file: File): Promise<url> => {
@@ -82,6 +89,27 @@ const Uploadpage = () => {
         success: 1,
         url: null,
       };
+    }
+  };
+
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const onSubmit = async (data: FormValues) => {
+    console.log("Form submitted...", data);
+    try {
+      const res = await axios.put(
+        `http://localhost:3000/api/upload/edit/${params.id}`,
+        data
+      );
+      console.log({ res });
+
+      queryClient.invalidateQueries({ queryKey: ["upload-data"] });
+      toast({
+        title: "Updated successfully",
+      });
+    } catch (err) {
+      console.error("Error updating profile:", err);
+      // Handle error gracefully
     }
   };
 
@@ -168,11 +196,7 @@ const Uploadpage = () => {
               )}
 
               <div className="w-[100px] h-[103px] relative">
-                <Image
-                  src="/assets/images/home/Group 58.svg"
-                  fill
-                  alt="image"
-                />
+                <Image src={form.getValues("image")} fill alt="image" />
               </div>
               <h6 className="pt-6 text-center text-sm text-[#2D3643] font-medium leading-[20.723px]">
                 Drag & Drop image here{" "}
@@ -192,7 +216,10 @@ const Uploadpage = () => {
           </div>
 
           <div className="flex items-center justify-between sm:col-span-2">
-            <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
+            <button
+              type="submit"
+              className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+            >
               Update
             </button>
           </div>

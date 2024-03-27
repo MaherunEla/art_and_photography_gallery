@@ -27,19 +27,19 @@ import { RiLuggageCartLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 
 export function DropdownMenuDemo(user: any) {
-  console.log("Image", user?.user?.email);
+  console.log("Image", user?.user?.image);
 
   const defaultImage = "/assets/images/home/defaultimage.jpg";
   // const session = await getServerSession(options);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger className="w-[50px] h-[50px] relative" asChild>
         <Image
           src={user?.user?.image || (defaultImage as any)}
           //src=""
-          width={50}
-          height={50}
-          className="rounded-full border-4 border-gray-300"
+          width={30}
+          height={30}
+          className="rounded-full border-4 border-gray-300 "
           alt=""
           // alt={session?.user?.name ?? "Profile Pic"}
         />
