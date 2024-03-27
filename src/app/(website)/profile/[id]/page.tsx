@@ -36,7 +36,7 @@ const Profilepage = () => {
 
         <div className="flex items-center justify-center pt-5">
           <Link
-            href="/profile/dd/edit"
+            href={`/profile/edit/${params.id}`}
             className="rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:text-white md:text-base md:inline-block"
           >
             Edit Profile
