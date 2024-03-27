@@ -8,6 +8,7 @@ import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 const signupformSchema = z.object({
   name: z.string().min(1, "Name is required"),
 
@@ -24,6 +25,7 @@ const signupformSchema = z.object({
 });
 
 type FormValues = z.infer<typeof signupformSchema>;
+
 // type FormValues = {
 //   firstname: string;
 //   lastname: string;
@@ -33,12 +35,7 @@ type FormValues = z.infer<typeof signupformSchema>;
 // };
 
 const Signuppage = () => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -58,6 +55,7 @@ const Signuppage = () => {
         toast({
           title: "Signup Add successfully  ",
         });
+        router.push("/login");
       })
       .catch((err) => console.log({ err }));
   };
@@ -73,34 +71,6 @@ const Signuppage = () => {
             <h2 className="pt-4 mb-4 text-center text-2xl font-bold text-white md:mb-6 lg:text-3xl">
               Sign Up
             </h2>
-          </div>
-
-          <div className="my-2 flex flex-col items-center sm:col-span-2 ">
-            <label className="themeSwitcherThree relative inline-flex cursor-pointer select-none items-center">
-              <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-                className="sr-only"
-              />
-
-              <div className="shadow-card flex h-[46px] w-[160px] items-center justify-center font-bold rounded-full bg-white border border-[#e11d48]">
-                <span
-                  className={`flex h-[45px] w-[80px] items-center justify-center rounded-full ${
-                    !isChecked ? "bg-[#e11d48] text-white" : "text-black"
-                  }`}
-                >
-                  User
-                </span>
-                <span
-                  className={`flex h-[45px] w-[80px] items-center justify-center rounded-full ${
-                    isChecked ? "bg-[#e11d48] text-white" : "text-black"
-                  }`}
-                >
-                  Artist
-                </span>
-              </div>
-            </label>
           </div>
 
           <div className="sm:col-span-2 px-5">
