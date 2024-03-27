@@ -1,7 +1,10 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { TbMoodEdit } from "react-icons/tb";
@@ -18,7 +21,10 @@ const signupformSchema = z.object({
     .string()
     .min(1, "Email is required")
     .email({ message: "Invalid Email address" }),
+
   occupation: z.string().min(1, "occupation is required"),
+  image: z.string().min(1, "Image is reguired"),
+
   socialaccountf: z.string().optional(),
   socialaccountl: z.string().optional(),
 });
@@ -26,13 +32,32 @@ const signupformSchema = z.object({
 type FormValues = z.infer<typeof signupformSchema>;
 
 const Profileeditpage = () => {
+  const params = useParams();
+  console.log("param", params);
+
+  const fetchProfile = () => {
+    return axios.get(`/api/signup/${params.id}`);
+  };
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["Profile-data"],
+    queryFn: fetchProfile,
+  });
+
+  console.log(data?.data.email);
+
+  const form = useForm<FormValues>({
+    defaultValues: async () => {
+      const { data } = await axios.get(`/api/signup/${params.id}`);
+      return data;
+    },
+    resolver: zodResolver(signupformSchema),
+  });
+
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(signupformSchema),
-  });
+  } = form;
 
   const onSubmit = (data: any) => {
     console.log({ data });
@@ -45,7 +70,7 @@ const Profileeditpage = () => {
       >
         <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px]  mx-auto relative">
           <Image
-            src="/assets/images/home/admin.jpg"
+            src={data?.data.image}
             fill
             className="rounded-full border-4 border-gray-300"
             alt=""
@@ -66,6 +91,7 @@ const Profileeditpage = () => {
             <input
               type="text"
               {...register("name")}
+              // defaultValue={form.getValues("name")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
             {errors.name && (
