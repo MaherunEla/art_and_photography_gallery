@@ -1,11 +1,15 @@
 export type Users = {
   id: number;
-  firstname: string;
-  lastname: string;
+  name: string;
+  image: string;
   contact: string;
   email: string;
+  createdat: string;
+  role: string;
   Occupation: string;
   totalorder: number;
+  view: string;
+  delete: any;
 };
 export type Artists = {
   id: number;

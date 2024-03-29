@@ -80,7 +80,7 @@
     @apply w-full h-[5px] bg-[#D7DFE9] flex-shrink-0 border border-[#D7DFE9] rounded-[5px];
   }
   .progrsspercentage {
-    @apply w-[162.549px] h-[5px] rounded-[5px] border border-[#455468] bg-[#455468];
+    @apply w-[0px] h-[5px] rounded-[5px] border border-[#455468] bg-[#455468];
   }
   .propercent {
     @apply text-[12px] font-medium  leading-[20px] -mt-8 -ml-8;
