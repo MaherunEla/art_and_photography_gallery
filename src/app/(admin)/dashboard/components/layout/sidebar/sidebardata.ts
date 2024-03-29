@@ -36,11 +36,7 @@ export const navsFooter = [
     name: "Revenue",
     icon: FaChartLine,
   },
-  {
-    href: "/dashboard/artist",
-    name: "Artists",
-    icon: BsPeopleFill,
-  },
+
   {
     href: "/dashboard/users",
     name: "Users",

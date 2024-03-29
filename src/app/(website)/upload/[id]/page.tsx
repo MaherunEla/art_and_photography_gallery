@@ -8,6 +8,7 @@ import Image from "next/image";
 import Progress from "../components/Progress";
 import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -33,6 +34,7 @@ const Uploadpage = () => {
   });
 
   const [File, setFile] = useState({});
+  const router = useRouter();
 
   type url = {
     success: number;
@@ -53,6 +55,7 @@ const Uploadpage = () => {
         toast({
           title: " Upload successfully  ",
         });
+        router.push(`/mygallery/${params.id}`);
       })
       .catch((err) => console.log({ err }));
   };
