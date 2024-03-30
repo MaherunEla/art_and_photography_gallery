@@ -37,3 +37,42 @@ export const PUT = async (req: Request, { params }: any) => {
   // console.log("user", user);
   //const data = NextResponse.json(query);
 };
+export const DELETE = async (req: Request, { params }: any) => {
+  const prisma = new PrismaClient();
+  console.log("id:", params?.email);
+
+  // const userDelete = await prisma.signup.delete({
+  //   where: { email: params?.email as string },
+  //   include: { upload: true },
+  // });
+
+  try {
+    // Find the Signup record by email
+    const signup = await prisma.signup.findUnique({
+      where: { email: params.email as string },
+      include: { upload: true }, // Include the associated uploads
+    });
+
+    if (!signup) {
+      throw new Error("Signup record not found.");
+    }
+
+    // Delete associated Upload records
+    await prisma.upload.deleteMany({
+      where: { userEmail: params.email as string },
+    });
+
+    // Delete the Signup record
+    await prisma.signup.delete({
+      where: { email: params.email as string },
+    });
+
+    return "User and associated uploads deleted successfully.";
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw new Error("Failed to delete user.");
+  } finally {
+    // Close the Prisma client connection
+    await prisma.$disconnect();
+  }
+};

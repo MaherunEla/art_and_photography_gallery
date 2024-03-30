@@ -45,6 +45,7 @@ model Signup {
     socialaccountf String   @default("")
     socialaccountl String   @default("")
     role           Role     @default(User)
+    createdat      DateTime @default(now())
     // accounts   Account[]
     // sessions   Session[]
     upload         Upload[]

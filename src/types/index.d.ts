@@ -6,8 +6,7 @@ export type Users = {
   email: string;
   createdat: string;
   role: string;
-  Occupation: string;
-  totalorder: number;
+  occupation: string;
   view: string;
   delete: any;
 };

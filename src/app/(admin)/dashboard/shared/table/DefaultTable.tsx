@@ -19,11 +19,12 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
+
   console.log("table state", table.getState());
-  var pages = Array.from(
-    { length: table?.getPageCount() },
-    (_, index) => index + 1
-  );
+  // var pages = Array.from(
+  //   { length: table?.getPageCount() || 0 },
+  //   (_, index) => index + 1
+  // );
 
   return (
     <div>
@@ -56,7 +57,7 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
           ))}
         </tbody>
       </table>
-      <div className="pt-[50px] flex justify-between ">
+      {/* <div className="pt-[50px] flex justify-between ">
         <div>
           <p className="tablep text-[#666666]">
             show {table.getState().pagination.pageSize} in {data.length} items
@@ -93,7 +94,7 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
             <MdNavigateNext className="ml-[4px]" />
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
