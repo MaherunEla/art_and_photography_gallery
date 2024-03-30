@@ -6,8 +6,22 @@ import { defaultData } from "./components/UsersData";
 import UserNavbar from "./components/UserNavbar";
 import Search from "./components/search";
 import Link from "next/link";
+import axios from "axios";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
-const page = () => {
+const Userpage = () => {
+  const fetchUpload = () => {
+    return axios.get(`/api/signup/`);
+  };
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["signup-data"],
+    queryFn: fetchUpload,
+  });
+
+  console.log(data?.data);
+  const tabledata = data?.data || [];
+
   return (
     <div className="bg-[#182237] p-5 rounded-[10px] mt-5">
       <div className="flex items-center justify-between">
@@ -19,10 +33,10 @@ const page = () => {
         </Link>
       </div>
       <div className="my-10">
-        <DefaultTable columns={columns} data={defaultData} />
+        <DefaultTable columns={columns} data={tabledata} />
       </div>
     </div>
   );
 };
 
-export default page;
+export default Userpage;

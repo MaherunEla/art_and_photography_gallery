@@ -3,8 +3,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/app/styles/globals.css";
 import Sidebarpage from "./components/layout/sidebar/page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const queryClient = new QueryClient();
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -19,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex">
-          <div className="flex-1 p-5 min-h-screen">
-            <Sidebarpage />
+        <QueryClientProvider client={queryClient}>
+          <div className="flex ">
+            <div className="flex-1 p-5 min-h-screen bg-[#151c2c]">
+              <Sidebarpage />
+            </div>
+            <div className="grow md-grow-0 p-5 bg-[#151c2c] ">{children}</div>
           </div>
-          <div className="grow md-grow-0 p-5 bg-[#151c2c]">{children}</div>
-        </div>
+        </QueryClientProvider>
         {/* <div className="flex">
           <div className="hidden lg:flex flex-col ">
             <Sidebarpage />
