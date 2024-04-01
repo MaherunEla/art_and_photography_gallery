@@ -13,11 +13,11 @@ const Singleproduct = ({ Gallery }: Props) => {
     id: Gallery?.id,
     title: Gallery?.title,
     slug: Gallery?.slug,
-    img: Gallery?.img,
+    image: Gallery?.image,
     price: Gallery?.price,
     discount: Gallery?.discount,
     quantity: 1,
-    author: Gallery?.author,
+    artist: Gallery?.artist,
     description: Gallery?.description,
   };
   const dispatch = useAppDispatch();
@@ -57,7 +57,7 @@ const Singleproduct = ({ Gallery }: Props) => {
             onMouseMove={handleMouseHover}
           >
             <Image
-              src={Gallery?.img}
+              src={Gallery?.image}
               loading="lazy"
               alt="Photo by Himanshu Dewangan"
               className=" h-full w-full object-cover object-center"
@@ -79,7 +79,7 @@ const Singleproduct = ({ Gallery }: Props) => {
                 <div
                   className="magnifier-image"
                   style={{
-                    backgroundImage: `url(${Gallery?.img})`,
+                    backgroundImage: `url(${Gallery?.image})`,
                     backgroundPosition: `${position.x}% ${position.y}%`,
                   }}
                 />
@@ -114,7 +114,7 @@ const Singleproduct = ({ Gallery }: Props) => {
           <div className="md:py-8">
             <div className="mb-2 md:mb-3">
               <span className="mb-0.5 inline-block text-gray-500">
-                {Gallery?.author}
+                {Gallery?.artist}
               </span>
               <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
                 {Gallery?.title}

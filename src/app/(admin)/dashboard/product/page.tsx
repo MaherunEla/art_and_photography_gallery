@@ -2,22 +2,20 @@
 import React, { useState } from "react";
 import DefaultTable from "../shared/table/DefaultTable";
 import { columns } from "./components/column";
-import { defaultData } from "./components/UsersData";
-import UserNavbar from "./components/UserNavbar";
-import Search from "./components/search";
+
 import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
 
 const fetchUpload = async () => {
-  const { data } = await axios.get("/api/signup");
+  const { data } = await axios.get("/api/upload");
   return data;
 };
-const Userpage = () => {
+const Productpage = () => {
   const [filtering, setFiltering] = useState("");
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["signup-data"],
+    queryKey: ["upload-data"],
     queryFn: fetchUpload,
   });
 
@@ -29,6 +27,8 @@ const Userpage = () => {
   }
 
   const tabledata = data || [];
+  const adminemail: string = "meherunela2002@gmail.com";
+  const url = `/dashboard/product/add/${adminemail}`;
 
   return (
     <div className="bg-[#182237] p-5 rounded-[10px] mt-5">
@@ -44,7 +44,7 @@ const Userpage = () => {
           />
         </div>
 
-        <Link href="/dashboard/users/add">
+        <Link href={url}>
           <button className="p-[10px] bg-[#5d57c9] text-white border-none rounded-[5px] cursor-pointer">
             Add New
           </button>
@@ -61,4 +61,4 @@ const Userpage = () => {
   );
 };
 
-export default Userpage;
+export default Productpage;

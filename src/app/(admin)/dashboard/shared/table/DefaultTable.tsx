@@ -1,5 +1,5 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { flexRender, getCoreRowModel } from "@tanstack/react-table";
@@ -8,23 +8,43 @@ import {
   useReactTable,
   PaginationState,
   getPaginationRowModel,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import { getJsPageSizeInKb } from "next/dist/build/utils";
 
-const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
+const DefaultTable: FC<{ data: any; columns: any; filtering: any }> = ({
+  data,
+  columns,
+  filtering,
+}) => {
+  const [pageSize, setPageSize] = useState(10);
+
   const table = useReactTable({
     data,
     columns,
 
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter: filtering,
+    },
+    onGlobalFilterChange: filtering,
   });
 
+  const handlePageSizeChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const newSize = parseInt(event.target.value);
+    setPageSize(newSize);
+    table.setPageSize(newSize);
+  };
+
   console.log("table state", table.getState());
-  // var pages = Array.from(
-  //   { length: table?.getPageCount() || 0 },
-  //   (_, index) => index + 1
-  // );
+  var pages = Array.from(
+    { length: table?.getPageCount() || 0 },
+    (_, index) => index + 1
+  );
 
   return (
     <div>
@@ -57,21 +77,35 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
           ))}
         </tbody>
       </table>
-      {/* <div className="pt-[50px] flex justify-between ">
+      <div className="pt-[50px] flex justify-between ">
         <div>
-          <p className="tablep text-[#666666]">
+          <p className="tablep text-white">
             show {table.getState().pagination.pageSize} in {data.length} items
           </p>
         </div>
+        <div className="text-white">
+          <label htmlFor="pageSize">Page Size: </label>
+          <select
+            id="pageSize"
+            value={pageSize}
+            className="bg-[#151c2c]"
+            onChange={handlePageSizeChange}
+          >
+            <option value="10">10</option>
+            <option value="5">5</option>
+            <option value="2">2</option>
+            {/* Add more options as needed */}
+          </select>
+        </div>
         <div className="flex items-center gap-[10px]">
           <button
-            className="border border-[#f5f5f5] active:border-[#26901b] active:bg-[#26901b]  bg-[#f5f5f5] w-[30px] h-[30px] cursor-pointer"
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-[#151c2c] w-[30px] h-[30px] cursor-pointer"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <GrFormPrevious className="ml-[4px] " />
+            <GrFormPrevious className="ml-[4px] text-white" />
           </button>
-          {pages.map((page, index) => {
+          {/* {pages.map((page, index) => {
             return (
               <button
                 key={index}
@@ -84,17 +118,17 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
                 <p className="text-[13px] font-normal">{page}</p>
               </button>
             );
-          })}
+          })} */}
 
           <button
-            className="border border-[#f5f5f5] bg-[#f5f5f5] active:border-[#26901b] active:bg-[#26901b] cursor-pointer w-[30px] h-[30px] "
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-[#151c2c] w-[30px] h-[30px] cursor-pointer"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <MdNavigateNext className="ml-[4px]" />
+            <MdNavigateNext className="ml-[4px] text-white" />
           </button>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

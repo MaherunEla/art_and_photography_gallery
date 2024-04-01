@@ -1,15 +1,18 @@
 "use client";
 import React, { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Controller, useForm } from "react-hook-form";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
-import Progress from "../components/Progress";
-import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import Image from "next/image";
+import { Controller, useForm } from "react-hook-form";
+
+import { TbMoodEdit } from "react-icons/tb";
+import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import Progress from "../../components/progress";
+
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
@@ -22,7 +25,7 @@ const uploadformSchema = z.object({
 });
 
 type FormValues = z.infer<typeof uploadformSchema>;
-const Uploadpage = () => {
+const Addpage = () => {
   const {
     handleSubmit,
     register,
@@ -40,7 +43,12 @@ const Uploadpage = () => {
     success: number;
     url: string | null;
   };
+  //const adminemail = "admin@gmail.com";
+  const adminemail = "meherunela2002@gmail.com";
   const params = useParams();
+  const encodedEmail = params.id as string;
+  const decodedEmail = decodeURIComponent(encodedEmail);
+
   console.log("param", params);
 
   const queryClient = useQueryClient();
@@ -48,14 +56,14 @@ const Uploadpage = () => {
   const onSubmit = async (data: FormValues) => {
     console.log("Form submitted...", data);
     axios
-      .post(`http://localhost:3000/api/upload/${params.id}`, data)
+      .post(`http://localhost:3000/api/upload/${decodedEmail}`, data)
       .then((res) => {
         console.log({ res });
         queryClient.invalidateQueries({ queryKey: ["upload-data"] });
         toast({
           title: " Upload successfully  ",
         });
-        router.push(`/mygallery/${params.id}`);
+        router.push("/dashboard/product");
       })
       .catch((err) => console.log({ err }));
   };
@@ -104,68 +112,99 @@ const Uploadpage = () => {
   };
 
   return (
-    <div className="bg-white py-6 sm:py-8 lg:py-12">
-      <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <div className="mb-10 md:mb-16">
-          <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">
-            Upload Your Work
-          </h2>
-        </div>
+    <div className="bg-[#182237] p-5 rounded-[10px] mt-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-wrap justify-between"
+      >
+        {/* <div className="flex items-center justify-center ">
+          <div className=" w-[50px] h-[50px] md:w-[60px] md:h-[60px] flex items-center justify-center absolute -mt-[50px] ml-[150px] md:-mt-[100px] md:ml-[250px] lg:-mt-[140px] lg:ml-[340px]  bg-white border rounded-full">
+            <TbMoodEdit size={40} />
+            <Controller
+              name="image"
+              control={control}
+              render={({ field }) => (
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="file-input opacity-0 w-full h-full absolute "
+                  onChange={async (e: any) => {
+                    const file = e.target.files[0];
+                    const res: any = await uploadImages(file);
+                    console.log("res", res);
+                    setValue("image", res.url);
+                    field.onChange(res.url);
+                  }}
+                />
+              )}
+            />
+            {errors.image && (
+              <p className="error">{errors.image.message as string}</p>
+            )}
+          </div>
+        </div> */}
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2"
-        >
+        <div className="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+            <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
               Title
             </label>
             <input
               type="text"
               {...register("title")}
-              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+              // defaultValue={form.getValues("name")}
+              className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none "
             />
-          </div>
-
-          <div className="sm:col-span-2">
-            <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
-              Price
-            </label>
-            <input
-              type="number"
-              {...register("price")}
-              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-            />
-            {errors.price && (
-              <p className="error">{errors.price.message as string}</p>
+            {errors.title && (
+              <p className="text-red-600">{errors.title.message as string}</p>
             )}
           </div>
-
           <div className="sm:col-span-2">
-            <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+            <label className="mb-2 inline-block text-lg font-bold  text-white sm:text-base">
+              Description
+            </label>
+            <input
+              type="text"
+              {...register("description")}
+              className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
+            />
+            {errors.description && (
+              <p className="text-red-600">
+                {errors.description.message as string}
+              </p>
+            )}
+          </div>
+          <div className="sm:col-span-2">
+            <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
               Artist
             </label>
             <input
               type="text"
               {...register("artist")}
-              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+              className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
             />
+            {errors.artist && (
+              <p className="text-red-600">{errors.artist.message as string}</p>
+            )}
           </div>
-
-          <div className="sm:col-span-2">
-            <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
-              Description
+          <div className="sm:col-span-2 ">
+            <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
+              Price
             </label>
-            <textarea
-              {...register("description")}
-              className="h-64 w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-            ></textarea>
+            <input
+              type="text"
+              {...register("price")}
+              className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
+            />
+            {errors.price && (
+              <p className="text-red-600">{errors.price.message as string}</p>
+            )}
           </div>
           <div className="sm:col-span-2">
             <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
               Image
             </label>
-            <div className="form relative">
+            <div className="form relative bg-[#151c2c] cursor-pointer">
               <Controller
                 name="image"
                 control={control}
@@ -173,7 +212,7 @@ const Uploadpage = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    className="file-input opacity-0 w-full h-full absolute "
+                    className="file-input opacity-0 w-full h-full absolute cursor-pointer"
                     onChange={async (e: any) => {
                       const file = e.target.files[0];
                       const res: any = await uploadImages(file);
@@ -195,10 +234,10 @@ const Uploadpage = () => {
                   alt="image"
                 />
               </div>
-              <h6 className="pt-6 text-center text-sm text-[#2D3643] font-medium leading-[20.723px]">
+              <h6 className="pt-6 text-center text-sm text-white font-medium leading-[20.723px] ">
                 Drag & Drop image here{" "}
               </h6>
-              <h6 className="text-center  text-sm text-[#2D3643]  font-medium leading-[20.723px]">
+              <h6 className="text-center  text-sm text-white  font-medium leading-[20.723px]">
                 or{" "}
                 <span className="underline  text-[#3C83F6]">Upload File</span>
               </h6>
@@ -207,23 +246,22 @@ const Uploadpage = () => {
             <p className="text-[12px] font-normal text-[#8897AE]">
               Upload .jpg or .png file with 16:9 ratio
             </p>
-            <div className="progrss">
+            {/* <div className="progrss bg-[#151c2c]">
               <Progress file={File} />
-            </div>
+            </div> */}
           </div>
-
           <div className="flex items-center justify-between sm:col-span-2">
             <button
               type="submit"
               className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
             >
-              Upload
+              Submit
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default Uploadpage;
+export default Addpage;

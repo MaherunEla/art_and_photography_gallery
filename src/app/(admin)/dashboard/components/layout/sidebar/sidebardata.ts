@@ -14,7 +14,7 @@ export const navigation = [
     icon: MdOutlineDashboard,
   },
   {
-    href: "javascript:void(0)",
+    href: "/dashboard/product",
     name: "Products",
     icon: GiWallet,
   },
