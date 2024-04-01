@@ -24,10 +24,13 @@ export interface Product {
   id: number;
   slug: string;
   title: string;
-  img: any;
+  description: string;
+  image: any;
   price: number;
   discount: number;
-  author: string;
+  artist: string;
+  view: any;
+  delete: any;
 }
 
 export interface AdProduct {
@@ -35,9 +38,9 @@ export interface AdProduct {
   slug: string;
   title: string;
   description: string;
-  img: any;
+  image: any;
   price: number;
   discount: number;
   quantity: number;
-  author: string;
+  artist: string;
 }

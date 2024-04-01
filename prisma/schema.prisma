@@ -59,7 +59,7 @@ enum Role {
 model Upload {
     id          String @id @default(uuid())
     title       String
-    price       String
+    price       Float?
     artist      String
     description String
     image       String
