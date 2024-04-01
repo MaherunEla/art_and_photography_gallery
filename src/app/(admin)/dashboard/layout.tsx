@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import "@/app/styles/globals.css";
 import Sidebarpage from "./components/layout/sidebar/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 const queryClient = new QueryClient();
@@ -28,6 +28,7 @@ export default function RootLayout({
               <Sidebarpage />
             </div>
             <div className="grow md-grow-0 p-5 bg-[#151c2c] ">{children}</div>
+            <Toaster />
           </div>
         </QueryClientProvider>
         {/* <div className="flex">
