@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { AccessorFn, createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
 import Deletebutton from "./deletebutton";
+import Link from "next/link";
 
 const columnHelper = createColumnHelper<Users>();
 
@@ -62,9 +63,11 @@ export const columns = [
   columnHelper.accessor("view", {
     header: () => "",
     cell: (info) => (
-      <button className="px-[10px] py-[5px] rounded-[5px] text-white border-none cursor-pointer bg-teal-600">
-        View
-      </button>
+      <Link href={`/dashboard/users/view/${info.row.original.email}`}>
+        <button className="px-[10px] py-[5px] rounded-[5px] text-white border-none cursor-pointer bg-teal-600">
+          View
+        </button>
+      </Link>
     ),
   }),
   columnHelper.accessor("delete", {
