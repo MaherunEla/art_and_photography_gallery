@@ -44,3 +44,13 @@ export interface AdProduct {
   artist: string;
   quantity: number;
 }
+
+export interface Order {
+  id: number;
+  formdata: Json;
+  product: Json;
+  total: number;
+  createdAt: string;
+  ordernote: string;
+  status: string;
+}

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Sidebarpage = () => {
   return (
-    <nav className="fixed top-0 left-0 w-full h-full border-r bg-[#182237] space-y-8 sm:w-80 border border-gray-900">
+    <nav className="sticky top-0 left-0 w-full h-full border-r bg-[#182237] space-y-8 sm:w-[290px]  border border-gray-900">
       <div className="flex flex-col h-full">
         <div className="py-10 px-4 ">
           <div className="flex items-center gap-x-4 relative">

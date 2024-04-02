@@ -21,22 +21,6 @@ const Carttablepage = () => {
     0
   );
 
-  const handleCarttable = async () => {
-    console.log("cart data", cart);
-    const data = {
-      product: cart,
-      total,
-    };
-    axios
-      .post("/api/order", data)
-      .then((res) => {
-        console.log({ res });
-        toast({
-          title: "item add Successfully",
-        });
-      })
-      .catch((err) => console.log({ err }));
-  };
   const dispatch = useAppDispatch();
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -155,15 +139,18 @@ const Carttablepage = () => {
                   <span className="text-lg font-bold">
                     {total.toFixed(2)} ৳
                   </span>
-                  <span className="text-sm text-gray-500">including VAT</span>
+                  <span className="text-sm text-gray-500">
+                    including Delivery charge
+                  </span>
                 </span>
               </div>
             </div>
           </div>
-
-          <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
-            Check out
-          </button>
+          <Link href="/placeorder">
+            <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
+              Place Order
+            </button>
+          </Link>
         </div>
       </div>
     </div>
