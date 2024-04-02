@@ -13,6 +13,7 @@ const slice = createSlice({
         (product: any) => product.id === action.payload.id
       );
       if (!isExist) {
+        //state.products = [...state.products, action.payload];
         state.products.push(action.payload);
         localStorage.setItem("cart", JSON.stringify(state.products));
       }

@@ -29,7 +29,7 @@ const HomeLatest = () => {
               >
                 <div className="h-full w-full related">
                   <Image
-                    src={item.img}
+                    src={item.image}
                     loading="lazy"
                     alt="Photo by Rachit Tank"
                     className="object-cover object-center transition duration-200 group-hover:scale-110"

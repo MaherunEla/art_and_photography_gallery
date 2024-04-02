@@ -63,11 +63,11 @@ export const DELETE = async (req: Request, { params }: any) => {
     });
 
     // Delete the Signup record
-    await prisma.signup.delete({
+    const deleteuser = await prisma.signup.delete({
       where: { email: params.email as string },
     });
 
-    return "User and associated uploads deleted successfully.";
+    return NextResponse.json(deleteuser);
   } catch (error) {
     console.error("Error deleting user:", error);
     throw new Error("Failed to delete user.");
