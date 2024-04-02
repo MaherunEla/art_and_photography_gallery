@@ -82,7 +82,7 @@ const Gallerypage = () => {
                 className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
               >
                 <Image
-                  src={item.img}
+                  src={item.image}
                   loading="lazy"
                   alt="Photo by Vladimir Fedotov"
                   className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
@@ -99,7 +99,7 @@ const Gallerypage = () => {
                     {item.title}
                   </Link>
                   <span className="text-sm text-gray-500 lg:text-base">
-                    by {item.author}
+                    by {item.artist}
                   </span>
                 </div>
 

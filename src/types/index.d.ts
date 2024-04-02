@@ -41,6 +41,6 @@ export interface AdProduct {
   image: any;
   price: number;
   discount: number;
-  quantity: number;
   artist: string;
+  quantity: number;
 }

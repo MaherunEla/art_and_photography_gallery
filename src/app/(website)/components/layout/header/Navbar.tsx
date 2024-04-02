@@ -8,6 +8,7 @@ import { DropdownMenuDemo } from "./DropDownMenu";
 import { useAppDispatch, useAppSelector } from "@/app/redux_store/store";
 import { addAllCart } from "@/app/redux_store/cartAddSlice";
 import { signOut, useSession } from "next-auth/react";
+import { AdProduct } from "@/types";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
