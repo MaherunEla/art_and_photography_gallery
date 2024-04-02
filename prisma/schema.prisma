@@ -53,7 +53,8 @@ model Signup {
 
 enum Role {
     User
-    artist
+    Artist
+    Admin
 }
 
 model Upload {
@@ -65,4 +66,24 @@ model Upload {
     image       String
     userEmail   String
     user        Signup @relation(fields: [userEmail], references: [email])
+}
+
+model Order {
+    id        String   @id @default(uuid())
+    // name      String
+    // contact   String
+    // address   String
+    // ordernote String
+    formdata  Json
+    product   Json
+    total     Float?
+    createdAt DateTime @default(now())
+    status    Status   @default(Pending)
+}
+
+enum Status {
+    Pending
+    InProgress
+    Deliverd
+    Cancel
 }

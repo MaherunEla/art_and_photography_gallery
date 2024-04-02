@@ -19,7 +19,7 @@ export const navigation = [
     icon: GiWallet,
   },
   {
-    href: "javascript:void(0)",
+    href: "/dashboard/order",
     name: "Orders",
     icon: BsBoxSeamFill,
   },
