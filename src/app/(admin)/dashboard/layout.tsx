@@ -5,6 +5,7 @@ import "@/app/styles/globals.css";
 import Sidebarpage from "./components/layout/sidebar/page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import Navbar from "./components/navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 const queryClient = new QueryClient();
@@ -27,7 +28,10 @@ export default function RootLayout({
             <div className="flex-1 p-5 min-h-screen bg-[#151c2c]">
               <Sidebarpage />
             </div>
-            <div className="grow md-grow-0 p-5 bg-[#151c2c] ">{children}</div>
+            <div className="grow md-grow-0 p-5 bg-[#151c2c] ">
+              <Navbar />
+              {children}
+            </div>
             <Toaster />
           </div>
         </QueryClientProvider>

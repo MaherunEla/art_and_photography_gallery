@@ -50,7 +50,9 @@ export interface Order {
   formdata: Json;
   product: Json;
   total: number;
+  revenue: number;
   createdAt: string;
   ordernote: string;
   status: string;
+  icon: any;
 }

@@ -9,7 +9,7 @@ import { BiSolidReport } from "react-icons/bi";
 
 export const navigation = [
   {
-    href: "javascript:void(0)",
+    href: "/dashboard",
     name: "Dashboard",
     icon: MdOutlineDashboard,
   },
@@ -24,7 +24,7 @@ export const navigation = [
     icon: BsBoxSeamFill,
   },
   {
-    href: "javascript:void(0)",
+    href: "/dashboard/sales",
     name: "Sales",
     icon: BsStack,
   },
@@ -32,7 +32,7 @@ export const navigation = [
 
 export const navsFooter = [
   {
-    href: "",
+    href: "/dashboard/revenue",
     name: "Revenue",
     icon: FaChartLine,
   },
