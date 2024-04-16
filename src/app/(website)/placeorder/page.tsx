@@ -41,6 +41,12 @@ const Placeorderpage = () => {
     (sum, item) => sum + item.discount * item.quantity,
     0
   );
+  const revenue: number = cart.reduce(
+    (sum, item) => sum + item.discount * 0.1 * item.quantity,
+    0
+  );
+
+  console.log({ revenue });
   const {
     handleSubmit,
     register,
@@ -54,6 +60,7 @@ const Placeorderpage = () => {
       product: cart,
       total,
       formdata,
+      revenue,
     };
     axios
       .post("/api/order", data)

@@ -108,6 +108,14 @@
   }
 }
 
+.positive {
+  color: lime;
+}
+
+.negative {
+  color: red;
+}
+
 .container {
   margin: 0 auto;
   width: calc(100% - 24px);

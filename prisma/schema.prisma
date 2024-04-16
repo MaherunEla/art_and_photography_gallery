@@ -77,6 +77,7 @@ model Order {
     formdata  Json
     product   Json
     total     Float?
+    revenue   Float?
     createdAt DateTime @default(now())
     status    Status   @default(Pending)
 }
