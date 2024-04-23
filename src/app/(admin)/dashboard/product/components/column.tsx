@@ -45,7 +45,7 @@ export const columns = [
     header: () => "price",
   }),
   columnHelper.accessor("discount", {
-    cell: (info) => <p>{info.getValue()}</p>,
+    cell: (info) => <p>{info.getValue().toFixed(2)}</p>,
     header: () => "Discount",
   }),
 

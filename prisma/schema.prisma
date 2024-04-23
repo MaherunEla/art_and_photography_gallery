@@ -61,6 +61,7 @@ model Upload {
     id          String @id @default(uuid())
     title       String
     price       Float?
+    discount    Float?
     artist      String
     description String
     image       String
