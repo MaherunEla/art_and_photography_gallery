@@ -16,18 +16,8 @@ const Navbar = () => {
         {pathname.split("/").pop()}
       </div>
       <div className="flex items-center gap-5">
-        <div className="flex items-center gap-2 bg-[#2e374a] p-3 rounded-[10px]">
-          <MdSearch />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="bg-transparent border-none text-white"
-          />
-        </div>
         <div className="flex gap-5">
           <MdOutlineChat size={20} />
-          <MdNotifications size={20} />
-          <MdPublic size={20} />
         </div>
       </div>
     </div>
