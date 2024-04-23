@@ -10,7 +10,7 @@ const Card = ({ item }: any) => {
         <span className="text-white text-[24px] font-semibold">
           {item.number}
         </span>
-        <span className="text-white text-[24px] font-light">
+        <span className="text-white md:text-[16px] lg:text-[20px] font-light">
           <span className={item.change > 0 ? "text-green-400" : "text-red-500"}>
             {item.change}%
           </span>

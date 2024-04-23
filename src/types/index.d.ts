@@ -43,6 +43,7 @@ export interface AdProduct {
   discount: number;
   artist: string;
   quantity: number;
+  userEmail: any;
 }
 
 export interface Order {

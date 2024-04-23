@@ -3,6 +3,7 @@ import Card from "./components/card/card";
 import { FaRegImage, FaUserAlt, FaUserCircle } from "react-icons/fa";
 import { MdAttachMoney, MdSupervisedUserCircle } from "react-icons/md";
 import Transactions from "./components/transactions/transactions";
+import Featured from "./components/featured/featured";
 
 export default function Home() {
   const cards = [
@@ -40,7 +41,9 @@ export default function Home() {
           <Transactions />
           {/* <Chart />  */}
         </div>
-        <div className="flex-1">{/* <Rightbar /> */}</div>
+        <div className="flex-1">
+          <Featured />
+        </div>
       </div>
     </main>
   );

@@ -9,6 +9,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303063@iubat.edu",
   },
   {
     id: 2,
@@ -20,6 +21,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
   {
     id: 4,
@@ -42,6 +45,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
   {
     id: 5,
@@ -53,6 +57,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
   {
     id: 6,
@@ -64,6 +69,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
   {
     id: 7,
@@ -75,6 +81,7 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
   {
     id: 8,
@@ -86,5 +93,6 @@ export const HomeGalleryData = [
     discount: 15,
     artist: "John Doe",
     quantity: 1,
+    userEmail: "19303062@iubat.edu",
   },
 ];
