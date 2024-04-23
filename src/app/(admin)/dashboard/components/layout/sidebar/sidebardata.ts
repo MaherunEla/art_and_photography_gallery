@@ -42,9 +42,4 @@ export const navsFooter = [
     name: "Users",
     icon: FaUserCircle,
   },
-  {
-    href: "javascript:void(0)",
-    name: "Report",
-    icon: BiSolidReport,
-  },
 ];

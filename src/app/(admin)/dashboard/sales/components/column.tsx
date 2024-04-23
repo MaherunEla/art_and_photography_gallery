@@ -95,6 +95,14 @@ export const columns = [
     cell: (info) => <p>{info.getValue().toFixed(2)}</p>,
     header: () => "Total",
   }),
+  columnHelper.accessor("status", {
+    cell: (info) => (
+      <p className="p-1 text-center w-[80px] border border-cyan-950 bg-cyan-950 rounded-md">
+        {info.getValue()}
+      </p>
+    ),
+    header: () => "Status",
+  }),
 
   columnHelper.accessor("createdAt", {
     cell: (info) => <p>{formatDate(info.getValue())}</p>,
