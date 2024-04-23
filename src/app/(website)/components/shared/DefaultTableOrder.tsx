@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useState } from "react";
-import { MdNavigateNext } from "react-icons/md";
+import { MdNavigateNext, MdOutlineFileDownload } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { flexRender, getCoreRowModel } from "@tanstack/react-table";
 
@@ -11,6 +11,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { getJsPageSizeInKb } from "next/dist/build/utils";
+import { Download } from "lucide-react";
 
 const DefaultTable: FC<{ data: any; columns: any; filtering: any }> = ({
   data,
