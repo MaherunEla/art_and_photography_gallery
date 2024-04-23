@@ -7,12 +7,15 @@ import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
+import { useParams } from "next/navigation";
 
 const fetchUpload = async () => {
   const { data } = await axios.get("/api/sales");
   return data;
 };
 const Productpage = () => {
+  const params = useParams();
+  console.log("param", params);
   const [filtering, setFiltering] = useState("");
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["order-data"],
@@ -26,7 +29,14 @@ const Productpage = () => {
     return <h2>{(error as any).message}</h2>;
   }
 
-  const tabledata = data || [];
+  const userEmailToFilter = params.id;
+
+  const filteredData: any = data.filter((item: any) =>
+    item.product.some((product: any) => product.userEmail === userEmailToFilter)
+  );
+  console.log(filteredData);
+
+  const tabledata = filteredData || [];
 
   return (
     <div className="mx-auto max-w-screen-2xl px-4 md:px-8p-5 p-5 rounded-[10px] mt-5">
