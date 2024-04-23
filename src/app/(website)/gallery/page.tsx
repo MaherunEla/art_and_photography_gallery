@@ -1,15 +1,35 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { HomeGalleryData } from "../components/home/components/HomeGallery";
+import { AdProduct } from "@/types";
 
 const Gallerypage = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState<AdProduct[]>([]);
+
+  async function getSearchProduct(query: string) {
+    const res = await fetch(`/api/search?query=${query}`, {
+      method: "GET",
+      cache: "no-store",
+    });
+    const { product } = await res.json();
+    console.log({ product });
+    if (res.ok) {
+      setSearchResult(product);
+    }
+  }
+
+  async function handleSearch() {
+    getSearchProduct(searchQuery);
+  }
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 ">
-        <div className="mb-10 md:mb-16   ">
-          <form className="max-w-2xl px-4 mx-auto mt-12">
-            <div className="relative ">
+        <div className="mb-10 md:mb-16  flex items-center gap-1 ">
+          <form className="flex-1 max-w-2xl px-4 mx-auto mt-12">
+            <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
@@ -27,6 +47,9 @@ const Gallerypage = () => {
               <input
                 type="text"
                 placeholder="Search"
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                }}
                 className="w-full  py-3 pl-12 pr-4 text-gray-500 border rounded-full outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
               />
             </div>
@@ -63,6 +86,13 @@ const Gallerypage = () => {
             </div> */}
           </form>
 
+          <button
+            className="w-[120px] px-6 py-3 mt-12 bg-blue-600 rounded-md text-white text-lg font-normal"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
+
           {/* <h2 className="mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl">
             Gallery
           </h2>
@@ -73,8 +103,93 @@ const Gallerypage = () => {
             text but is random or otherwise generated.
           </p> */}
         </div>
+        {searchResult && searchResult.length ? (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {searchResult.map((item, index) => (
+              <div key={index}>
+                <Link
+                  href={`/gallery/${item.slug}`}
+                  className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
+                >
+                  <Image
+                    src={item.image}
+                    loading="lazy"
+                    alt="Photo by Vladimir Fedotov"
+                    className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    fill
+                  />
+                </Link>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
+                  <div className="flex flex-col">
+                    <Link
+                      href="#"
+                      className="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg"
+                    >
+                      {item.title}
+                    </Link>
+                    <span className="text-sm text-gray-500 lg:text-base">
+                      by {item.artist}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col items-end">
+                    <span className="font-bold text-gray-600 lg:text-lg">
+                      {/*  ৳{item.discount.toFixed(2)} */}
+                    </span>
+                    <span className="font-bold text-gray-600 lg:text-lg line-through">
+                      ৳{item.price.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {HomeGalleryData.map((item, index) => (
+              <div key={index}>
+                <Link
+                  href={`/gallery/${item.slug}`}
+                  className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
+                >
+                  <Image
+                    src={item.image}
+                    loading="lazy"
+                    alt="Photo by Vladimir Fedotov"
+                    className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    fill
+                  />
+                </Link>
+
+                <div className="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
+                  <div className="flex flex-col">
+                    <Link
+                      href="#"
+                      className="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg"
+                    >
+                      {item.title}
+                    </Link>
+                    <span className="text-sm text-gray-500 lg:text-base">
+                      by {item.artist}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col items-end">
+                    <span className="font-bold text-gray-600 lg:text-lg">
+                      ৳{item.discount.toFixed(2)}
+                    </span>
+                    <span className="font-bold text-gray-600 lg:text-lg line-through">
+                      ৳{item.price.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {HomeGalleryData.map((item, index) => (
             <div key={index}>
               <Link
@@ -114,7 +229,7 @@ const Gallerypage = () => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
