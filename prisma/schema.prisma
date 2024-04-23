@@ -69,17 +69,19 @@ model Upload {
 }
 
 model Order {
-    id        String   @id @default(uuid())
+    id           String   @id @default(uuid())
     // name      String
     // contact   String
     // address   String
     // ordernote String
-    formdata  Json
-    product   Json
-    total     Float?
-    revenue   Float?
-    createdAt DateTime @default(now())
-    status    Status   @default(Pending)
+    formdata     Json
+    product      Json
+    total        Float?
+    revenue      Float?
+    totalrevenue Float?
+    createdAt    DateTime @default(now())
+    status       Status   @default(Pending)
+    userEmail    String
 }
 
 enum Status {

@@ -8,15 +8,19 @@ import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
 
-const fetchUpload = async () => {
+interface TableDataRow {
+  [key: string]: any;
+}
+
+const fetchSales = async () => {
   const { data } = await axios.get("/api/sales");
   return data;
 };
 const Productpage = () => {
   const [filtering, setFiltering] = useState("");
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["upload-data"],
-    queryFn: fetchUpload,
+    queryKey: ["sales-data"],
+    queryFn: fetchSales,
   });
 
   if (isLoading) {
@@ -26,7 +30,7 @@ const Productpage = () => {
     return <h2>{(error as any).message}</h2>;
   }
 
-  const tabledata = data || [];
+  const tabledata: TableDataRow = data || [];
 
   return (
     <div className="bg-[#182237] p-5 rounded-[10px] mt-5">

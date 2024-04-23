@@ -1,5 +1,6 @@
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { Button } from "@/components/ui/button";
+import { TiShoppingCart } from "react-icons/ti";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,7 +63,11 @@ export function DropdownMenuDemo(user: any) {
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center gap-1 font-semibold">
             <RiLuggageCartLine size={15} />
-            <Link href="/order/h">Orders</Link>
+            <Link href={`/order/${user?.user?.email}`}>Orders</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center gap-1 font-semibold">
+            <TiShoppingCart size={15} />
+            <Link href={`/sales/${user?.user?.email}`}>Sales</Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 

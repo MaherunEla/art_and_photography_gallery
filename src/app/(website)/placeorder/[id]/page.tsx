@@ -17,7 +17,9 @@ import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
 
 const orderformSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -33,6 +35,21 @@ const orderformSchema = z.object({
 type FormValues = z.infer<typeof orderformSchema>;
 
 const Placeorderpage = () => {
+  const { data: session, status } = useSession();
+  console.log(session?.user?.email);
+
+  const params = useParams();
+  console.log("param", params);
+
+  const fetchProfile = () => {
+    return axios.get(`/api/signup/${params.id}`);
+  };
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["signup-data"],
+    queryFn: fetchProfile,
+  });
+
   const cart = useAppSelector((state) => state?.cart?.products);
   console.log(cart);
 
@@ -46,14 +63,22 @@ const Placeorderpage = () => {
     0
   );
 
+  const userEmail: any = session?.user?.email;
+
+  const form = useForm<FormValues>({
+    defaultValues: async () => {
+      const { data } = await axios.get(`/api/signup/${params.id}`);
+      return data;
+    },
+    resolver: zodResolver(orderformSchema),
+  });
+
   console.log({ revenue });
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormValues>({
-    resolver: zodResolver(orderformSchema),
-  });
+  } = form;
   const onSubmit = async (formdata: FormValues) => {
     console.log("cart data", cart);
     const data = {
@@ -61,6 +86,7 @@ const Placeorderpage = () => {
       total,
       formdata,
       revenue,
+      userEmail,
     };
     axios
       .post("/api/order", data)

@@ -10,9 +10,11 @@ import {
   removeCart,
 } from "@/app/redux_store/cartAddSlice";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const Carttablepage = () => {
   const { toast } = useToast();
+  const { data: session, status } = useSession();
 
   const cart = useAppSelector((state) => state?.cart?.products);
   console.log(cart);
@@ -146,11 +148,30 @@ const Carttablepage = () => {
               </div>
             </div>
           </div>
-          <Link href="/placeorder">
-            <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
-              Place Order
-            </button>
-          </Link>
+
+          {session ? (
+            <>
+              {/* <button
+                  onClick={() => signOut()}
+                  className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
+                >
+                  Log Out
+                </button> */}
+
+              <Link href={`/placeorder/${session?.user?.email}`}>
+                <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
+                  Place Order
+                </button>
+              </Link>
+            </>
+          ) : (
+            <Link
+              href="/signup"
+              className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
+            >
+              Sign Up
+            </Link>
+          )}
         </div>
       </div>
     </div>

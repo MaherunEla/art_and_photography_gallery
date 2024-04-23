@@ -19,6 +19,7 @@ const Singleproduct = ({ Gallery }: Props) => {
     quantity: 1,
     artist: Gallery?.artist,
     description: Gallery?.description,
+    userEmail: Gallery?.userEmail,
   };
   const dispatch = useAppDispatch();
   //for zoom image

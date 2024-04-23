@@ -16,6 +16,8 @@ export async function POST(req: Request) {
   const data = await req.json();
   console.log(data);
 
+  const totalrevenue: number = data.revenue;
+
   const res = await prisma.order.create({
     data: data,
   });
