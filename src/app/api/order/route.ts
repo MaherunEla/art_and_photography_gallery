@@ -14,12 +14,16 @@ export const GET = async (req: any) => {
 
 export async function POST(req: Request) {
   const data = await req.json();
-  console.log(data);
 
-  const totalrevenue: number = data.revenue;
+  // const totalrevenue = await prisma.order.aggregate({
+  //   _sum: { revenue: true },
+  // });
+
+  // const totalRevenueSum = totalrevenue._sum?.revenue || 0;
+  // const finalTotalRevenue = totalRevenueSum === 0 ? data.revenue : totalRevenueSum + data.revenue;
 
   const res = await prisma.order.create({
-    data: data,
+    data: { ...data, totalrevenue: 0 },
   });
   return NextResponse.json(res);
 }

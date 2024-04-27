@@ -18,7 +18,7 @@ datasource db {
 //     accessTokenExpires DateTime?
 //     createdAt          DateTime  @default(now())
 //     updatedAt          DateTime  @updatedAt
-//     user               Signup    @relation(fields: [userId], references: [id])
+//     user               Signup    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 //     @@unique([providerId, providerAccountId])
 // }
@@ -31,7 +31,7 @@ datasource db {
 //     accessToken  String   @unique
 //     createdAt    DateTime @default(now())
 //     updatedAt    DateTime @updatedAt
-//     user         Signup   @relation(fields: [userId], references: [id])
+//     user         Signup   @relation(fields: [userId], references: [id], onDelete: Cascade)
 // }
 
 model Signup {
@@ -46,8 +46,8 @@ model Signup {
     socialaccountl String   @default("")
     role           Role     @default(User)
     createdat      DateTime @default(now())
-    // accounts   Account[]
-    // sessions   Session[]
+    // accounts       Account[]
+    // sessions       Session[]
     upload         Upload[]
 }
 

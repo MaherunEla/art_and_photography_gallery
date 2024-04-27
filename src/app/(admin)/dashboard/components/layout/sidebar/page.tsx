@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { navigation, navsFooter } from "./sidebardata";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 const Sidebarpage = () => {
   return (
@@ -45,15 +46,27 @@ const Sidebarpage = () => {
             <ul className="px-4 pb-4 text-sm font-medium">
               {navsFooter.map((item, idx) => (
                 <li key={idx}>
-                  <a
-                    href={item.href}
-                    className="flex items-center gap-x-2 text-white text-normal font-bold p-2 rounded-lg   hover:bg-[#2e374a] active:bg-[#2e374a] duration-150"
-                  >
-                    <div className="text-white">
-                      <item.icon className="text-white " size={20} />
-                    </div>
-                    {item.name}
-                  </a>
+                  {item.name === "Logout" ? (
+                    <a
+                      onClick={() => signOut()}
+                      className="flex items-center gap-x-2 text-white text-normal font-bold p-2 rounded-lg   hover:bg-[#2e374a] active:bg-[#2e374a] duration-150 cursor-pointer"
+                    >
+                      <div className="text-white">
+                        <item.icon className="text-white " size={20} />
+                      </div>
+                      {item.name}
+                    </a>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="flex items-center gap-x-2 text-white text-normal font-bold p-2 rounded-lg   hover:bg-[#2e374a] active:bg-[#2e374a] duration-150"
+                    >
+                      <div className="text-white">
+                        <item.icon className="text-white " size={20} />
+                      </div>
+                      {item.name}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

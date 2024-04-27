@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
+import { User } from "@/types/interfaces";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
@@ -7,10 +7,19 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 //import prisma from "@/app/utils/connect";
 
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/connect";
 
 export const options: NextAuthOptions = {
-  // adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+  },
+
+  pages: {
+    signIn: "/login",
+
+    error: "/login",
+  },
 
   providers: [
     // GitHubProvider({
@@ -32,11 +41,6 @@ export const options: NextAuthOptions = {
         };
 
         try {
-          // Query the user from the database using Prisma
-
-          // if (!credentials || !credentials.username || !credentials.password) {
-          //   return null; // Return null if credentials are not provided or incomplete
-          // }
           const user = await prisma.signup.findFirst({
             where: {
               email: email,
@@ -73,8 +77,16 @@ export const options: NextAuthOptions = {
     }),
   ],
 
-  pages: {
-    signIn: "/login",
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      session.user.role = token.role;
+
+      return session;
+    },
   },
 };
 

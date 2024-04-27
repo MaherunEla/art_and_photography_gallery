@@ -22,7 +22,6 @@ const Loginpage = () => {
     });
 
     console.log(res);
-
     if (res?.error) {
       setErrorMessage("Invalid email or password. Please try again.");
     }
@@ -32,8 +31,8 @@ const Loginpage = () => {
     return <div>Loading...</div>;
   }
 
-  if (status === "authenticated") {
-    router.push("/");
+  if (data?.user.role === "Admin") {
+    router.push("/dashboard");
   }
 
   return (
@@ -42,7 +41,7 @@ const Loginpage = () => {
         <div className="text-center">
           <div className="mt-6 space-y-2">
             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
-              Log In
+              Admin Log In
             </h3>
           </div>
         </div>
@@ -81,6 +80,7 @@ const Loginpage = () => {
           >
             Log In
           </button>
+
           {errorMessage && (
             <p className="text-red-500 text-sm font-normal">{errorMessage}</p>
           )}

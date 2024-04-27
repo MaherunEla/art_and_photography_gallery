@@ -42,6 +42,10 @@ const Productpage = () => {
     return format(date, "d MMM, yyyy");
   };
 
+  const pdfMake = require("pdfmake/build/pdfmake.js");
+  const pdfFonts = require("pdfmake/build/vfs_fonts.js");
+  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
   const handleDownload = () => {
     // Convert data to a format compatible with Excel
     const excelData: { [key: string]: any }[] = tabledata.map((order) => ({
@@ -49,31 +53,40 @@ const Productpage = () => {
         .map((product: any) => `${product.title} (${product.quantity})`)
         .join(", "),
       Artist: order.product.map((product: any) => product.artist).join(", "),
-      Total: `৳ ${order.total.toFixed(2)}`,
-      Revenue: `৳ ${order.revenue.toFixed(2)}`,
+      Total: ` ${order.total.toFixed(2)}tk`,
+      Revenue: ` ${order.revenue.toFixed(2)}tk`,
+      TotalRevenue: `${order.totalrevenue.toFixed(2)}tk`,
       Date: formatDate(order.createdAt),
     }));
 
-    // Define column headers
-    const headers = Object.keys(excelData[0]);
+    const pdfData = {
+      content: [
+        {
+          table: {
+            headerRows: 1,
+            widths: ["*", "*", "*", "*", "*", "*"],
+            body: [
+              // Header Row
+              Object.keys(excelData[0]).map((header) => ({
+                text: header,
+                style: "tableHeader",
+              })),
+              // Data Rows
+              ...excelData.map((row) => Object.values(row)),
+            ],
+          },
+        },
+      ],
+      styles: {
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          fillColor: "#eeeeee",
+        },
+      },
+    };
 
-    // Create an array of arrays containing the values of each cell
-    const excelArray = [
-      headers,
-      ...excelData.map((row) => headers.map((header) => row[header])),
-    ];
-
-    // Create a new Excel workbook
-    const workbook = XLSX.utils.book_new();
-
-    // Convert the data array to a worksheet
-    const worksheet = XLSX.utils.aoa_to_sheet(excelArray);
-
-    // Add the worksheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
-
-    // Trigger file download
-    XLSX.writeFile(workbook, "Revenue.xlsx");
+    pdfMake.createPdf(pdfData).download("Revenue.pdf");
   };
 
   return (
