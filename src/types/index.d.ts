@@ -52,6 +52,7 @@ export interface Order {
   product: Json;
   total: number;
   revenue: number;
+  totalrevenue: number;
   createdAt: string;
   ordernote: string;
   status: string;

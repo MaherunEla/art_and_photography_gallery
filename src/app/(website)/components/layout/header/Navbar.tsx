@@ -13,7 +13,7 @@ import { AdProduct } from "@/types";
 const Navbar = () => {
   const { data: session, status } = useSession();
 
-  console.log({ status });
+  console.log({ session });
 
   const currentRoute = usePathname();
 

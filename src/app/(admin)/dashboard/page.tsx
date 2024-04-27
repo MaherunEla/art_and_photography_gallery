@@ -4,6 +4,9 @@ import { FaRegImage, FaUserAlt, FaUserCircle } from "react-icons/fa";
 import { MdAttachMoney, MdSupervisedUserCircle } from "react-icons/md";
 import Transactions from "./components/transactions/transactions";
 import Featured from "./components/featured/featured";
+import { authOption } from "@/app/utils/auth";
+import { getServerSession } from "next-auth";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const cards = [

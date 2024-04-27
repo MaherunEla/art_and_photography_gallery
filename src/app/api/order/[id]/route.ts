@@ -14,16 +14,29 @@ export const GET = async (req: any, { params }: any) => {
 
 export const PUT = async (req: Request, { params }: any) => {
   const data = await req.json();
-  console.log(data);
+  console.log({ data });
 
-  const updatestatus = await prisma.order.update({
-    where: { id: params?.id as string },
-    data: data,
-  });
+  if (data.status === "Deliverd") {
+    const totalrevenue = await prisma.order.aggregate({
+      _sum: { revenue: true },
+    });
 
-  console.log(updatestatus);
+    const totalRevenueSum = totalrevenue._sum?.revenue || 0;
 
-  return NextResponse.json(updatestatus);
+    const updatestatus = await prisma.order.update({
+      where: { id: params?.id as string },
+      data: { ...data, totalrevenue: totalRevenueSum },
+    });
+
+    console.log(updatestatus);
+    return NextResponse.json(updatestatus);
+  } else {
+    const updatestatus = await prisma.order.update({
+      where: { id: params?.id as string },
+      data: data,
+    });
+    return NextResponse.json(updatestatus);
+  }
 };
 export const DELETE = async (req: any, { params }: any) => {
   const prisma = new PrismaClient();

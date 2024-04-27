@@ -6,6 +6,8 @@ import { BsPeopleFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa6";
 import { BiSolidReport } from "react-icons/bi";
+import { TiHome } from "react-icons/ti";
+import { IoLogOut } from "react-icons/io5";
 
 export const navigation = [
   {
@@ -28,9 +30,6 @@ export const navigation = [
     name: "Sales",
     icon: BsStack,
   },
-];
-
-export const navsFooter = [
   {
     href: "/dashboard/revenue",
     name: "Revenue",
@@ -41,5 +40,18 @@ export const navsFooter = [
     href: "/dashboard/users",
     name: "Users",
     icon: FaUserCircle,
+  },
+];
+
+export const navsFooter = [
+  {
+    href: "/",
+    name: "Home",
+    icon: TiHome,
+  },
+  {
+    href: "",
+    name: "Logout",
+    icon: IoLogOut,
   },
 ];

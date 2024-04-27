@@ -54,6 +54,10 @@ export const columns = [
     cell: (info) => <p> ৳ {info.getValue().toFixed(2)}</p>,
     header: () => "Revenue",
   }),
+  columnHelper.accessor("totalrevenue", {
+    cell: (info) => <p> ৳ {info.getValue().toFixed(2)}</p>,
+    header: () => "Total Revenue",
+  }),
 
   columnHelper.accessor("createdAt", {
     cell: (info) => <p>{formatDate(info.getValue())}</p>,

@@ -95,7 +95,7 @@ const Placeorderpage = () => {
         toast({
           title: "Order added Successfully",
         });
-        router.push("/thankyou");
+        router.push(`/thankyou/${params.id}`);
       })
       .catch((err) => console.log({ err }));
   };

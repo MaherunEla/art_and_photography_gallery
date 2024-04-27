@@ -46,7 +46,7 @@ const Gallerypage = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search By Title, Artist ,Description"
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
                 }}
