@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Card from "./components/card/card";
 import { FaRegImage, FaUserAlt, FaUserCircle } from "react-icons/fa";
@@ -7,13 +8,15 @@ import Featured from "./components/featured/featured";
 import { authOption } from "@/app/utils/auth";
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const cards = [
     {
       id: 1,
       title: "Total Users",
-      number: 10.928,
+      number: 10,
       change: 12,
       icon: FaUserCircle,
     },
