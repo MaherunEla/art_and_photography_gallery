@@ -1,6 +1,6 @@
 import { Status, PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/connect";
 export const GET = async (req: any, { params }: any) => {
   console.log(params);
 
@@ -39,8 +39,6 @@ export const PUT = async (req: Request, { params }: any) => {
   }
 };
 export const DELETE = async (req: any, { params }: any) => {
-  const prisma = new PrismaClient();
-
   const OrderDelete = await prisma.order.delete({
     where: { id: params?.id as string },
   });

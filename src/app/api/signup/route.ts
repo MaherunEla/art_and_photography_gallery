@@ -2,8 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/connect";
 
 export const GET = async (req: any) => {
   const signup = await prisma.signup.findMany();

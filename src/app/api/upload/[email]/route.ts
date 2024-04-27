@@ -2,8 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-
-const prisma = new PrismaClient();
+import prisma from "@/app/utils/connect";
 
 export const GET = async (req: any, { params }: any) => {
   const uploads = await prisma.upload.findMany({
@@ -29,7 +28,6 @@ export async function POST(req: Request, { params }: any) {
 }
 
 export const DELETE = async (req: Request, { params }: any) => {
-  const prisma = new PrismaClient();
   console.log("id:", params?.email);
 
   const productDelete = await prisma.upload.delete({
