@@ -1,6 +1,6 @@
 export const HomeGalleryData = [
   {
-    id: 1,
+    id: "1973a567-61dd-49f0-894b-ee0d50e2d7d0",
     slug: "sailboat",
     title: "Sailboat",
     image: "/assets/images/home/1.jpg",
@@ -12,7 +12,7 @@ export const HomeGalleryData = [
     userEmail: "19303063@iubat.edu",
   },
   {
-    id: 2,
+    id: "2",
     slug: "captivemind",
     title: "Captive Mind",
     image: "/assets/images/home/2.jpg",
@@ -24,7 +24,7 @@ export const HomeGalleryData = [
     userEmail: "19303062@iubat.edu",
   },
   {
-    id: 3,
+    id: "4",
     slug: "apath",
     title: "A path",
     image: "/assets/images/home/3.jpg",
@@ -36,7 +36,7 @@ export const HomeGalleryData = [
     userEmail: "19303062@iubat.edu",
   },
   {
-    id: 4,
+    id: "4",
     slug: "beautifullpath",
     title: "Beautifull path",
     image: "/assets/images/home/4.jpg",
@@ -48,7 +48,7 @@ export const HomeGalleryData = [
     userEmail: "19303062@iubat.edu",
   },
   {
-    id: 5,
+    id: "5",
     slug: "watercolor",
     title: "Water Color",
     image: "/assets/images/home/5.jpg",
@@ -60,7 +60,7 @@ export const HomeGalleryData = [
     userEmail: "19303062@iubat.edu",
   },
   {
-    id: 6,
+    id: "6",
     slug: "seabeach",
     title: "Sea Beach",
     image: "/assets/images/home/6.jpg",
@@ -72,7 +72,7 @@ export const HomeGalleryData = [
     userEmail: "19303062@iubat.edu",
   },
   {
-    id: 7,
+    id: "7",
     slug: "seaside",
     title: "Sea Side",
     image: "/assets/images/home/7.jpg",
@@ -84,7 +84,7 @@ export const HomeGalleryData = [
     userEmail: "19303062@iubat.edu",
   },
   {
-    id: 8,
+    id: "8",
     slug: "boat",
     title: "Boat",
     image: "/assets/images/home/8.jpg",

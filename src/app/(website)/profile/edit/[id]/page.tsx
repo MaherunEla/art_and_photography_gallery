@@ -214,7 +214,7 @@ const Profileeditpage = () => {
             </label>
             <input
               type="text"
-              placeholder="Twiter"
+              placeholder="LinkedIn"
               {...register("socialaccountf")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
@@ -226,7 +226,7 @@ const Profileeditpage = () => {
             <input
               type="text"
               {...register("socialaccountl")}
-              placeholder="LinkedIn"
+              placeholder="Twiter"
               className="w-full rounded border bg-gray-50 mt-4 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
             {errors.socialaccountl && (

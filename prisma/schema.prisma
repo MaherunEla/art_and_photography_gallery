@@ -35,20 +35,21 @@ datasource db {
 // }
 
 model Signup {
-    id             String   @id @default(uuid())
+    id             String    @id @default(uuid())
     name           String
     contact        String
-    email          String   @unique
+    email          String    @unique
     password       String
     occupation     String
-    image          String   @default("/assets/images/home/defaultimage.jpg")
-    socialaccountf String   @default("")
-    socialaccountl String   @default("")
-    role           Role     @default(User)
-    createdat      DateTime @default(now())
+    image          String    @default("/assets/images/home/defaultimage.jpg")
+    socialaccountf String    @default("")
+    socialaccountl String    @default("")
+    role           Role      @default(User)
+    createdat      DateTime  @default(now())
     // accounts       Account[]
     // sessions       Session[]
     upload         Upload[]
+    comment        Comment[]
 }
 
 enum Role {
@@ -58,16 +59,17 @@ enum Role {
 }
 
 model Upload {
-    id          String   @id @default(uuid())
+    id          String    @id @default(uuid())
     title       String
     price       Float?
     discount    Float?
     artist      String
     description String
     image       String
-    createdAt   DateTime @default(now())
+    createdAt   DateTime  @default(now())
     userEmail   String
-    user        Signup   @relation(fields: [userEmail], references: [email])
+    user        Signup    @relation(fields: [userEmail], references: [email])
+    comment     Comment[]
 }
 
 model Order {
@@ -84,6 +86,16 @@ model Order {
     createdAt    DateTime @default(now())
     status       Status   @default(Pending)
     userEmail    String
+}
+
+model Comment {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    text      String
+    userEmail String
+    user      Signup   @relation(fields: [userEmail], references: [email])
+    productId String
+    product   Upload   @relation(fields: [productId], references: [id])
 }
 
 enum Status {

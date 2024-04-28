@@ -12,7 +12,6 @@ const Singleproduct = ({ Gallery }: Props) => {
   const product: AdProduct = {
     id: Gallery?.id,
     title: Gallery?.title,
-    slug: Gallery?.slug,
     image: Gallery?.image,
     price: Gallery?.price,
     discount: Gallery?.discount,
@@ -150,14 +149,22 @@ const Singleproduct = ({ Gallery }: Props) => {
             </div>
 
             <div className="my-8">
-              <div className="flex items-end gap-2">
-                <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  ৳{Gallery?.discount.toFixed(2)}
-                </span>
-                <span className="mb-0.5 text-red-500 line-through">
-                  ৳{Gallery?.price.toFixed(2)}
-                </span>
-              </div>
+              {Gallery?.discount === null ? (
+                <div className="flex items-end gap-2">
+                  <span className="mb-0.5 text-xl font-bold md:text-2xl text-gray-800 ">
+                    ৳{Gallery?.price.toFixed(2)}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-end gap-2">
+                  <span className="text-xl font-bold text-gray-800 md:text-2xl">
+                    ৳{Gallery?.discount.toFixed(2)}
+                  </span>
+                  <span className="mb-0.5  text-red-500 line-through">
+                    ৳{Gallery?.price.toFixed(2)}
+                  </span>
+                </div>
+              )}
 
               <span className="text-sm text-gray-500">
                 incl. VAT plus shipping
@@ -195,7 +202,7 @@ const Singleproduct = ({ Gallery }: Props) => {
               </button>
 
               <a
-                href="#"
+                href="/cart"
                 className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
               >
                 Buy now

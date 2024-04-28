@@ -18,8 +18,11 @@ const Carttablepage = () => {
 
   const cart = useAppSelector((state) => state?.cart?.products);
   console.log(cart);
+
   const total: number = cart.reduce(
-    (sum, item) => sum + item.discount * item.quantity,
+    (sum, item) =>
+      sum +
+      (item.discount !== null ? item.discount : item.price) * item.quantity,
     0
   );
 
@@ -65,9 +68,15 @@ const Carttablepage = () => {
                   </div>
 
                   <div>
-                    <span className="mb-1 block font-bold text-gray-800 md:text-lg">
-                      ৳{item.discount.toFixed(2)}
-                    </span>
+                    {item?.discount === null ? (
+                      <span className="mb-1 block font-bold text-gray-800 md:text-lg">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    ) : (
+                      <span className="mb-1 block font-bold text-gray-800 md:text-lg">
+                        ৳{item.discount.toFixed(2)}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -110,9 +119,15 @@ const Carttablepage = () => {
                   </div>
 
                   <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
-                    <span className="block font-bold text-gray-800 md:text-lg">
-                      ৳{(item.discount * item.quantity).toFixed(2)}
-                    </span>
+                    {item?.discount === null ? (
+                      <span className="block font-bold text-gray-800 md:text-lg">
+                        ৳{(item.price * item.quantity).toFixed(2)}
+                      </span>
+                    ) : (
+                      <span className="block font-bold text-gray-800 md:text-lg">
+                        ৳{(item.discount * item.quantity).toFixed(2)}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

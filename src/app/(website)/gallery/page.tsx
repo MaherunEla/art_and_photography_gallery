@@ -2,9 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { HomeGalleryData } from "../components/home/components/HomeGallery";
+// import { HomeGalleryData } from "../components/home/components/HomeGallery";
 import { AdProduct } from "@/types";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
+const fetchUpload = async () => {
+  const { data } = await axios.get("/api/upload");
+  return data;
+};
 const Gallerypage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState<AdProduct[]>([]);
@@ -23,6 +29,20 @@ const Gallerypage = () => {
 
   async function handleSearch() {
     getSearchProduct(searchQuery);
+  }
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["upload-data"],
+    queryFn: fetchUpload,
+  });
+
+  console.log({ data });
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>{(error as any).message}</h2>;
   }
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -108,7 +128,7 @@ const Gallerypage = () => {
             {searchResult.map((item, index) => (
               <div key={index}>
                 <Link
-                  href={`/gallery/${item.slug}`}
+                  href={`/gallery/${item.id}`}
                   className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
                 >
                   <Image
@@ -133,24 +153,32 @@ const Gallerypage = () => {
                     </span>
                   </div>
 
-                  <div className="flex flex-col items-end">
-                    <span className="font-bold text-gray-600 lg:text-lg">
-                      ৳{item?.discount.toFixed(2)}
-                    </span>
-                    <span className="font-bold text-gray-600 lg:text-lg line-through">
-                      ৳{item.price.toFixed(2)}
-                    </span>
-                  </div>
+                  {item.discount === null ? (
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-gray-600 lg:text-lg ">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-gray-600 lg:text-lg">
+                        ৳{item.discount.toFixed(2)}
+                      </span>
+                      <span className="font-semibold text-red-600 lg:text-lg line-through">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {HomeGalleryData.map((item, index) => (
+            {data.map((item: any, index: any) => (
               <div key={index}>
                 <Link
-                  href={`/gallery/${item.slug}`}
+                  href={`/gallery/${item.id}`}
                   className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
                 >
                   <Image
@@ -175,14 +203,22 @@ const Gallerypage = () => {
                     </span>
                   </div>
 
-                  <div className="flex flex-col items-end">
-                    <span className="font-bold text-gray-600 lg:text-lg">
-                      ৳{item.discount.toFixed(2)}
-                    </span>
-                    <span className="font-bold text-gray-600 lg:text-lg line-through">
-                      ৳{item.price.toFixed(2)}
-                    </span>
-                  </div>
+                  {item.discount === null ? (
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-gray-600 lg:text-lg ">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-gray-600 lg:text-lg">
+                        ৳{item.discount.toFixed(2)}
+                      </span>
+                      <span className="font-semibold text-red-600 lg:text-lg line-through">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

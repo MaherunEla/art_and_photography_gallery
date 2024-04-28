@@ -20,6 +20,13 @@ const Mygallerypage = () => {
   });
 
   console.log({ data });
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>{(error as any).message}</h2>;
+  }
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">

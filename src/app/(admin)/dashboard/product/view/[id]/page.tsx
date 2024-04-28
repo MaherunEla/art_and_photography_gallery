@@ -14,6 +14,7 @@ const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
   price: z.string().transform((value) => parseFloat(value)),
+  discount: z.string().transform((value) => parseFloat(value)),
   artist: z.string().min(1, "Artist is required"),
 
   description: z.string().min(1, "Description is required"),
@@ -156,12 +157,28 @@ const Viewpage = () => {
                 Price
               </label>
               <input
-                type="number"
+                type="text"
                 {...register("price")}
                 className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
               />
               {errors.price && (
                 <p className="text-red-600">{errors.price.message as string}</p>
+              )}
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
+                Discount
+              </label>
+              <input
+                type="text"
+                {...register("discount")}
+                className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
+              />
+              {errors.discount && (
+                <p className="text-red-600">
+                  {errors.discount.message as string}
+                </p>
               )}
             </div>
 

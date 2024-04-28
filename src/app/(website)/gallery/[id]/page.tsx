@@ -7,6 +7,9 @@ import { HomeGalleryData } from "../../components/home/components/HomeGallery";
 //import { Product } from "@/types";
 import Singleproduct from "../../components/shared/singleproduct";
 import { AdProduct } from "@/types";
+import Comments from "../../components/comment/Comment";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 // interface Product {
 //   id: number;
@@ -19,12 +22,31 @@ import { AdProduct } from "@/types";
 //   artist: string;
 //   quantity: number;
 // }
+
+const fetchUpload = async () => {
+  const { data } = await axios.get("/api/upload");
+  return data;
+};
 const Itempage = () => {
   const param = useParams();
   console.log({ param });
 
-  const Gallery: AdProduct | undefined = HomeGalleryData.find(
-    (e) => e.slug == param?.slug
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["upload-data"],
+    queryFn: fetchUpload,
+  });
+
+  console.log({ data });
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>{(error as any).message}</h2>;
+  }
+
+  const Gallery: AdProduct | undefined = data.find(
+    (e: any) => e.id == param?.id
   );
   console.log({ Gallery });
 
@@ -36,6 +58,7 @@ const Itempage = () => {
   return (
     <div>
       <Singleproduct Gallery={Gallery} />
+      <Comments productId={param.id} />
     </div>
   );
 };
