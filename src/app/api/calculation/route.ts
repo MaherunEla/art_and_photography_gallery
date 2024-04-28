@@ -168,33 +168,35 @@ export const GET = async (req: any) => {
 
     const userdifference = countUserCurrentWeek - countUserPreviousWeek / 100;
 
-    // // Aggregate the count of Product created in the current week
-    // const currentWeekProductCount = await prisma.upload.aggregate({
-    //   _count: { title: true },
-    //   where: {
-    //     createdAt: {
-    //       gte: currentWeekStart,
-    //       lte: currentWeekEnd,
-    //     },
-    //   },
-    // });
+    // Aggregate the count of Product created in the current week
+    const currentWeekProductCount = await prisma.upload.aggregate({
+      _count: { title: true },
+      where: {
+        createdAt: {
+          gte: currentWeekStart,
+          lte: currentWeekEnd,
+        },
+      },
+    });
 
-    // const countProductCurrentWeek = currentWeekProductCount._count?.title || 0;
+    const countProductCurrentWeek = currentWeekProductCount._count?.title || 0;
 
-    // // Aggregate the count of users created in the previous week
-    // const previousWeekProductCount = await prisma.upload.aggregate({
-    //   _count: { title: true },
-    //   where: {
-    //     createdAt: {
-    //       gte: previousWeekStart,
-    //       lte: previousWeekEnd,
-    //     },
-    //   },
-    // });
+    // Aggregate the count of users created in the previous week
+    const previousWeekProductCount = await prisma.upload.aggregate({
+      _count: { title: true },
+      where: {
+        createdAt: {
+          gte: previousWeekStart,
+          lte: previousWeekEnd,
+        },
+      },
+    });
 
-    // const countProductPreviousWeek = previousWeekProductCount._count?.title || 0;
+    const countProductPreviousWeek =
+      previousWeekProductCount._count?.title || 0;
 
-    // const productdifference = countProductCurrentWeek - countProductPreviousWeek / 100;
+    const productdifference =
+      countProductCurrentWeek - countProductPreviousWeek / 100;
 
     return NextResponse.json([
       countuser,
@@ -205,6 +207,7 @@ export const GET = async (req: any) => {
       totalRevenueLastMonth,
       revenueDifference,
       userdifference,
+      productdifference,
     ]);
   } catch (error) {
     console.error("Error fetching total users:", error);

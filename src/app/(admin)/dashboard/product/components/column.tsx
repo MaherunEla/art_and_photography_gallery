@@ -45,7 +45,10 @@ export const columns = [
     header: () => "price",
   }),
   columnHelper.accessor("discount", {
-    cell: (info) => <p>{info.getValue().toFixed(2)}</p>,
+    cell: (info) => {
+      const discount = info.getValue();
+      return <p>{discount !== null ? discount.toFixed(2) : 0}</p>;
+    },
     header: () => "Discount",
   }),
 
