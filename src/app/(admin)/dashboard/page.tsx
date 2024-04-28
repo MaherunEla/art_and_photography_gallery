@@ -5,50 +5,66 @@ import { FaRegImage, FaUserAlt, FaUserCircle } from "react-icons/fa";
 import { MdAttachMoney, MdSupervisedUserCircle } from "react-icons/md";
 import Transactions from "./components/transactions/transactions";
 import Featured from "./components/featured/featured";
-import { authOption } from "@/app/utils/auth";
-import { getServerSession } from "next-auth";
-import { useSession } from "next-auth/react";
+
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-
+import Chart from "./components/chart/chart";
+import { useState, useEffect } from "react";
 export default function Home() {
+  const fetchCalculation = () => {
+    return axios.get("/api/calculation");
+  };
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["calculation-data"],
+    queryFn: fetchCalculation,
+  });
+  console.log(data?.data[0]);
+
   const cards = [
     {
       id: 1,
       title: "Total Users",
-      number: 10,
+      number: data?.data[0],
       change: 12,
       icon: FaUserCircle,
     },
     {
       id: 2,
       title: "Total Product",
-      number: 8.236,
+      number: data?.data[1],
       change: -2,
       icon: FaRegImage,
     },
     {
       id: 3,
       title: "Revenue",
-      number: 6.642,
+      number: data?.data[2],
       change: 18,
       icon: MdAttachMoney,
     },
   ];
+
   return (
-    <main>
-      <div className="flex gap-5 mt-5">
-        <div className="flex-3 flex flex-col gap-5">
-          <div className="flex gap-5 justify-between">
-            {cards.map((item) => (
-              <Card item={item} key={item.id} />
-            ))}
-          </div>
-          <Transactions />
-          {/* <Chart />  */}
+    <main className="max-w-screen-xl ">
+      <div className="flex flex-col gap-5 mt-5">
+        <div className="flex gap-5 justify-between">
+          {cards.map((item) => (
+            <Card item={item} key={item.id} />
+          ))}
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center justify-between ">
+          <Featured
+            totalRevenueToday={data?.data[3]}
+            totalRevenueLastWeek={data?.data[4]}
+            totalRevenueLastMonth={data?.data[5]}
+          />
+
+          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
         </div>
         <div className="flex-1">
-          <Featured />
+          <Transactions />
         </div>
       </div>
     </main>

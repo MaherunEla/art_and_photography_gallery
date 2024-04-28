@@ -3,7 +3,7 @@ import { MdSupervisedUserCircle } from "react-icons/md";
 
 const Card = ({ item }: any) => {
   return (
-    <div className="bg-[#182237] p-5 rounded-[10px] flex gap-5 cursor-pointer w-full">
+    <div className="bg-[#182237] p-5 rounded-[10px] flex gap-5  w-full">
       <item.icon className="text-white" size={24} />
       <div className="flex flex-col gap-5">
         <span className="text-white">{item.title}</span>

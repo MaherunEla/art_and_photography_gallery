@@ -109,12 +109,14 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex ">
-      <div className="flex-1 p-5 min-h-screen bg-[#151c2c]">
+      <div className="sticky w-[300px] p-5 min-h-screen bg-[#151c2c]">
         <Sidebarpage />
       </div>
-      <div className="grow md-grow-0 p-5 bg-[#151c2c] ">
-        <Navbar />
-        {children}
+      <div className="flex-1  lg:p-5 bg-[#151c2c] ">
+        <div className="hidden sm:flex flex-col max-w-screen-xl px-5 ">
+          <Navbar />
+          {children}
+        </div>
       </div>
       <Toaster />
       <LogoutOnClose />
