@@ -34,8 +34,7 @@ export interface Product {
 }
 
 export interface AdProduct {
-  id: number;
-  slug: string;
+  id: string;
   title: string;
   description: string;
   image: any;

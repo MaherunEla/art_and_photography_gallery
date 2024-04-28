@@ -198,6 +198,13 @@ export const GET = async (req: any) => {
     const productdifference =
       countProductCurrentWeek - countProductPreviousWeek / 100;
 
+    const totalArtist = await prisma.signup.aggregate({
+      where: { role: "Artist" },
+      _count: { name: true },
+    });
+
+    const countArtist = totalArtist._count?.name || 0;
+
     return NextResponse.json([
       countuser,
       countproduct,
@@ -208,6 +215,7 @@ export const GET = async (req: any) => {
       revenueDifference,
       userdifference,
       productdifference,
+      countArtist,
     ]);
   } catch (error) {
     console.error("Error fetching total users:", error);

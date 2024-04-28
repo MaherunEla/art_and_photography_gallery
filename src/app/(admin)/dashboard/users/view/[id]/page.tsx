@@ -254,7 +254,7 @@ const Viewpage = () => {
               </label>
               <input
                 type="text"
-                placeholder="Twiter"
+                placeholder="LinkedIn"
                 {...register("socialaccountf")}
                 className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none mb-5"
               />
@@ -266,7 +266,7 @@ const Viewpage = () => {
               <input
                 type="text"
                 {...register("socialaccountl")}
-                placeholder="LinkedIn"
+                placeholder="Twiter"
                 className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
               />
               {errors.socialaccountl && (

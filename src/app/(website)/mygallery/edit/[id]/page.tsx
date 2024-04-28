@@ -13,7 +13,11 @@ import { useToast } from "@/components/ui/use-toast";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
-  price: z.string().min(1, "Price is required"),
+  price: z.string().transform((value) => parseFloat(value)),
+  discount: z
+    .string()
+    .transform((value) => parseFloat(value))
+    .optional(),
 
   artist: z.string().min(1, "Artist is required"),
 
@@ -144,6 +148,16 @@ const Uploadpage = () => {
             <input
               type="text"
               {...register("price")}
+              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
+            />
+          </div>
+          <div className="sm:col-span-2">
+            <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+              Discount
+            </label>
+            <input
+              type="text"
+              {...register("discount")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
           </div>

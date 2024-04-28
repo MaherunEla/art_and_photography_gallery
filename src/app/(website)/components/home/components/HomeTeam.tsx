@@ -1,6 +1,19 @@
+"use client";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React from "react";
 
 const HomeTeam = () => {
+  const fetchCalculation = () => {
+    return axios.get("/api/calculation");
+  };
+
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["calculation-data"],
+    queryFn: fetchCalculation,
+  });
+  console.log(data?.data[0]);
+
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
@@ -19,7 +32,7 @@ const HomeTeam = () => {
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:gap-8">
           <div className="flex flex-col items-center justify-center rounded-lg bg-gray-100 p-4 lg:p-8">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
-              15+
+              {data?.data[0] - data?.data[9]} +
             </div>
             <div className="text-sm font-semibold sm:text-base">
               Talented Artists
@@ -28,7 +41,7 @@ const HomeTeam = () => {
 
           <div className="flex flex-col items-center justify-center rounded-lg bg-gray-100 p-4 md:p-8">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
-              500+
+              {data?.data[1]}+
             </div>
             <div className="text-sm font-semibold sm:text-base">
               Captured Moments
@@ -37,14 +50,14 @@ const HomeTeam = () => {
 
           <div className="flex flex-col items-center justify-center rounded-lg bg-gray-100 p-4 md:p-8">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
-              1000+
+              {data?.data[0]}+
             </div>
             <div className="text-sm font-semibold sm:text-base">Customers</div>
           </div>
 
           <div className="flex flex-col items-center justify-center rounded-lg bg-gray-100 p-4 md:p-8">
             <div className="text-xl font-bold text-indigo-500 sm:text-2xl md:text-3xl">
-              2000+
+              {data?.data[1] * 5}+
             </div>
             <div className="text-sm font-semibold sm:text-base">
               Hours of Creativity

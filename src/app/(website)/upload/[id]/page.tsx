@@ -135,7 +135,7 @@ const Uploadpage = () => {
               Price
             </label>
             <input
-              type="number"
+              type="text"
               {...register("price")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
@@ -148,7 +148,7 @@ const Uploadpage = () => {
               Discount
             </label>
             <input
-              type="number"
+              type="text"
               {...register("discount")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />

@@ -20,6 +20,7 @@ const Profilepage = () => {
   });
 
   console.log(data?.data.email);
+
   const defaultImage = "/assets/images/home/defaultimage.jpg";
 
   return (
@@ -79,9 +80,24 @@ const Profilepage = () => {
             <label className="mb-2 inline-block text-lg font-bold text-gray-800 sm:text-base">
               Social Accunts
             </label>
-            <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              linked in
-            </p>
+            {data?.data.socialaccountf === "" ? (
+              <p className="border border-gray-200 px-3 py-2 rounded-sm">
+                linked In
+              </p>
+            ) : (
+              <p className="border border-gray-200 px-3 py-2 rounded-sm">
+                {data?.data.socialaccountf}
+              </p>
+            )}
+            {data?.data.socialaccountl === "" ? (
+              <p className="border border-gray-200 px-3 py-2 rounded-sm">
+                Twiter
+              </p>
+            ) : (
+              <p className="border border-gray-200 px-3 py-2 rounded-sm">
+                {data?.data.socialaccountl}
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -86,7 +86,7 @@ const Loginpage = () => {
           )}
         </form>
 
-        {/* <div className="text-center">
+        <div className="text-center">
           <p className="">
             Don&apos;t have an account?{" "}
             <Link
@@ -96,7 +96,7 @@ const Loginpage = () => {
               Sign up
             </Link>
           </p>
-        </div> */}
+        </div>
       </div>
     </div>
   );
