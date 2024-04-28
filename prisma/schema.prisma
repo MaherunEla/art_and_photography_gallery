@@ -58,15 +58,16 @@ enum Role {
 }
 
 model Upload {
-    id          String @id @default(uuid())
+    id          String   @id @default(uuid())
     title       String
     price       Float?
     discount    Float?
     artist      String
     description String
     image       String
+    createdAt   DateTime @default(now())
     userEmail   String
-    user        Signup @relation(fields: [userEmail], references: [email])
+    user        Signup   @relation(fields: [userEmail], references: [email])
 }
 
 model Order {
