@@ -116,7 +116,7 @@ export function DropdownMenuDemo({ row }: any) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem className="flex justify-between">
+          {/* <DropdownMenuItem className="flex justify-between">
             <button
               onClick={() => {
                 deleteOrder(row.id);
@@ -128,7 +128,7 @@ export function DropdownMenuDemo({ row }: any) {
               Delete
             </button>
             <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
       </DropdownMenuContent>

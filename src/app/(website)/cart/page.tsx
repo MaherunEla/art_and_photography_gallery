@@ -22,7 +22,10 @@ const Carttablepage = () => {
   const total: number = cart.reduce(
     (sum, item) =>
       sum +
-      (item.discount !== null ? item.discount : item.price) * item.quantity,
+      (item.discount !== null
+        ? item.discount + (item.framePrice ?? 0)
+        : item.price + (item.framePrice ?? 0)) *
+        item.quantity,
     0
   );
 
@@ -80,33 +83,72 @@ const Carttablepage = () => {
                   </div>
                 </div>
 
-                <div className="flex w-full justify-between border-t p-4 sm:w-auto sm:border-none sm:pl-0 lg:p-6 lg:pl-0">
-                  <div className="flex flex-col items-start gap-2">
-                    <div className="flex h-12 w-20 overflow-hidden rounded border">
-                      <p className="w-full px-4 py-2 outline-none ring-inset ring-indigo-300 transition duration-100 focus:ring">
-                        {item?.quantity}
-                      </p>
-
-                      <div className="flex flex-col divide-y border-l">
-                        <button
-                          onClick={() => {
-                            dispatch(addQuantity(item.id));
-                          }}
-                          className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                        >
-                          +
-                        </button>
-                        <button
-                          disabled={item.quantity === 1}
-                          onClick={() => {
-                            dispatch(decrementQuantity(item.id));
-                          }}
-                          className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
-                        >
-                          -
-                        </button>
+                {item.category === "Digitally Captured" ? (
+                  <>
+                    <div className="group relative block h-48 w-32 bg-gray-100 sm:h-56 sm:w-40">
+                      <div className="h-full w-full overflow-hidden relative flex items-center justify-center">
+                        <Image
+                          src={item?.frameImg || ""}
+                          loading="lazy"
+                          alt=""
+                          className=" object-cover object-center transition duration-200 group-hover:scale-110"
+                          width={160}
+                          height={224}
+                        />
                       </div>
                     </div>
+                    <div className="flex flex-1 flex-col justify-between py-4">
+                      <div>
+                        <a
+                          href="#"
+                          className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
+                        >
+                          {item.frameName}
+                        </a>
+                      </div>
+
+                      <div>
+                        <span className="mb-1 block font-bold text-gray-800 md:text-lg">
+                          ৳{item?.framePrice?.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+
+                <div className="flex w-full justify-between border-t p-4 sm:w-auto sm:border-none sm:pl-0 lg:p-6 lg:pl-0">
+                  <div className="flex flex-col items-start gap-2">
+                    {item?.category === "Digitally Captured" ? (
+                      <div className="flex h-12 w-20 overflow-hidden rounded border">
+                        <p className="w-full px-4 py-2 outline-none ring-inset ring-indigo-300 transition duration-100 focus:ring">
+                          {item?.quantity}
+                        </p>
+
+                        <div className="flex flex-col divide-y border-l">
+                          <button
+                            onClick={() => {
+                              dispatch(addQuantity(item.id));
+                            }}
+                            className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                          >
+                            +
+                          </button>
+                          <button
+                            disabled={item.quantity === 1}
+                            onClick={() => {
+                              dispatch(decrementQuantity(item.id));
+                            }}
+                            className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                          >
+                            -
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
 
                     <button
                       onClick={() => {
@@ -118,17 +160,39 @@ const Carttablepage = () => {
                     </button>
                   </div>
 
-                  <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
-                    {item?.discount === null ? (
-                      <span className="block font-bold text-gray-800 md:text-lg">
-                        ৳{(item.price * item.quantity).toFixed(2)}
-                      </span>
-                    ) : (
-                      <span className="block font-bold text-gray-800 md:text-lg">
-                        ৳{(item.discount * item.quantity).toFixed(2)}
-                      </span>
-                    )}
-                  </div>
+                  {item.category === "Digitally Captured" ? (
+                    <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
+                      {item?.discount === null ? (
+                        <span className="block font-bold text-gray-800 md:text-lg">
+                          ৳
+                          {(
+                            (item.price + (item?.framePrice ?? 0)) *
+                            item.quantity
+                          ).toFixed(2)}
+                        </span>
+                      ) : (
+                        <span className="block font-bold text-gray-800 md:text-lg">
+                          ৳
+                          {(
+                            (item.discount + (item?.framePrice ?? 0)) *
+                            item.quantity
+                          ).toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
+                      {item?.discount === null ? (
+                        <span className="block font-bold text-gray-800 md:text-lg">
+                          ৳{(item.price * item.quantity).toFixed(2)}
+                        </span>
+                      ) : (
+                        <span className="block font-bold text-gray-800 md:text-lg">
+                          ৳{(item.discount * item.quantity).toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -157,7 +221,7 @@ const Carttablepage = () => {
                     {total.toFixed(2)} ৳
                   </span>
                   <span className="text-sm text-gray-500">
-                    including Delivery charge
+                    Without including Delivery charge
                   </span>
                 </span>
               </div>
@@ -181,10 +245,10 @@ const Carttablepage = () => {
             </>
           ) : (
             <Link
-              href="/signup"
+              href="/login"
               className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
             >
-              Sign Up
+              Sign Up / Log In
             </Link>
           )}
         </div>

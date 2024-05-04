@@ -37,6 +37,7 @@ const DefaultTable: FC<{ data: any; columns: any; filtering: any }> = ({
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newSize = parseInt(event.target.value);
+
     setPageSize(newSize);
     table.setPageSize(newSize);
   };

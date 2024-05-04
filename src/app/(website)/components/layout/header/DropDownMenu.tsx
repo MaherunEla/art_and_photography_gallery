@@ -15,7 +15,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 // import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,12 +26,25 @@ import { GrGallery } from "react-icons/gr";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import { RiLuggageCartLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
+import { useRouter } from "next/navigation";
 
 export function DropdownMenuDemo(user: any) {
   console.log("Image", user?.user?.image);
 
   const defaultImage = "/assets/images/home/defaultimage.jpg";
   // const session = await getServerSession(options);
+
+  const router = useRouter();
+  const { status } = useSession();
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status !== "authenticated") {
+    router.push("/");
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="w-[50px] h-[50px] relative" asChild>

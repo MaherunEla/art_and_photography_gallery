@@ -4,19 +4,46 @@ import React, { useState } from "react";
 import { addCart } from "@/app/redux_store/cartAddSlice";
 import { useAppDispatch } from "@/app/redux_store/store";
 import { AdProduct } from "@/types";
+import { useToast } from "@/components/ui/use-toast";
+
+const images = [
+  { id: 1, src: "/assets/images/home/frame4.jpg", name: "gold", price: 200 },
+  { id: 2, src: "/assets/images/home/frame2.jpg", name: "gold", price: 200 },
+  { id: 3, src: "/assets/images/home/frame3.jpg", name: "gold", price: 200 },
+];
 
 type Props = {
   Gallery: AdProduct;
 };
 const Singleproduct = ({ Gallery }: Props) => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageName, setSelectedImageName] = useState(null);
+  const [selectedImagePrice, setSelectedImagePrice] = useState(null);
+  const [selectedImageSrc, setSelectedImageSrc] = useState(null);
+
+  const handleImageChange = (
+    imageId: any,
+    imageName: any,
+    imagePrice: any,
+    imageSrc: any
+  ) => {
+    setSelectedImage(imageId);
+    setSelectedImageName(imageName);
+    setSelectedImagePrice(imagePrice);
+    setSelectedImageSrc(imageSrc);
+  };
   const product: AdProduct = {
     id: Gallery?.id,
     title: Gallery?.title,
     image: Gallery?.image,
+    category: Gallery?.category,
     price: Gallery?.price,
     discount: Gallery?.discount,
     quantity: 1,
     artist: Gallery?.artist,
+    frameImg: selectedImageSrc || "",
+    frameName: selectedImageName || "",
+    framePrice: selectedImagePrice || 0,
     description: Gallery?.description,
     userEmail: Gallery?.userEmail,
   };
@@ -43,13 +70,20 @@ const Singleproduct = ({ Gallery }: Props) => {
 
     setCursorPosition({ x: e.pageX - left, y: e.pageY - top });
   };
+  const { toast } = useToast();
 
   if (!Gallery) return <div>Not Found</div>;
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8  ">
-        <div className="grid gap-8 grid-cols-2  ">
+        <div
+          className={`grid gap-8 ${
+            Gallery.category === "Digitally Captured"
+              ? "grid-cols-3"
+              : "grid-cols-2"
+          } `}
+        >
           <div
             className="relative  overflow-hidden rounded-lg bg-gray-100 "
             onMouseEnter={() => setShowMagnifier(true)}
@@ -148,7 +182,7 @@ const Singleproduct = ({ Gallery }: Props) => {
               <p className="text-gray-500">{Gallery?.description}</p>
             </div>
 
-            <div className="my-8">
+            <div className="my-4">
               {Gallery?.discount === null ? (
                 <div className="flex items-end gap-2">
                   <span className="mb-0.5 text-xl font-bold md:text-2xl text-gray-800 ">
@@ -165,36 +199,32 @@ const Singleproduct = ({ Gallery }: Props) => {
                   </span>
                 </div>
               )}
-
-              <span className="text-sm text-gray-500">
-                incl. VAT plus shipping
-              </span>
             </div>
 
-            <div className="mb-6 flex items-center gap-2 text-gray-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"
-                />
-              </svg>
-
-              <span className="text-sm">2-4 day shipping</span>
+            <div className="mb-3 flex  items-center gap-2 text-gray-800">
+              {selectedImagePrice === null ? (
+                <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2"></div>
+              ) : (
+                <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
+                  <p> {selectedImageName}</p>
+                  <p>৳ {(1 + selectedImagePrice).toFixed(2)}</p>
+                  <p>
+                    Total:{" "}
+                    {Gallery?.discount === null
+                      ? (Gallery?.price + selectedImagePrice).toFixed(2)
+                      : (Gallery.discount + selectedImagePrice).toFixed(2)}
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="flex gap-2.5">
               <button
                 onClick={() => {
                   dispatch(addCart(product));
+                  toast({
+                    title: " Item added to cart  ",
+                  });
                 }}
                 className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
               >
@@ -209,7 +239,81 @@ const Singleproduct = ({ Gallery }: Props) => {
               </a>
             </div>
           </div>
+          {Gallery.category === "Digitally Captured" ? (
+            <div className="w-full h-full">
+              <h3 className="text-lg font-semibold">
+                Selected Frame for Image:
+              </h3>
+
+              {selectedImage && (
+                <div className="w-full h-full relative  ">
+                  <Image
+                    src={
+                      images.find((image) => image.id === selectedImage)!.src
+                    }
+                    alt="Selected Image"
+                    fill
+                  />
+                  <div className="relative top-0 left-0 w-full h-full ">
+                    <Image
+                      src={Gallery.image} // Replace with the path to your overlay image
+                      alt="Overlay Image"
+                      fill
+                      className="w-full h-full p-[60px]"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
+        {Gallery.category === "Digitally Captured" ? (
+          <div className="mt-5">
+            <h2 className="text-lg font-semibold">Select Frame for Image:</h2>
+            <form className="grid gap-8 grid-cols-3">
+              {images.map((image) => (
+                <div
+                  key={image.id}
+                  className="flex  items-start justify-start gap-2"
+                >
+                  <input
+                    type="radio"
+                    id={`image-${image.id}`}
+                    name="selectedImage"
+                    value={image.id}
+                    checked={selectedImage === image.id}
+                    onChange={() =>
+                      handleImageChange(
+                        image.id,
+                        image.name,
+                        image.price,
+                        image.src
+                      )
+                    }
+                  />
+                  <label htmlFor={`image-${image.id}`}>
+                    <Image
+                      src={image.src}
+                      alt={`Image ${image.id}`}
+                      width={200}
+                      height={200}
+                    />
+                    <p className="text-lg font-semibold py-2">
+                      Frame: {image.name}
+                    </p>
+                    <p className="text-lg font-semibold">
+                      Price: {image.price}
+                    </p>
+                  </label>
+                </div>
+              ))}
+            </form>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

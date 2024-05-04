@@ -19,6 +19,7 @@ const uploadformSchema = z.object({
     .transform((value) => parseFloat(value))
     .optional(),
   artist: z.string().min(1, "Artist is required"),
+  category: z.string().min(3, "Category is required"),
 
   description: z.string().min(1, "Description is required"),
   image: z.string().min(1, "Image is required"),
@@ -128,6 +129,9 @@ const Uploadpage = () => {
               {...register("title")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
+            {errors.title && (
+              <p className="error">{errors.title.message as string}</p>
+            )}
           </div>
 
           <div className="sm:col-span-2">
@@ -143,18 +147,24 @@ const Uploadpage = () => {
               <p className="error">{errors.price.message as string}</p>
             )}
           </div>
+
           <div className="sm:col-span-2">
             <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
-              Discount
+              Category
             </label>
-            <input
-              type="text"
-              {...register("discount")}
-              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
-            />
-            {errors.discount && (
-              <p className="error">{errors.discount.message as string}</p>
-            )}
+            <select
+              {...register("category")}
+              className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring "
+            >
+              <option selected value="0">
+                Select Category
+              </option>
+              {["Digitally Captured", "Color Painting"].map((item, index) => (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="sm:col-span-2">
@@ -166,6 +176,9 @@ const Uploadpage = () => {
               {...register("artist")}
               className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             />
+            {errors.artist && (
+              <p className="error">{errors.artist.message as string}</p>
+            )}
           </div>
 
           <div className="sm:col-span-2">
@@ -176,6 +189,9 @@ const Uploadpage = () => {
               {...register("description")}
               className="h-64 w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring"
             ></textarea>
+            {errors.description && (
+              <p className="error">{errors.description.message as string}</p>
+            )}
           </div>
           <div className="sm:col-span-2">
             <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
