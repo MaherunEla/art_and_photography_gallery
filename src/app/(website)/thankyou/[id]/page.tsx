@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
 const Invoicepage = () => {
   const params = useParams();
   console.log("param", params);
+
   const encodedEmail: string = params.id as string;
   const decodedEmail: string = decodeURIComponent(encodedEmail);
 
@@ -89,22 +90,34 @@ const Invoicepage = () => {
           </View>
           {data?.product.map((item: AdProduct, idx: any) => (
             <View style={styles.row} key={idx}>
-              <Text style={styles.cell}>{item.title}</Text>
+              <Text style={styles.cell}>
+                {item.title},{item.frameName}
+              </Text>
               <Text style={styles.cell}>{item.quantity}</Text>
-              <Text style={styles.cell}>{item.discount}</Text>
-              <Text style={styles.cell}>{item.discount * item.quantity}</Text>
+              <Text style={styles.cell}>
+                {" "}
+                {item.discount === null ? item.price : item.discount},
+                {item.framePrice === null ? "" : item.framePrice}
+              </Text>
+              <Text style={styles.cell}>
+                {" "}
+                {(item.discount === null
+                  ? item.price + (item.framePrice ?? 0)
+                  : item.discount + (item.framePrice ?? 0)) * item.quantity}
+              </Text>
             </View>
           ))}
         </View>
         <View style={styles.section}>
           <Text style={{ fontWeight: "bold", margin: "4px 0" }}>
-            Subtotal: {data?.total}tk
+            Subtotal: {(data?.total - data?.formdata.deliverycharge).toFixed(2)}
+            tk
           </Text>
           <Text style={{ fontWeight: "bold", margin: "4px 0" }}>
-            Tax (0%): 0tk
+            Delivery Charge: {data.formdata.deliverycharge.toFixed(2)}tk
           </Text>
           <Text style={{ fontWeight: "bold", margin: "4px 0" }}>
-            Total: {data?.total}tk
+            Total: {data?.total.toFixed(2)}tk
           </Text>
         </View>
       </Page>
@@ -166,36 +179,57 @@ const Invoicepage = () => {
             <tbody className="text-gray-600 divide-y">
               {data?.product.map((item: AdProduct, idx: any) => (
                 <tr key={idx}>
-                  <td className="pr-6 py-4 whitespace-nowrap">{item.title}</td>
+                  <td className="pr-6 py-4 whitespace-nowrap">
+                    {item.title}, {item.frameName}
+                  </td>
                   <td className="pr-6 py-4 whitespace-nowrap">
                     {item.quantity}
                   </td>
 
                   <td className="pr-6 py-4 whitespace-nowrap">
-                    {item.discount}
+                    {item.discount === null ? item.price : item.discount},
+                    {item.framePrice === null ? "" : item.framePrice}
                   </td>
                   <td className="pr-6 py-4 whitespace-nowrap">
-                    {item.discount * item.quantity}
+                    {(item.discount === null
+                      ? item.price + (item.framePrice ?? 0)
+                      : item.discount + (item.framePrice ?? 0)) * item.quantity}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="flex  items-end justify-end gap-4 py-4">
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold">Subtotal </h3>
-              <h3 className="font-bold ">Tax(0%) </h3>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold">{data?.total}tk</h3>
-              <h3 className="font-bold ">0tk</h3>
-            </div>
-          </div>
 
-          <div className="  flex items-end justify-end gap-4">
-            <div className="w-[150px] border-t-2 border-black flex items-end justify-end gap-4 py-2">
-              <h1 className="font-bold text-xl">Total</h1>
-              <h1 className="font-bold text-xl ">{data?.total}tk</h1>
+          <div className="sm:col-span-2 mt-4  rounded-lg pr-10 lg:pr-[60px] bg-transparent ">
+            <div className="flex  items-start justify-between gap-4 text-gray-500 py-1">
+              <span className="font-medium">Subtotal</span>
+
+              <span className="flex flex-col items-end">
+                <span className="font-medium text-sm">
+                  {(data?.total - data?.formdata?.deliverycharge).toFixed(2)}tk
+                </span>
+              </span>
+            </div>
+            <div className="flex  items-start justify-between gap-4 text-gray-500 py-1">
+              <span className="font-medium">Delivery Charge</span>
+
+              <span className="flex flex-col items-end">
+                <span className="text-sm font-medium">
+                  {(data?.formdata?.deliverycharge).toFixed(2)}tk
+                </span>
+              </span>
+            </div>
+            <div className="flex mt-4 border-t pt-4  items-start justify-between gap-4 text-gray-800">
+              <span className="text-lg font-bold">Total</span>
+
+              <span className="flex flex-col items-end">
+                <span className="text-lg font-bold">
+                  {data?.total.toFixed(2)}tk
+                </span>
+                <span className="text-sm text-gray-500">
+                  including Delivery Charge
+                </span>
+              </span>
             </div>
           </div>
         </div>

@@ -4,6 +4,19 @@ import { AccessorFn, createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
 
 import Link from "next/link";
+import Orderinvoice from "./orderinvoice";
+import { InvoiceDocument } from "./invoicedocument";
+
+import {
+  PDFDownloadLink,
+  PDFViewer,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+} from "@react-pdf/renderer";
+import { AdProduct } from "@/types";
 
 const columnHelper = createColumnHelper<Order>();
 const formatDate = (dateString: string) => {
@@ -68,7 +81,7 @@ export const columns = [
         <div>
           {products.map((e: any, index: any) => (
             <span key={index} className="flex flex-col gap-2">
-              {e.title} ({e.quantity})
+              {e.title}, {e.frameName} ({e.quantity})
             </span>
           ))}
         </div>
@@ -135,4 +148,26 @@ export const columns = [
     cell: (info) => <p>{formatDate(info.getValue())}</p>,
     header: () => "Date",
   }),
+
+  // columnHelper.accessor("icon", {
+  //   header: () => "Download Invoice",
+  //   cell: ({ row }) => {
+  //     const id = row.original.id;
+  //     return (
+  //       <>
+  //         {" "}
+  //         <div className="px-2 inline-block sm:col-span-2 rounded-lg bg-indigo-500  py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
+  //           <PDFDownloadLink
+  //             document={<InvoiceDocument orderId={id} />}
+  //             fileName="invoice.pdf"
+  //           >
+  //             {({ blob, url, loading, error }) =>
+  //               loading ? "Loading document..." : "Download PDF"
+  //             }
+  //           </PDFDownloadLink>
+  //         </div>
+  //       </>
+  //     );
+  //   },
+  // }),
 ];

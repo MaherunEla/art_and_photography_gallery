@@ -66,6 +66,7 @@ model Upload {
     artist      String
     description String
     image       String
+    category    String
     createdAt   DateTime  @default(now())
     userEmail   String
     user        Signup    @relation(fields: [userEmail], references: [email])

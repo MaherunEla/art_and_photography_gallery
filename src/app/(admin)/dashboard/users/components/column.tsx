@@ -70,10 +70,10 @@ export const columns = [
       </Link>
     ),
   }),
-  columnHelper.accessor("delete", {
-    header: () => "",
-    cell: (info) => <Deletebutton id={`${info.row.original.email}`} />,
-  }),
+  // columnHelper.accessor("delete", {
+  //   header: () => "",
+  //   cell: (info) => <Deletebutton id={`${info.row.original.email}`} />,
+  // }),
 
   // columnHelper.accessor("icon", {
   //   header: () => "",

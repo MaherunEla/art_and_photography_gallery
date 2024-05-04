@@ -1,9 +1,11 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+
 import React from "react";
 
 const Mygallerypage = () => {
@@ -27,6 +29,7 @@ const Mygallerypage = () => {
   if (isError) {
     return <h2>{(error as any).message}</h2>;
   }
+
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">

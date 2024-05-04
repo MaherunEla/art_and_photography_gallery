@@ -38,10 +38,14 @@ export interface AdProduct {
   title: string;
   description: string;
   image: any;
+  category: string;
   price: number;
   discount: number;
   artist: string;
   quantity: number;
+  frameImg?: string;
+  frameName?: string;
+  framePrice?: number;
   userEmail: any;
 }
 
