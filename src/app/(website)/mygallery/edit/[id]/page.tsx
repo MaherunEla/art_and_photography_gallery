@@ -7,17 +7,14 @@ import Image from "next/image";
 
 import axios from "axios";
 import Progress from "@/app/(website)/upload/components/Progress";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/use-toast";
+import { useSession } from "next-auth/react";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
   price: z.string().transform((value) => parseFloat(value)),
-  discount: z
-    .string()
-    .transform((value) => parseFloat(value))
-    .optional(),
 
   artist: z.string().min(1, "Artist is required"),
   category: z.string().min(3, "Category is required"),
@@ -117,6 +114,12 @@ const Uploadpage = () => {
       // Handle error gracefully
     }
   };
+
+  const router = useRouter();
+  const { status } = useSession();
+  if (status !== "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">

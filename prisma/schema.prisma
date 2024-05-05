@@ -35,17 +35,18 @@ datasource db {
 // }
 
 model Signup {
-    id             String    @id @default(uuid())
+    id             String     @id @default(uuid())
     name           String
     contact        String
-    email          String    @unique
+    email          String     @unique
     password       String
     occupation     String
-    image          String    @default("/assets/images/home/defaultimage.jpg")
-    socialaccountf String    @default("")
-    socialaccountl String    @default("")
-    role           Role      @default(User)
-    createdat      DateTime  @default(now())
+    image          String     @default("/assets/images/home/defaultimage.jpg")
+    socialaccountf String     @default("")
+    socialaccountl String     @default("")
+    role           Role       @default(User)
+    userstatus     Userstatus @default(Active)
+    createdat      DateTime   @default(now())
     // accounts       Account[]
     // sessions       Session[]
     upload         Upload[]
@@ -58,19 +59,27 @@ enum Role {
     Admin
 }
 
+enum Userstatus {
+    Active
+    Inactive
+}
+
 model Upload {
-    id          String    @id @default(uuid())
-    title       String
-    price       Float?
-    discount    Float?
-    artist      String
-    description String
-    image       String
-    category    String
-    createdAt   DateTime  @default(now())
-    userEmail   String
-    user        Signup    @relation(fields: [userEmail], references: [email])
-    comment     Comment[]
+    id            String        @id @default(uuid())
+    title         String
+    price         Float?
+    discount      Float?
+    artist        String
+    description   String
+    image         String
+    cimage        String?
+    category      String
+    createdAt     DateTime      @default(now())
+    userEmail     String
+    user          Signup        @relation(fields: [userEmail], references: [email])
+    comment       Comment[]
+    productstatus Productstatus @default(Notsale)
+    permission    Permission    @default(Notaccepted)
 }
 
 model Order {
@@ -104,4 +113,14 @@ enum Status {
     InProgress
     Deliverd
     Cancel
+}
+
+enum Productstatus {
+    Sale
+    Notsale
+}
+
+enum Permission {
+    Accepted
+    Notaccepted
 }

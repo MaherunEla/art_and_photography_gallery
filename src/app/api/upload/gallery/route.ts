@@ -5,8 +5,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/app/utils/connect";
 
 export const GET = async (req: any) => {
-  const signup = await prisma.signup.findMany({
-    where: { role: "Artist", userstatus: "Active" },
+  const upload = await prisma.upload.findMany({
+    where: { permission: "Accepted", cimage: { not: null } },
   });
-  return NextResponse.json(signup);
+  return NextResponse.json(upload);
 };

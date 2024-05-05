@@ -12,6 +12,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 import Progress from "../../components/progress";
+import { Productstatus } from "@prisma/client";
 
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -23,7 +24,7 @@ const uploadformSchema = z.object({
     .optional(),
 
   artist: z.string().min(1, "Artist is required"),
-
+  category: z.string().min(3, "Category is required"),
   description: z.string().min(1, "Description is required"),
   image: z.string().min(1, "Image is required"),
 });
@@ -178,6 +179,25 @@ const Addpage = () => {
               </p>
             )}
           </div>
+
+          <div className="sm:col-span-2">
+            <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
+              Category
+            </label>
+            <select
+              {...register("category")}
+              className="w-full rounded border bg-[#151c2c] px-3 py-2 text-white outline-none ring-indigo-300 transition duration-100 focus:ring "
+            >
+              <option selected value="0">
+                Select Category
+              </option>
+              {["Digitally Captured", "Color Painting"].map((item, index) => (
+                <option value={item} key={index}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="sm:col-span-2">
             <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
               Artist
@@ -207,7 +227,7 @@ const Addpage = () => {
 
           <div className="sm:col-span-2 ">
             <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
-              Discount
+              Discounted
             </label>
             <input
               type="text"

@@ -5,6 +5,7 @@ import { addCart } from "@/app/redux_store/cartAddSlice";
 import { useAppDispatch } from "@/app/redux_store/store";
 import { AdProduct } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
+import { z } from "zod";
 
 const images = [
   { id: 1, src: "/assets/images/home/frame4.jpg", name: "gold", price: 200 },
@@ -35,7 +36,7 @@ const Singleproduct = ({ Gallery }: Props) => {
   const product: AdProduct = {
     id: Gallery?.id,
     title: Gallery?.title,
-    image: Gallery?.image,
+    cimage: Gallery?.cimage,
     category: Gallery?.category,
     price: Gallery?.price,
     discount: Gallery?.discount,
@@ -46,6 +47,7 @@ const Singleproduct = ({ Gallery }: Props) => {
     framePrice: selectedImagePrice || 0,
     description: Gallery?.description,
     userEmail: Gallery?.userEmail,
+    productstatus: Gallery?.productstatus,
   };
   const dispatch = useAppDispatch();
   //for zoom image
@@ -91,7 +93,7 @@ const Singleproduct = ({ Gallery }: Props) => {
             onMouseMove={handleMouseHover}
           >
             <Image
-              src={Gallery?.image}
+              src={Gallery?.cimage}
               loading="lazy"
               alt="Photo by Himanshu Dewangan"
               className=" h-full w-full object-cover object-center"
@@ -113,7 +115,7 @@ const Singleproduct = ({ Gallery }: Props) => {
                 <div
                   className="magnifier-image"
                   style={{
-                    backgroundImage: `url(${Gallery?.image})`,
+                    backgroundImage: `url(${Gallery?.cimage})`,
                     backgroundPosition: `${position.x}% ${position.y}%`,
                   }}
                 />
@@ -180,22 +182,28 @@ const Singleproduct = ({ Gallery }: Props) => {
               </div>
 
               <p className="text-gray-500">{Gallery?.description}</p>
+
+              {Gallery.productstatus === "Sale" ? (
+                <p className="text-red-500 text-lg font-bold">Out of Stock</p>
+              ) : (
+                <></>
+              )}
             </div>
 
             <div className="my-4">
               {Gallery?.discount === null ? (
                 <div className="flex items-end gap-2">
                   <span className="mb-0.5 text-xl font-bold md:text-2xl text-gray-800 ">
-                    ৳{Gallery?.price.toFixed(2)}
+                    ৳ {Gallery?.price.toFixed(2)}
                   </span>
                 </div>
               ) : (
                 <div className="flex items-end gap-2">
                   <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                    ৳{Gallery?.discount.toFixed(2)}
+                    ৳ {Gallery?.discount.toFixed(2)}
                   </span>
                   <span className="mb-0.5  text-red-500 line-through">
-                    ৳{Gallery?.price.toFixed(2)}
+                    ৳ {Gallery?.price.toFixed(2)}
                   </span>
                 </div>
               )}
@@ -203,13 +211,17 @@ const Singleproduct = ({ Gallery }: Props) => {
 
             <div className="mb-3 flex  items-center gap-2 text-gray-800">
               {selectedImagePrice === null ? (
-                <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2"></div>
+                <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
+                  <p className="text-red-500">
+                    Select a frame before add to card
+                  </p>
+                </div>
               ) : (
                 <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
                   <p> {selectedImageName}</p>
                   <p>৳ {(1 + selectedImagePrice).toFixed(2)}</p>
-                  <p>
-                    Total:{" "}
+                  <p className="text-red-500">
+                    <span className="text-gray-800"> Total: </span>৳{" "}
                     {Gallery?.discount === null
                       ? (Gallery?.price + selectedImagePrice).toFixed(2)
                       : (Gallery.discount + selectedImagePrice).toFixed(2)}
@@ -218,26 +230,51 @@ const Singleproduct = ({ Gallery }: Props) => {
               )}
             </div>
 
-            <div className="flex gap-2.5">
-              <button
-                onClick={() => {
-                  dispatch(addCart(product));
-                  toast({
-                    title: " Item added to cart  ",
-                  });
-                }}
-                className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
-              >
-                Add to cart
-              </button>
+            {Gallery.category === "Digitally Captured" ? (
+              <div className="flex gap-2.5">
+                <button
+                  disabled={selectedImage === null}
+                  onClick={() => {
+                    dispatch(addCart(product));
+                    toast({
+                      title: " Item added to cart  ",
+                    });
+                  }}
+                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                >
+                  Add to cart
+                </button>
 
-              <a
-                href="/cart"
-                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
-              >
-                Buy now
-              </a>
-            </div>
+                <a
+                  href="/cart"
+                  className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
+                >
+                  Buy now
+                </a>
+              </div>
+            ) : (
+              <div className="flex gap-2.5">
+                <button
+                  disabled={Gallery.productstatus === "Sale"}
+                  onClick={() => {
+                    dispatch(addCart(product));
+                    toast({
+                      title: " Item added to cart  ",
+                    });
+                  }}
+                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+                >
+                  Add to cart
+                </button>
+
+                <a
+                  href="/cart"
+                  className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
+                >
+                  Buy now
+                </a>
+              </div>
+            )}
           </div>
           {Gallery.category === "Digitally Captured" ? (
             <div className="w-full h-full">

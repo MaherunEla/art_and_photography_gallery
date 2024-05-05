@@ -16,30 +16,38 @@ export const GET = async (req: NextResponse) => {
       words.map(async (word) => {
         return await prisma.upload.findMany({
           where: {
-            OR: [
+            AND: [
+              { permission: "Accepted" },
               {
-                title: {
-                  contains: word,
-                  mode: "insensitive",
-                },
+                cimage: { not: null }, // Condition for cimage not being null
               },
               {
-                artist: {
-                  contains: word,
-                  mode: "insensitive",
-                },
-              },
-              {
-                description: {
-                  contains: word,
-                  mode: "insensitive",
-                },
-              },
-              {
-                category: {
-                  contains: word,
-                  mode: "insensitive",
-                },
+                OR: [
+                  {
+                    title: {
+                      contains: word,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    artist: {
+                      contains: word,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    description: {
+                      contains: word,
+                      mode: "insensitive",
+                    },
+                  },
+                  {
+                    category: {
+                      contains: word,
+                      mode: "insensitive",
+                    },
+                  },
+                ],
               },
             ],
           },

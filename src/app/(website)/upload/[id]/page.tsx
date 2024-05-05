@@ -10,6 +10,7 @@ import axios from "axios";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
@@ -47,6 +48,8 @@ const Uploadpage = () => {
   const params = useParams();
   console.log("param", params);
 
+  const { status } = useSession();
+
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const onSubmit = async (data: FormValues) => {
@@ -59,7 +62,7 @@ const Uploadpage = () => {
         toast({
           title: " Upload successfully  ",
         });
-        router.push(`/mygallery/${params.id}`);
+        // router.push(`/mygallery/${params.id}`);
       })
       .catch((err) => console.log({ err }));
   };
@@ -106,6 +109,10 @@ const Uploadpage = () => {
       };
     }
   };
+
+  if (status !== "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">

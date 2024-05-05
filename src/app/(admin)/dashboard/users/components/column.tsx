@@ -52,6 +52,28 @@ export const columns = [
     cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Role",
   }),
+  columnHelper.accessor("userstatus", {
+    cell: (info) => {
+      const Color = info.getValue();
+      if (Color == "Active") {
+        return (
+          <div>
+            <p className="p-1 w-[75px] text-center border border-green-900 bg-green-900 rounded-md">
+              {info.getValue()}
+            </p>
+          </div>
+        );
+      }
+      if (Color == "Inactive") {
+        return (
+          <p className="p-1 w-[100px] text-center border border-red-900 bg-red-900 rounded-md">
+            {info.getValue()}
+          </p>
+        );
+      }
+    },
+    header: () => "Status",
+  }),
   columnHelper.accessor("occupation", {
     header: () => "Occupation",
     cell: (info) => <p>{info.renderValue()}</p>,

@@ -160,6 +160,7 @@ const Placeorderpage = () => {
       .catch((err) => console.log({ err }));
   };
   const dispatch = useAppDispatch();
+
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">

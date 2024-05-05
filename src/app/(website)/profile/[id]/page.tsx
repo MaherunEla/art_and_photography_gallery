@@ -1,17 +1,19 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
 const Profilepage = () => {
   const params = useParams();
   console.log("param", params);
 
-  const fetchProfile = () => {
-    return axios.get(`/api/signup/${params.id}`);
+  const fetchProfile = async () => {
+    const { data } = await axios.get(`/api/signup/${params.id}`);
+    return data;
   };
 
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
@@ -19,16 +21,21 @@ const Profilepage = () => {
     queryFn: fetchProfile,
   });
 
-  console.log(data?.data.email);
+  console.log(data?.email);
 
   const defaultImage = "/assets/images/home/defaultimage.jpg";
+  const router = useRouter();
+  const { status } = useSession();
+  if (status !== "authenticated") {
+    router.push("/");
+  }
 
   return (
-    <div className="bg-gradient-to-r from-indigo-100 py-6 sm:py-8 lg:py-12">
-      <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
+    <div className=" py-4 sm:py-8 lg:py-6">
+      <div className="mx-auto max-w-screen-2xl bg-gradient-to-r from-indigo-100 px-4 md:px-8 py-4 border rounded-lg">
         <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px]  mx-auto relative">
           <Image
-            src={data?.data.image || defaultImage}
+            src={data?.image || defaultImage}
             fill
             className="rounded-full border-4 border-gray-300"
             alt=""
@@ -37,7 +44,7 @@ const Profilepage = () => {
 
         <div className="flex items-center justify-center pt-5">
           <Link
-            href={`/profile/edit/${data?.data.email}`}
+            href={`/profile/edit/${data?.email}`}
             className="rounded-lg bg-red-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:text-white md:text-base md:inline-block"
           >
             Edit Profile
@@ -49,7 +56,7 @@ const Profilepage = () => {
               Name
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              {data?.data.name}
+              {data?.name}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -57,7 +64,7 @@ const Profilepage = () => {
               Contact
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              {data?.data.contact}
+              {data?.contact}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -65,7 +72,7 @@ const Profilepage = () => {
               Email
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              {data?.data.email}
+              {data?.email}
             </p>
           </div>
           <div className="sm:col-span-2">
@@ -73,29 +80,29 @@ const Profilepage = () => {
               Occupation
             </label>
             <p className="border border-gray-200 px-3 py-2 rounded-sm">
-              {data?.data.occupation}
+              {data?.occupation}
             </p>
           </div>
           <div className="sm:col-span-2">
             <label className="mb-2 inline-block text-lg font-bold text-gray-800 sm:text-base">
               Social Accunts
             </label>
-            {data?.data.socialaccountf === "" ? (
-              <p className="border border-gray-200 px-3 py-2 rounded-sm">
+            {data?.socialaccountf === "" ? (
+              <p className="border border-gray-200 px-3 py-2 mb-4 rounded-sm">
                 linked In
               </p>
             ) : (
-              <p className="border border-gray-200 px-3 py-2 rounded-sm">
-                {data?.data.socialaccountf}
+              <p className="border border-gray-200 px-3 py-2 mb-4 rounded-sm">
+                {data?.socialaccountf}
               </p>
             )}
-            {data?.data.socialaccountl === "" ? (
-              <p className="border border-gray-200 px-3 py-2 rounded-sm">
+            {data?.socialaccountl === "" ? (
+              <p className="border border-gray-200 px-3 py-2 mb-4 rounded-sm">
                 Twiter
               </p>
             ) : (
-              <p className="border border-gray-200 px-3 py-2 rounded-sm">
-                {data?.data.socialaccountl}
+              <p className="border border-gray-200 px-3 py-2 mb-4 rounded-sm">
+                {data?.socialaccountl}
               </p>
             )}
           </div>
