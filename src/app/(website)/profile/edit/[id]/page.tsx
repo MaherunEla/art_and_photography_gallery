@@ -3,9 +3,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TbMoodEdit } from "react-icons/tb";
@@ -38,15 +39,16 @@ const Profileeditpage = () => {
   const decodedEmail = decodeURIComponent(encodedEmail);
   console.log("param", params);
 
-  const fetchProfile = () => {
-    return axios.get(`/api/signup/${params.id}`);
+  const fetchProfile = async () => {
+    const { data } = await axios.get(`/api/signup/${params.id}`);
+    return data;
   };
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["signup-data"],
     queryFn: fetchProfile,
   });
 
-  console.log(data?.data.email);
+  console.log(data?.email);
 
   const form = useForm<FormValues>({
     defaultValues: async () => {
@@ -110,11 +112,18 @@ const Profileeditpage = () => {
       // Handle error gracefully
     }
   };
+
+  const router = useRouter();
+  const { status } = useSession();
+  if (status !== "authenticated") {
+    router.push("/");
+  }
+
   return (
-    <div className="bg-gradient-to-r from-indigo-100 py-6 sm:py-8 lg:py-12">
+    <div className=" py-4 sm:py-8 lg:py-6">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mx-auto max-w-screen-2xl px-4 md:px-8"
+        className="mx-auto bg-gradient-to-r from-indigo-100 py-4 border rounded-lg max-w-screen-2xl px-4 md:px-8"
       >
         <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px]  mx-auto relative">
           <Image

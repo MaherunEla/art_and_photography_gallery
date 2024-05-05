@@ -10,53 +10,53 @@ import SearchInput from "../components/shared/SearchInput";
 import { HomeGalleryData } from "../components/home/components/HomeGallery";
 
 const fetchUpload = async () => {
-  const { data } = await axios.get("/api/upload");
+  const { data } = await axios.get("/api/upload/gallery");
   return data;
 };
 const Gallerypage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResult, setSearchResult] = useState<AdProduct[]>([]);
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const [searchResult, setSearchResult] = useState<AdProduct[]>([]);
 
-  const [categoryFilter, setCategoryFilter] = useState("");
-  const [categoryResult, setCategoryResult] = useState<AdProduct[]>([]);
+  // const [categoryFilter, setCategoryFilter] = useState("");
+  // const [categoryResult, setCategoryResult] = useState<AdProduct[]>([]);
 
-  console.log({ categoryFilter });
+  // console.log({ categoryFilter });
 
-  console.log({ searchResult });
+  // console.log({ searchResult });
 
-  async function getSearchProduct(query: string) {
-    const res = await fetch(`/api/search?query=${query}`, {
-      method: "GET",
-      cache: "no-store",
-    });
-    const { product } = await res.json();
-    console.log({ product });
-    if (res.ok) {
-      setSearchResult(product);
-    }
-  }
+  // async function getSearchProduct(query: string) {
+  //   const res = await fetch(`/api/search?query=${query}`, {
+  //     method: "GET",
+  //     cache: "no-store",
+  //   });
+  //   const { product } = await res.json();
+  //   console.log({ product });
+  //   if (res.ok) {
+  //     setSearchResult(product);
+  //   }
+  // }
 
-  async function handleSearch() {
-    getSearchProduct(searchQuery);
-  }
+  // async function handleSearch() {
+  //   getSearchProduct(searchQuery);
+  // }
 
-  async function getFilterProduct(query: string) {
-    const decodedQuery = query ? decodeURIComponent(query as string) : "";
-    console.log({ decodedQuery });
-    const res = await fetch(`/api/upload/category?query=${query}`, {
-      method: "GET",
-      cache: "no-store",
-    });
-    const { product } = await res.json();
-    console.log({ product });
-    if (res.ok) {
-      setCategoryResult(product);
-    }
-  }
+  // async function getFilterProduct(query: string) {
+  //   const decodedQuery = query ? decodeURIComponent(query as string) : "";
+  //   console.log({ decodedQuery });
+  //   const res = await fetch(`/api/upload/category?query=${query}`, {
+  //     method: "GET",
+  //     cache: "no-store",
+  //   });
+  //   const { product } = await res.json();
+  //   console.log({ product });
+  //   if (res.ok) {
+  //     setCategoryResult(product);
+  //   }
+  // }
 
-  async function handleFilter() {
-    getFilterProduct(categoryFilter);
-  }
+  // async function handleFilter() {
+  //   getFilterProduct(categoryFilter);
+  // }
 
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["upload-data"],
@@ -84,12 +84,19 @@ const Gallerypage = () => {
                 className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
               >
                 <Image
-                  src={item.image}
+                  src={item.cimage}
                   loading="lazy"
                   alt="Photo by Vladimir Fedotov"
                   className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
                   fill
                 />
+                {item.productstatus === "Sale" ? (
+                  <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
+                    {item.productstatus}
+                  </span>
+                ) : (
+                  <></>
+                )}
               </Link>
 
               <div className="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">

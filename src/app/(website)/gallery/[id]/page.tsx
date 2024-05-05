@@ -24,7 +24,7 @@ import { useQuery } from "@tanstack/react-query";
 // }
 
 const fetchUpload = async () => {
-  const { data } = await axios.get("/api/upload");
+  const { data } = await axios.get("/api/upload/gallery");
   return data;
 };
 const Itempage = () => {

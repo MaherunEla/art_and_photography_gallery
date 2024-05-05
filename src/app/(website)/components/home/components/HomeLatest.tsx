@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchUpload = async () => {
-  const { data } = await axios.get("/api/upload");
+  const { data } = await axios.get("/api/upload/gallery");
   return data;
 };
 const HomeLatest = () => {
@@ -49,7 +49,7 @@ const HomeLatest = () => {
               >
                 <div className="h-full w-full related">
                   <Image
-                    src={item.image}
+                    src={item.cimage}
                     loading="lazy"
                     alt="Photo by Rachit Tank"
                     className="object-cover object-center transition duration-200 group-hover:scale-110"

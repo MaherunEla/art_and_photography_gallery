@@ -40,6 +40,10 @@ export const columns = [
     cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Author",
   }),
+  columnHelper.accessor("productstatus", {
+    cell: (info) => <p>{info.getValue()}</p>,
+    header: () => "Status",
+  }),
   columnHelper.accessor("price", {
     cell: (info) => <p>{info.getValue().toFixed(2)}</p>,
     header: () => "price",
@@ -49,13 +53,42 @@ export const columns = [
       const discount = info.getValue();
       return <p>{discount !== null ? discount.toFixed(2) : 0}</p>;
     },
-    header: () => "Discount",
+    header: () => "Discounted",
   }),
+
+  columnHelper.accessor("permission", {
+    cell: (info) => {
+      const Color = info.getValue();
+      if (Color == "Accepted") {
+        return (
+          <div>
+            <p className="p-1 w-[100px] text-center border border-green-900 bg-green-900 rounded-md">
+              {info.getValue()}
+            </p>
+          </div>
+        );
+      }
+      if (Color == "Notaccepted") {
+        return (
+          <p className="p-1 w-[120px] text-center border border-red-900 bg-red-900 rounded-md">
+            {info.getValue()}
+          </p>
+        );
+      }
+    },
+    header: () => "Permission",
+  }),
+
+  // columnHelper.accessor("permission", {
+  //   cell: (info) => <p>{info.getValue()}</p>,
+  //   header: () => "Permission",
+  // }),
 
   // columnHelper.accessor("totalorder", {
   //   header: () => "Total Order",
   //   cell: (info) => <p>{info.getValue()}</p>,
   // }),
+
   columnHelper.accessor("view", {
     header: () => "",
     cell: (info) => (
@@ -66,10 +99,10 @@ export const columns = [
       </Link>
     ),
   }),
-  columnHelper.accessor("delete", {
-    header: () => "",
-    cell: (info) => <Deletebutton id={`${info.row.original.id}`} />,
-  }),
+  // columnHelper.accessor("delete", {
+  //   header: () => "",
+  //   cell: (info) => <Deletebutton id={`${info.row.original.id}`} />,
+  // }),
 
   // columnHelper.accessor("icon", {
   //   header: () => "",

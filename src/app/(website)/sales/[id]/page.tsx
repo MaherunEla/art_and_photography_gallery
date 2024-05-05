@@ -7,13 +7,16 @@ import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const fetchUpload = async () => {
   const { data } = await axios.get("/api/sales");
   return data;
 };
 const Productpage = () => {
+  const router = useRouter();
+  const { status } = useSession();
   const params = useParams();
   console.log("param", params);
   const [filtering, setFiltering] = useState("");
@@ -37,6 +40,10 @@ const Productpage = () => {
   console.log(filteredData);
 
   const tabledata = filteredData || [];
+
+  if (status !== "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className="mx-auto max-w-screen-2xl px-4 md:px-8p-5 p-5 rounded-[10px] mt-5">

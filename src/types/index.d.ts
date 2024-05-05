@@ -6,6 +6,7 @@ export type Users = {
   email: string;
   createdat: string;
   role: string;
+  userstatus: string;
   occupation: string;
   view: string;
   delete: any;
@@ -29,6 +30,8 @@ export interface Product {
   price: number;
   discount: number;
   artist: string;
+  productstatus: string;
+  permission: string;
   view: any;
   delete: any;
 }
@@ -37,7 +40,8 @@ export interface AdProduct {
   id: string;
   title: string;
   description: string;
-  image: any;
+  image?: any;
+  cimage: any;
   category: string;
   price: number;
   discount: number;
@@ -47,6 +51,7 @@ export interface AdProduct {
   frameName?: string;
   framePrice?: number;
   userEmail: any;
+  productstatus: string;
 }
 
 export interface Order {

@@ -1,14 +1,17 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import React from "react";
 
 const Mygallerypage = () => {
+  const router = useRouter();
+  const { status } = useSession();
   const params = useParams();
   console.log("param", params);
 
@@ -28,6 +31,9 @@ const Mygallerypage = () => {
   }
   if (isError) {
     return <h2>{(error as any).message}</h2>;
+  }
+  if (status !== "authenticated") {
+    router.push("/");
   }
 
   return (

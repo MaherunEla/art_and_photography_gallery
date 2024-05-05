@@ -7,11 +7,14 @@ import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Productpage = () => {
   const params = useParams();
   console.log("param", params);
+  const router = useRouter();
+  const { status } = useSession();
 
   const fetchUpload = async () => {
     const { data } = await axios.get(`/api/userorder/${params.id}`);
@@ -32,6 +35,10 @@ const Productpage = () => {
   }
 
   const tabledata = data || [];
+
+  if (status !== "authenticated") {
+    router.push("/");
+  }
 
   return (
     <div className=" mx-auto max-w-screen-2xl px-4 md:px-8p-5 rounded-[10px] mt-5">

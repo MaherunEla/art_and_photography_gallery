@@ -44,6 +44,7 @@ export const options: NextAuthOptions = {
           const user = await prisma.signup.findFirst({
             where: {
               email: email,
+              userstatus: "Active",
             },
           });
 

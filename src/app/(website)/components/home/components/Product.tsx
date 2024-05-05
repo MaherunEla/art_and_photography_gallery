@@ -15,7 +15,7 @@ const Product = ({ Gallery }: any) => {
                 className="group relative block h-96 overflow-hidden rounded-t-lg bg-gray-100"
               >
                 <Image
-                  src={item.image}
+                  src={item.cimage}
                   loading="lazy"
                   alt="Photo by Vladimir Fedotov"
                   className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"

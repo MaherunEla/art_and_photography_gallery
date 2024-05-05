@@ -39,7 +39,7 @@ const Comments = ({ productId }: Props) => {
       {status === "authenticated" ? (
         <div className="flex items-center gap-5 py-10 ">
           <textarea
-            className="flex-1 py-5 px-2 border border-slate-200 outline-none text-black"
+            className="flex-1 py-5 px-2 border border-slate-200 bg-slate-200 rounded-lg outline-none text-black"
             placeholder="write a comment..."
             onChange={(e) => setText(e.target.value)}
           />
@@ -69,10 +69,11 @@ const Comments = ({ productId }: Props) => {
                   </div>
                   <div className="flex flex-col gap-2 ">
                     <span className="font-medium">{item.user.name}</span>
-                    <span>{item.createdAt.substring(0, 10)}</span>
+                    <p>{item.text}</p>
+                    {/* <span>{item.createdAt.substring(0, 10)}</span> */}
                   </div>
                 </div>
-                <p>{item.text}</p>
+                <span>{item.createdAt.substring(0, 10)}</span>
               </div>
             ))}
       </div>

@@ -1,6 +1,7 @@
 "use client";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Productstatus } from "@prisma/client";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
@@ -13,12 +14,29 @@ import { z } from "zod";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
-  price: z.string().transform((value) => parseFloat(value)),
-  discount: z.string().transform((value) => parseFloat(value)),
+  price: z
+    .union([
+      z.string().transform((value) => parseFloat(value)),
+      z.number(),
+      z.null(),
+    ])
+    .optional(),
+  discount: z
+    .union([z.string().transform((value) => parseFloat(value)), z.null()])
+    .optional(),
+  category: z.string().min(3, "Category is required"),
   artist: z.string().min(1, "Artist is required"),
-
+  permission: z.string().optional(),
   description: z.string().min(1, "Description is required"),
   image: z.string().min(1, "Image is required"),
+  cimage: z.string().min(1, "Water mark image is required").optional(),
+  productstatus: z
+    .string()
+    .min(4, "Sale or Notsale")
+    .optional()
+    .refine((value) => value === "Sale" || value === "Notsale", {
+      message: "Product status must be 'Sale' or 'Notsale'",
+    }),
 });
 
 type FormValues = z.infer<typeof uploadformSchema>;
@@ -182,6 +200,25 @@ const Viewpage = () => {
               )}
             </div>
 
+            <div className="sm:col-span-2">
+              <label className="mb-2 inline-block text-sm text-gray-800 sm:text-base">
+                Category
+              </label>
+              <select
+                {...register("category")}
+                className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-indigo-300 transition duration-100 focus:ring "
+              >
+                <option selected value="0">
+                  Select Category
+                </option>
+                {["Digitally Captured", "Color Painting"].map((item, index) => (
+                  <option value={item} key={index}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="sm:col-span-2 ">
               <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
                 Artist
@@ -194,6 +231,40 @@ const Viewpage = () => {
               {errors.artist && (
                 <p className="text-red-600">
                   {errors.artist.message as string}
+                </p>
+              )}
+            </div>
+
+            <div className="sm:col-span-2 ">
+              <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
+                Product Status
+              </label>
+              <input
+                type="text"
+                {...register("productstatus")}
+                className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
+              />
+              {errors.productstatus && (
+                <p className="text-red-600">
+                  {errors.productstatus.message as string}
+                </p>
+              )}
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
+                Permission
+              </label>
+              <select
+                {...register("permission")}
+                className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
+              >
+                <option value="Accepted">Accepted</option>
+                <option value="Not Accepted">Not Accepted</option>
+              </select>
+              {errors.permission && (
+                <p className="text-red-600">
+                  {errors.permission.message as string}
                 </p>
               )}
             </div>
@@ -223,6 +294,34 @@ const Viewpage = () => {
               />
               {errors.image && (
                 <p className="error">{errors.image.message as string}</p>
+              )}
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
+                Watermark Image
+              </label>
+              <Controller
+                name="cimage"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    type="file"
+                    accept="cimage/*"
+                    className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none "
+                    onChange={async (e: any) => {
+                      const file = e.target.files[0];
+                      const res: any = await uploadImages(file);
+                      console.log("res", res);
+                      setValue("cimage", res.url);
+                      setImage(res.url);
+                      field.onChange(res.url);
+                    }}
+                  />
+                )}
+              />
+              {errors.cimage && (
+                <p className="error">{errors.cimage.message as string}</p>
               )}
             </div>
 
