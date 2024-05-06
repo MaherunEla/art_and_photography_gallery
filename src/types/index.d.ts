@@ -42,6 +42,7 @@ export interface Frame {
   framename: string;
   frameprice: number;
   stockstatus: string;
+  createdAt: string;
   view: any;
 }
 

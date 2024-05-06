@@ -10,7 +10,8 @@ const Featured = ({
   totalRevenueLastWeek,
   totalRevenueLastMonth,
 }: any) => {
-  const percent = totalRevenueToday / 100;
+  const percent = +(totalRevenueToday * 0.01).toFixed(2);
+
   return (
     <div className="featured max-w-md">
       <div className="top">

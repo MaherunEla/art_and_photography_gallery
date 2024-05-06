@@ -88,6 +88,7 @@ model Frame {
     frameprice  Float?
     frameimage  String
     stockstatus Stockstatus @default(Stock)
+    createdAt   DateTime    @default(now())
 }
 
 model Order {

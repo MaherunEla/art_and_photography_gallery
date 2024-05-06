@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchUpload = async () => {
-  const { data } = await axios.get("/api/upload/gallery");
+  const { data } = await axios.get("/api/upload/latest");
   return data;
 };
 const HomeLatest = () => {
@@ -23,6 +23,9 @@ const HomeLatest = () => {
   }
   if (isError) {
     return <h2>{(error as any).message}</h2>;
+  }
+  if (isFetching) {
+    return <h2>data is fatching...</h2>;
   }
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -43,49 +46,48 @@ const HomeLatest = () => {
         <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 md:gap-x-6 lg:grid-cols-3 xl:grid-cols-4">
           {data?.map((item: any, index: any) => (
             <div key={index}>
-              <Link
-                href={`/gallery/${item.id}`}
-                className="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-gray-100 lg:mb-3 "
-              >
-                <div className="h-full w-full related">
-                  <Image
-                    src={item.cimage}
-                    loading="lazy"
-                    alt="Photo by Rachit Tank"
-                    className="object-cover object-center transition duration-200 group-hover:scale-110"
-                    fill
-                  />
+              <Link href={`/gallery/${item.id}`}>
+                <div className="group relative mb-2 block h-80 overflow-hidden rounded-lg bg-gray-100 lg:mb-3 ">
+                  <div className="h-full w-full related">
+                    <Image
+                      src={item.cimage}
+                      loading="lazy"
+                      alt="Photo by Rachit Tank"
+                      className="object-cover object-center transition duration-200 group-hover:scale-110"
+                      fill
+                    />
+                    {item.productstatus === "Sale" ? (
+                      <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
+                        {item.productstatus}
+                      </span>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
                 </div>
 
-                {/* <span className="absolute left-0 top-0 rounded-br-lg bg-red-500 px-3 py-1.5 text-sm uppercase tracking-wider text-white">
-                  sale
-                </span> */}
+                <div>
+                  <div className="hover:gray-800 mb-1 text-gray-500 transition duration-100 lg:text-lg">
+                    {item.title}
+                  </div>
+                  {item?.discount === null ? (
+                    <div className="flex items-end gap-2">
+                      <span className="font-bold text-gray-800 lg:text-lg">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-end gap-2">
+                      <span className="font-bold text-gray-800 lg:text-lg">
+                        ৳{item.discount.toFixed(2)}
+                      </span>
+                      <span className="mb-0.5 text-red-500 line-through">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </Link>
-
-              <div>
-                <a
-                  href={`/gallery/${item.id}`}
-                  className="hover:gray-800 mb-1 text-gray-500 transition duration-100 lg:text-lg"
-                >
-                  {item.title}
-                </a>
-                {item?.discount === null ? (
-                  <div className="flex items-end gap-2">
-                    <span className="font-bold text-gray-800 lg:text-lg">
-                      ৳{item.price.toFixed(2)}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="flex items-end gap-2">
-                    <span className="font-bold text-gray-800 lg:text-lg">
-                      ৳{item.discount.toFixed(2)}
-                    </span>
-                    <span className="mb-0.5 text-red-500 line-through">
-                      ৳{item.price.toFixed(2)}
-                    </span>
-                  </div>
-                )}
-              </div>
             </div>
           ))}
         </div>

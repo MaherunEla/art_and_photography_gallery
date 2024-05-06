@@ -10,6 +10,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Chart from "./components/chart/chart";
 import { useState, useEffect } from "react";
+import { FcFrame } from "react-icons/fc";
 export default function Home() {
   const fetchCalculation = () => {
     return axios.get("/api/calculation");
@@ -26,21 +27,28 @@ export default function Home() {
       id: 1,
       title: "Total Users",
       number: data?.data[0],
-      change: data?.data[4],
+      change: data?.data[7],
       icon: FaUserCircle,
     },
     {
       id: 2,
       title: "Total Product",
       number: data?.data[1],
-      change: data?.data[5],
+      change: data?.data[8],
       icon: FaRegImage,
     },
     {
       id: 3,
+      title: "Total Frame",
+      number: data?.data[10],
+      change: data?.data[11],
+      icon: FcFrame,
+    },
+    {
+      id: 4,
       title: "Revenue",
       number: data?.data[2],
-      change: data?.data[3],
+      change: data?.data[6],
       icon: MdAttachMoney,
     },
   ];

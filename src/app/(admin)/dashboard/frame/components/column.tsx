@@ -35,6 +35,10 @@ export const columns = [
     cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Status",
   }),
+  columnHelper.accessor("createdAt", {
+    cell: (info) => <p>{info.getValue().substring(0, 10)}</p>,
+    header: () => "Date",
+  }),
 
   // columnHelper.accessor("permission", {
   //   cell: (info) => <p>{info.getValue()}</p>,

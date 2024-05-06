@@ -47,30 +47,9 @@ const Productpage = () => {
 
   return (
     <div className="mx-auto max-w-screen-2xl px-4 md:px-8p-5 p-5 rounded-[10px] mt-5">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-[10px]  p-[10px] rounded-[10px] max-w-max">
-          <MdSearch />
-          <input
-            type="text"
-            value={filtering}
-            onChange={(e) => setFiltering(e.target.value)}
-            placeholder="Search for a user ..."
-            className="bg-transparent border-none text-black outline-none"
-          />
-        </div>
-
-        {/* <Link href={url}>
-          <button className="p-[10px] bg-[#5d57c9] text-white border-none rounded-[5px] cursor-pointer">
-            Add New
-          </button>
-        </Link> */}
-      </div>
+      <div className="flex items-center justify-between"></div>
       <div className="my-10">
-        <DefaultTable
-          columns={columns}
-          data={tabledata}
-          filtering={filtering}
-        />
+        <DefaultTable columns={columns} data={tabledata} />
       </div>
     </div>
   );

@@ -96,33 +96,31 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
         </div>
         <div className="flex items-center gap-[10px]">
           <button
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-white w-[30px] h-[30px] cursor-pointer"
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[100px] h-[30px] cursor-pointer"
             onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
           >
-            <GrFormPrevious className="ml-[4px] text-black" />
+            First Page
           </button>
-          {/* {pages.map((page, index) => {
-            return (
-              <button
-                key={index}
-                className={`border border-[#f5f5f5] bg-[#f5f5f5]  text-[#222] w-[30px] h-[30px] cursor-pointer ${
-                  table.getState().pagination.pageIndex == page - 1 &&
-                  "border-[#26901b] bg-[#26901b] text-white"
-                }`}
-                onClick={() => table.setPageIndex(page - 1)}
-              >
-                <p className="text-[13px] font-normal">{page}</p>
-              </button>
-            );
-          })} */}
+          <button
+            disabled={!table.getCanPreviousPage()}
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[30px] h-[30px] cursor-pointer"
+            onClick={() => table.previousPage()}
+          >
+            <GrFormPrevious className="ml-[4px] text-[#151c2c]" />
+          </button>
 
           <button
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-white w-[30px] h-[30px] cursor-pointer"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[30px] h-[30px] cursor-pointer"
+            onClick={() => table.nextPage()}
           >
-            <MdNavigateNext className="ml-[4px] text-black" />
+            <MdNavigateNext className="ml-[4px] text-[#151c2c]" />
+          </button>
+          <button
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[100px] h-[30px] cursor-pointer"
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          >
+            Last Page
           </button>
         </div>
       </div>
