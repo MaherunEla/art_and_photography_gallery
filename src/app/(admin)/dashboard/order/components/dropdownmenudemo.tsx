@@ -116,19 +116,9 @@ export function DropdownMenuDemo({ row }: any) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          {/* <DropdownMenuItem className="flex justify-between">
-            <button
-              onClick={() => {
-                deleteOrder(row.id);
-                toast({
-                  title: "Order Deleted successfully ",
-                });
-              }}
-            >
-              Delete
-            </button>
-            <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
+          <DropdownMenuItem className="flex justify-between">
+            <Link href={`/dashboard/invoice/${row.id}`}>Invoice</Link>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
       </DropdownMenuContent>

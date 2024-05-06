@@ -11,7 +11,6 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { getJsPageSizeInKb } from "next/dist/build/utils";
-import { Download } from "lucide-react";
 
 const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
   const [pageSize, setPageSize] = useState(10);
@@ -29,7 +28,6 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newSize = parseInt(event.target.value);
-
     setPageSize(newSize);
     table.setPageSize(newSize);
   };
@@ -42,12 +40,12 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
 
   return (
     <div>
-      <table id="order" className="w-full text-black">
+      <table id="order" className="w-full text-white">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className="text-start py-4 px-2">
+                <th key={header.id} className="text-start">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -61,12 +59,9 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className={row.index % 2 === 0 ? "bg-[#D6EEEE]" : ""}
-            >
+            <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="py-[10px] px-2 text-black ">
+                <td key={cell.id} className="py-[10px]  text-white ">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -76,16 +71,16 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
       </table>
       <div className="pt-[50px] flex justify-between ">
         <div>
-          <p className="tablep text-black">
+          <p className="tablep text-white">
             show {table.getState().pagination.pageSize} in {data.length} items
           </p>
         </div>
-        <div className="text-black">
+        <div className="text-white">
           <label htmlFor="pageSize">Page Size: </label>
           <select
             id="pageSize"
             value={pageSize}
-            className="bg-white"
+            className="bg-[#151c2c]"
             onChange={handlePageSizeChange}
           >
             <option value="10">10</option>
@@ -96,11 +91,11 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
         </div>
         <div className="flex items-center gap-[10px]">
           <button
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-white w-[30px] h-[30px] cursor-pointer"
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-[#151c2c] w-[30px] h-[30px] cursor-pointer"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <GrFormPrevious className="ml-[4px] text-black" />
+            <GrFormPrevious className="ml-[4px] text-white" />
           </button>
           {/* {pages.map((page, index) => {
             return (
@@ -118,11 +113,11 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
           })} */}
 
           <button
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-white w-[30px] h-[30px] cursor-pointer"
+            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-[#151c2c] w-[30px] h-[30px] cursor-pointer"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <MdNavigateNext className="ml-[4px] text-black" />
+            <MdNavigateNext className="ml-[4px] text-white" />
           </button>
         </div>
       </div>

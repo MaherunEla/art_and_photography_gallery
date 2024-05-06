@@ -51,7 +51,7 @@ const Carttablepage = () => {
                   className="group relative block h-48 w-32 overflow-hidden bg-gray-100 sm:h-56 sm:w-40"
                 >
                   <Image
-                    src={item.image}
+                    src={item.cimage}
                     loading="lazy"
                     alt=""
                     className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"

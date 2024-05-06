@@ -278,7 +278,7 @@ const Placeorderpage = () => {
                     className="group relative block h-[50px] w-[50px] overflow-hidden bg-gray-100 sm:h-[120px] sm:w-[70px]"
                   >
                     <Image
-                      src={item.image}
+                      src={item.cimage}
                       loading="lazy"
                       alt=""
                       className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"

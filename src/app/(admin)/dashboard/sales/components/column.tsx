@@ -6,10 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const columnHelper = createColumnHelper<Order>();
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return format(date, "d MMM, yyyy");
-};
+
 export const columns = [
   // columnHelper.accessor("id", {
   //   header: () => "ID",
@@ -49,17 +46,6 @@ export const columns = [
     },
     header: () => "Address",
   }),
-  columnHelper.accessor("formdata", {
-    cell: (info) => {
-      const form = info.getValue();
-      return (
-        <div>
-          <h3>{form.ordernote}</h3>
-        </div>
-      );
-    },
-    header: () => "Note",
-  }),
 
   columnHelper.accessor("product", {
     cell: (info) => {
@@ -68,7 +54,7 @@ export const columns = [
         <div>
           {products.map((e: any, index: any) => (
             <span key={index} className="flex flex-col gap-2">
-              {e.title} ({e.quantity})
+              {e.title} {e.frameName} ({e.quantity})
             </span>
           ))}
         </div>
@@ -105,7 +91,7 @@ export const columns = [
   }),
 
   columnHelper.accessor("createdAt", {
-    cell: (info) => <p>{formatDate(info.getValue())}</p>,
+    cell: (info) => <p>{info.getValue().substring(0, 10)}</p>,
     header: () => "Date",
   }),
 ];

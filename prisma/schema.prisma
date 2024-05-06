@@ -82,6 +82,14 @@ model Upload {
     permission    Permission    @default(Notaccepted)
 }
 
+model Frame {
+    id          String      @id @default(uuid())
+    framename   String
+    frameprice  Float?
+    frameimage  String
+    stockstatus Stockstatus @default(Stock)
+}
+
 model Order {
     id           String   @id @default(uuid())
     // name      String
@@ -96,6 +104,7 @@ model Order {
     createdAt    DateTime @default(now())
     status       Status   @default(Pending)
     userEmail    String
+    date         String?
 }
 
 model Comment {
@@ -123,4 +132,9 @@ enum Productstatus {
 enum Permission {
     Accepted
     Notaccepted
+}
+
+enum Stockstatus {
+    Stock
+    OutofStock
 }

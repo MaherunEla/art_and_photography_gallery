@@ -7,10 +7,7 @@ import Link from "next/link";
 import { DropdownMenuDemo } from "./dropdownmenudemo";
 
 const columnHelper = createColumnHelper<Order>();
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return format(date, "d MMM, yyyy");
-};
+
 export const columns = [
   // columnHelper.accessor("id", {
   //   header: () => "ID",
@@ -69,7 +66,7 @@ export const columns = [
         <div>
           {products.map((e: any, index: any) => (
             <span key={index} className="flex flex-col gap-2">
-              {e.title} ({e.quantity})
+              {e.title} {e.frameName} ({e.quantity})
             </span>
           ))}
         </div>
@@ -133,7 +130,7 @@ export const columns = [
     header: () => "Status",
   }),
   columnHelper.accessor("createdAt", {
-    cell: (info) => <p>{formatDate(info.getValue())}</p>,
+    cell: (info) => <p>{info.getValue().substring(0, 10)}</p>,
     header: () => "Date",
   }),
   columnHelper.accessor("icon", {
@@ -149,27 +146,9 @@ export const columns = [
   //   header: () => "Total Order",
   //   cell: (info) => <p>{info.getValue()}</p>,
   // }),
-  //   columnHelper.accessor("view", {
-  //     header: () => "",
-  //     cell: (info) => (
-  //       <Link href={`/dashboard/product/view/${info.row.original.id}`}>
-  //         <button className="px-[10px] py-[5px] rounded-[5px] text-white border-none cursor-pointer bg-teal-600">
-  //           View
-  //         </button>
-  //       </Link>
-  //     ),
-  //   }),
+
   //   columnHelper.accessor("delete", {
   //     header: () => "",
   //     cell: (info) => <Deletebutton id={`${info.row.original.id}`} />,
   //   }),
-
-  // columnHelper.accessor("icon", {
-  //   header: () => "",
-  //   cell: (info) => {
-  //     const Icon = info.getValue();
-  //     const id = info.row.original.id;
-  //     return <DropdownMenuDemo id={id} />;
-  //   },
-  // }),
 ];
