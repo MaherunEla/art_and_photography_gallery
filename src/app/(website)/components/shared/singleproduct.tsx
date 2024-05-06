@@ -20,7 +20,7 @@ type Props = {
 };
 
 const fetchFrame = async () => {
-  const { data } = await axios.get("/api/frame");
+  const { data } = await axios.get("/api/frame/gallery");
   return data;
 };
 const Singleproduct = ({ Gallery }: Props) => {

@@ -17,15 +17,31 @@ export const PUT = async (req: Request, { params }: any) => {
   console.log({ data });
 
   if (data.status === "Deliverd") {
-    const totalrevenue = await prisma.order.aggregate({
+    const prevrevenue = await prisma.order.aggregate({
       _sum: { revenue: true },
+
+      where: {
+        status: "Deliverd",
+      },
     });
 
-    const totalRevenueSum = totalrevenue._sum?.revenue || 0;
+    const prevRevenueSum = prevrevenue._sum?.revenue || 0;
+
+    const nowrevenue = await prisma.order.aggregate({
+      _sum: { revenue: true },
+
+      where: {
+        id: params?.id,
+      },
+    });
+
+    const nowRevenue = nowrevenue._sum?.revenue || 0;
+
+    const totalRevenue = prevRevenueSum + nowRevenue;
 
     const updatestatus = await prisma.order.update({
       where: { id: params?.id as string },
-      data: { ...data, totalrevenue: totalRevenueSum },
+      data: { ...data, totalrevenue: totalRevenue },
     });
 
     console.log(updatestatus);

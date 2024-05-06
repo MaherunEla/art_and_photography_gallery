@@ -7,18 +7,37 @@ export const GET = async (req: any) => {
   try {
     const totaluser = await prisma.signup.aggregate({
       _count: { name: true },
+      where: {
+        userstatus: "Active",
+      },
     });
 
     const countuser = totaluser._count?.name || 0;
 
     const totalproduct = await prisma.upload.aggregate({
       _count: { title: true },
+      where: {
+        permission: "Accepted",
+        productstatus: "Notsale",
+      },
     });
 
     const countproduct = totalproduct._count?.title || 0;
 
+    const totalframe = await prisma.frame.aggregate({
+      _count: { framename: true },
+      where: {
+        stockstatus: "Stock",
+      },
+    });
+
+    const countframe = totalframe._count?.framename || 0;
+
     const revenue = await prisma.order.aggregate({
       _max: { totalrevenue: true },
+      where: {
+        status: "Deliverd",
+      },
     });
 
     const totalrevenue = revenue._max?.totalrevenue || 0;
@@ -35,6 +54,7 @@ export const GET = async (req: any) => {
           gte: startOfDay,
           lte: endOfDay,
         },
+        status: "Deliverd",
       },
     });
 
@@ -57,6 +77,7 @@ export const GET = async (req: any) => {
           gte: lastWeekStart,
           lte: lastWeekEnd,
         },
+        status: "Deliverd",
       },
     });
 
@@ -88,6 +109,7 @@ export const GET = async (req: any) => {
           gte: startOfLastMonth,
           lte: endOfLastMonth,
         },
+        status: "Deliverd",
       },
     });
 
@@ -118,6 +140,7 @@ export const GET = async (req: any) => {
           gte: currentWeekStart,
           lte: currentWeekEnd,
         },
+        status: "Deliverd",
       },
     });
 
@@ -131,6 +154,7 @@ export const GET = async (req: any) => {
           gte: previousWeekStart,
           lte: previousWeekEnd,
         },
+        status: "Deliverd",
       },
     });
 
@@ -138,7 +162,7 @@ export const GET = async (req: any) => {
 
     // Calculate the difference between the total revenues of the current week and the previous week
     const revenueDifference =
-      totalRevenueCurrentWeek - totalRevenuePreviousWeek / 100;
+      (totalRevenueCurrentWeek - totalRevenuePreviousWeek) * 0.01;
 
     // Aggregate the count of users created in the current week
     const currentWeekUserCount = await prisma.signup.aggregate({
@@ -166,7 +190,8 @@ export const GET = async (req: any) => {
 
     const countUserPreviousWeek = previousWeekUserCount._count?.name || 0;
 
-    const userdifference = countUserCurrentWeek - countUserPreviousWeek / 100;
+    const userdifference =
+      (countUserCurrentWeek - countUserPreviousWeek) * 0.01;
 
     // Aggregate the count of Product created in the current week
     const currentWeekProductCount = await prisma.upload.aggregate({
@@ -176,14 +201,53 @@ export const GET = async (req: any) => {
           gte: currentWeekStart,
           lte: currentWeekEnd,
         },
+        permission: "Accepted",
       },
     });
 
     const countProductCurrentWeek = currentWeekProductCount._count?.title || 0;
 
-    // Aggregate the count of users created in the previous week
+    // Aggregate the count of product created in the previous week
     const previousWeekProductCount = await prisma.upload.aggregate({
       _count: { title: true },
+      where: {
+        createdAt: {
+          gte: previousWeekStart,
+          lte: previousWeekEnd,
+        },
+        permission: "Accepted",
+      },
+    });
+
+    const countProductPreviousWeek =
+      previousWeekProductCount._count?.title || 0;
+
+    const productdifference =
+      (countProductCurrentWeek - countProductPreviousWeek) * 0.01;
+
+    const totalArtist = await prisma.signup.aggregate({
+      where: { role: "Artist" },
+      _count: { name: true },
+    });
+
+    const countArtist = totalArtist._count?.name || 0;
+
+    // Aggregate the count of Frame created in the current week
+    const currentWeekFrameCount = await prisma.frame.aggregate({
+      _count: { framename: true },
+      where: {
+        createdAt: {
+          gte: currentWeekStart,
+          lte: currentWeekEnd,
+        },
+      },
+    });
+
+    const countFrameCurrentWeek = currentWeekFrameCount._count?.framename || 0;
+
+    // Aggregate the count of users created in the previous week
+    const previousWeekFrameCount = await prisma.frame.aggregate({
+      _count: { framename: true },
       where: {
         createdAt: {
           gte: previousWeekStart,
@@ -192,18 +256,11 @@ export const GET = async (req: any) => {
       },
     });
 
-    const countProductPreviousWeek =
-      previousWeekProductCount._count?.title || 0;
+    const countFramePreviousWeek =
+      previousWeekFrameCount._count?.framename || 0;
 
-    const productdifference =
-      countProductCurrentWeek - countProductPreviousWeek / 100;
-
-    const totalArtist = await prisma.signup.aggregate({
-      where: { role: "Artist" },
-      _count: { name: true },
-    });
-
-    const countArtist = totalArtist._count?.name || 0;
+    const framedifference =
+      (countFrameCurrentWeek - countFramePreviousWeek) * 0.01;
 
     return NextResponse.json([
       countuser,
@@ -216,6 +273,8 @@ export const GET = async (req: any) => {
       userdifference,
       productdifference,
       countArtist,
+      countframe,
+      framedifference,
     ]);
   } catch (error) {
     console.error("Error fetching total users:", error);

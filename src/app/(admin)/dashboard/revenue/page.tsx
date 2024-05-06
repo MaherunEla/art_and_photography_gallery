@@ -36,6 +36,8 @@ const Productpage = () => {
 
   const tabledata: Order[] = data || [];
 
+  const dataToMap = filteredData.length === 0 ? tabledata : filteredData;
+
   const pdfMake = require("pdfmake/build/pdfmake.js");
   const pdfFonts = require("pdfmake/build/vfs_fonts.js");
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -145,7 +147,7 @@ const Productpage = () => {
         </button>
       </div>
       <div className="my-10">
-        <DefaultTable columns={columns} data={tabledata} />
+        <DefaultTable columns={columns} data={dataToMap} />
       </div>
     </div>
   );

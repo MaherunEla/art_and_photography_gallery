@@ -298,7 +298,7 @@ const Placeorderpage = () => {
                         {item.title}
                       </a>
                       <span className="block text-gray-500 text-base">
-                        By Jone deo{" "}
+                        By {item.artist}
                       </span>
                     </div>
 
@@ -355,9 +355,10 @@ const Placeorderpage = () => {
                           <span className="mb-1 block font-bold text-red-800 md:text-lg">
                             ৳
                             {(item.discount === null
-                              ? item?.discount + (item.framePrice ?? 0)
-                              : (item?.discount + (item.framePrice ?? 0)) *
-                                item.quantity
+                              ? (item?.price + (item?.framePrice ?? 0)) *
+                                item?.quantity
+                              : (item?.discount + (item?.framePrice ?? 0)) *
+                                item?.quantity
                             ).toFixed(2)}
                           </span>
                         </div>
