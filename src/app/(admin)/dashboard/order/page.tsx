@@ -35,6 +35,7 @@ const Productpage = () => {
   }
 
   const tabledata: Order[] = data || [];
+  const dataToMap = filteredData.length === 0 ? tabledata : filteredData;
 
   console.log(startingdate, endingdate);
   const pdfMake = require("pdfmake/build/pdfmake.js");
@@ -158,7 +159,7 @@ const Productpage = () => {
         </button>
       </div>
       <div className="my-10">
-        <DefaultTable columns={columns} data={tabledata} />
+        <DefaultTable columns={columns} data={dataToMap} />
       </div>
     </div>
   );
