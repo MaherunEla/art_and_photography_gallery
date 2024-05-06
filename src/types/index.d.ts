@@ -36,6 +36,15 @@ export interface Product {
   delete: any;
 }
 
+export interface Frame {
+  id: string;
+  frameimage: any;
+  framename: string;
+  frameprice: number;
+  stockstatus: string;
+  view: any;
+}
+
 export interface AdProduct {
   id: string;
   title: string;
@@ -65,4 +74,5 @@ export interface Order {
   ordernote: string;
   status: string;
   icon: any;
+  date?: string;
 }

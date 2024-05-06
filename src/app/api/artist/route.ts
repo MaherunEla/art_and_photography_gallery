@@ -6,7 +6,7 @@ import prisma from "@/app/utils/connect";
 
 export const GET = async (req: any) => {
   const signup = await prisma.signup.findMany({
-    where: { role: "Artist", userstatus: "Active" },
+    where: { role: "Artist" },
   });
   return NextResponse.json(signup);
 };

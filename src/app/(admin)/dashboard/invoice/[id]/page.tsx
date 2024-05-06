@@ -42,10 +42,9 @@ const Invoicepage = () => {
   console.log("param", params);
 
   const encodedEmail: string = params.id as string;
-  const decodedEmail: string = decodeURIComponent(encodedEmail);
 
   const fetchUpload = async () => {
-    const { data } = await axios.get(`/api/invoice/${decodedEmail}`);
+    const { data } = await axios.get(`/api/invoicedb/${params.id}`);
     return data;
   };
 
@@ -81,39 +80,36 @@ const Invoicepage = () => {
             <Text style={styles.cell}>Unit Price</Text>
             <Text style={styles.cell}>Total</Text>
           </View>
-          {data &&
-            data.product &&
-            data.product.map((item: AdProduct, idx: any) => (
-              <View style={styles.row} key={idx}>
-                <Text style={styles.cell}>
-                  {item.title},{item.frameName}
-                </Text>
-                <Text style={styles.cell}>{item.quantity}</Text>
-                <Text style={styles.cell}>
-                  {" "}
-                  {item.discount === null ? item.price : item.discount},
-                  {item.framePrice === null ? "" : item.framePrice}
-                </Text>
-                <Text style={styles.cell}>
-                  {" "}
-                  {(item.discount === null
-                    ? item.price + (item.framePrice ?? 0)
-                    : item.discount + (item.framePrice ?? 0)) * item.quantity}
-                </Text>
-              </View>
-            ))}
+          {data?.product.map((item: AdProduct, idx: any) => (
+            <View style={styles.row} key={idx}>
+              <Text style={styles.cell}>
+                {item.title} {item.frameName ?? ""}
+              </Text>
+              <Text style={styles.cell}>{item.quantity}</Text>
+              <Text style={styles.cell}>
+                {" "}
+                {item.discount === null ? item.price : item.discount},
+                {item.framePrice === 0 ? "" : item.framePrice}
+              </Text>
+              <Text style={styles.cell}>
+                {" "}
+                {(item.discount === null
+                  ? item.price + (item.framePrice ?? 0)
+                  : item.discount + (item.framePrice ?? 0)) * item.quantity}
+              </Text>
+            </View>
+          ))}
         </View>
         <View style={styles.section}>
           <Text style={{ fontWeight: "bold", margin: "4px 0" }}>
-            Subtotal:{" "}
-            {(data?.total - data?.formdata?.deliverycharge).toFixed(2)}
+            Subtotal: {(data?.total - data?.formdata.deliverycharge).toFixed(2)}
             tk
           </Text>
           <Text style={{ fontWeight: "bold", margin: "4px 0" }}>
-            Delivery Charge: {data?.formdata?.deliverycharge.toFixed(2)}tk
+            Delivery Charge: {data.formdata.deliverycharge.toFixed(2)}tk
           </Text>
           <Text style={{ fontWeight: "bold", margin: "4px 0" }}>
-            Total: {data?.total?.toFixed(2)}tk
+            Total: {data?.total.toFixed(2)}tk
           </Text>
         </View>
       </Page>
@@ -178,7 +174,7 @@ const Invoicepage = () => {
                 data.product.map((item: AdProduct, idx: any) => (
                   <tr key={idx}>
                     <td className="pr-6 py-4 whitespace-nowrap">
-                      {item.title}, {item.frameName}
+                      {item.title},{item.frameName}
                     </td>
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {item.quantity}
@@ -186,7 +182,7 @@ const Invoicepage = () => {
 
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {item.discount === null ? item.price : item.discount},
-                      {item.framePrice === null ? "" : item.framePrice}
+                      {item.framePrice === 0 ? "" : item.framePrice}
                     </td>
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {(item.discount === null
@@ -225,7 +221,7 @@ const Invoicepage = () => {
 
               <span className="flex flex-col items-end">
                 <span className="text-lg font-bold">
-                  {data?.total?.toFixed(2)}tk
+                  {data?.total.toFixed(2)}tk
                 </span>
                 <span className="text-sm text-gray-500">
                   including Delivery Charge

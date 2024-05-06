@@ -6,21 +6,32 @@ import { useAppDispatch } from "@/app/redux_store/store";
 import { AdProduct } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
 import { z } from "zod";
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
-const images = [
-  { id: 1, src: "/assets/images/home/frame4.jpg", name: "gold", price: 200 },
-  { id: 2, src: "/assets/images/home/frame2.jpg", name: "gold", price: 200 },
-  { id: 3, src: "/assets/images/home/frame3.jpg", name: "gold", price: 200 },
-];
+// const images = [
+//   { id: 1, src: "/assets/images/home/frame4.jpg", name: "gold", price: 200 },
+//   { id: 2, src: "/assets/images/home/frame2.jpg", name: "gold", price: 200 },
+//   { id: 3, src: "/assets/images/home/frame3.jpg", name: "gold", price: 200 },
+// ];
 
 type Props = {
   Gallery: AdProduct;
+};
+
+const fetchFrame = async () => {
+  const { data } = await axios.get("/api/frame");
+  return data;
 };
 const Singleproduct = ({ Gallery }: Props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageName, setSelectedImageName] = useState(null);
   const [selectedImagePrice, setSelectedImagePrice] = useState(null);
   const [selectedImageSrc, setSelectedImageSrc] = useState(null);
+  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
+    queryKey: ["frame-data"],
+    queryFn: fetchFrame,
+  });
 
   const handleImageChange = (
     imageId: any,
@@ -75,6 +86,13 @@ const Singleproduct = ({ Gallery }: Props) => {
   const { toast } = useToast();
 
   if (!Gallery) return <div>Not Found</div>;
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <h2>{(error as any).message}</h2>;
+  }
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -212,9 +230,13 @@ const Singleproduct = ({ Gallery }: Props) => {
             <div className="mb-3 flex  items-center gap-2 text-gray-800">
               {selectedImagePrice === null ? (
                 <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
-                  <p className="text-red-500">
-                    Select a frame before add to card
-                  </p>
+                  {Gallery?.category === "Digitally Captured" ? (
+                    <p className="text-red-500">
+                      Select a frame before add to card
+                    </p>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               ) : (
                 <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
@@ -286,7 +308,8 @@ const Singleproduct = ({ Gallery }: Props) => {
                 <div className="w-full h-full relative  ">
                   <Image
                     src={
-                      images.find((image) => image.id === selectedImage)!.src
+                      data?.find((image: any) => image.id === selectedImage)!
+                        .frameimage
                     }
                     alt="Selected Image"
                     fill
@@ -310,7 +333,7 @@ const Singleproduct = ({ Gallery }: Props) => {
           <div className="mt-5">
             <h2 className="text-lg font-semibold">Select Frame for Image:</h2>
             <form className="grid gap-8 grid-cols-3">
-              {images.map((image) => (
+              {data?.map((image: any) => (
                 <div
                   key={image.id}
                   className="flex  items-start justify-start gap-2"
@@ -324,24 +347,24 @@ const Singleproduct = ({ Gallery }: Props) => {
                     onChange={() =>
                       handleImageChange(
                         image.id,
-                        image.name,
-                        image.price,
-                        image.src
+                        image.framename,
+                        image.frameprice,
+                        image.frameimage
                       )
                     }
                   />
                   <label htmlFor={`image-${image.id}`}>
                     <Image
-                      src={image.src}
+                      src={image.frameimage}
                       alt={`Image ${image.id}`}
                       width={200}
                       height={200}
                     />
                     <p className="text-lg font-semibold py-2">
-                      Frame: {image.name}
+                      Frame: {image.framename}
                     </p>
                     <p className="text-lg font-semibold">
-                      Price: {image.price}
+                      Price: {image.frameprice}
                     </p>
                   </label>
                 </div>

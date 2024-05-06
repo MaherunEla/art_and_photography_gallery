@@ -1,28 +1,10 @@
 import { Order } from "@/types";
-import { format } from "date-fns";
+
 import { AccessorFn, createColumnHelper } from "@tanstack/react-table";
-import Image from "next/image";
-
 import Link from "next/link";
-import Orderinvoice from "./orderinvoice";
-import { InvoiceDocument } from "./invoicedocument";
-
-import {
-  PDFDownloadLink,
-  PDFViewer,
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-} from "@react-pdf/renderer";
-import { AdProduct } from "@/types";
 
 const columnHelper = createColumnHelper<Order>();
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return format(date, "d MMM, yyyy");
-};
+
 export const columns = [
   // columnHelper.accessor("id", {
   //   header: () => "ID",
@@ -109,65 +91,21 @@ export const columns = [
     header: () => "Total",
   }),
   columnHelper.accessor("status", {
-    cell: (info) => {
-      const Color = info.getValue();
-      if (Color == "Pending") {
-        return (
-          <div>
-            <p className="p-1 w-[75px] text-center border border-yellow-400 bg-yellow-400 rounded-md">
-              {info.getValue()}
-            </p>
-          </div>
-        );
-      }
-      if (Color == "InProgress") {
-        return (
-          <p className="p-1 w-[100px] text-center border border-teal-400 bg-teal-400 rounded-md">
-            {info.getValue()}
-          </p>
-        );
-      }
-      if (Color == "Deliverd") {
-        return (
-          <p className="p-1 text-center w-[80px] border border-cyan-450 bg-cyan-450 rounded-md">
-            {info.getValue()}
-          </p>
-        );
-      }
-      if (Color == "Cancel") {
-        return (
-          <p className="p-1 w-[70px] text-center border border-red-400 bg-red-400 rounded-md">
-            {info.getValue()}
-          </p>
-        );
-      }
-    },
+    cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Status",
   }),
   columnHelper.accessor("createdAt", {
-    cell: (info) => <p>{formatDate(info.getValue())}</p>,
+    cell: (info) => <p>{info.getValue().substring(0, 10)}</p>,
     header: () => "Date",
   }),
-
-  // columnHelper.accessor("icon", {
-  //   header: () => "Download Invoice",
-  //   cell: ({ row }) => {
-  //     const id = row.original.id;
-  //     return (
-  //       <>
-  //         {" "}
-  //         <div className="px-2 inline-block sm:col-span-2 rounded-lg bg-indigo-500  py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
-  //           <PDFDownloadLink
-  //             document={<InvoiceDocument orderId={id} />}
-  //             fileName="invoice.pdf"
-  //           >
-  //             {({ blob, url, loading, error }) =>
-  //               loading ? "Loading document..." : "Download PDF"
-  //             }
-  //           </PDFDownloadLink>
-  //         </div>
-  //       </>
-  //     );
-  //   },
-  // }),
+  columnHelper.accessor("icon", {
+    header: () => "",
+    cell: (info) => (
+      <Link href={`/orderinvoice/${info.row.original.id}`}>
+        <button className="px-[10px] py-[5px] rounded-[5px] text-white border-none cursor-pointer bg-teal-600">
+          Invoice
+        </button>
+      </Link>
+    ),
+  }),
 ];

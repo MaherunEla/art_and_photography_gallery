@@ -42,10 +42,9 @@ const Invoicepage = () => {
   console.log("param", params);
 
   const encodedEmail: string = params.id as string;
-  const decodedEmail: string = decodeURIComponent(encodedEmail);
 
   const fetchUpload = async () => {
-    const { data } = await axios.get(`/api/invoice/${decodedEmail}`);
+    const { data } = await axios.get(`/api/invoicedb/${params.id}`);
     return data;
   };
 
@@ -86,13 +85,13 @@ const Invoicepage = () => {
             data.product.map((item: AdProduct, idx: any) => (
               <View style={styles.row} key={idx}>
                 <Text style={styles.cell}>
-                  {item.title},{item.frameName}
+                  {item.title} {item.frameName ?? ""}
                 </Text>
                 <Text style={styles.cell}>{item.quantity}</Text>
                 <Text style={styles.cell}>
                   {" "}
                   {item.discount === null ? item.price : item.discount},
-                  {item.framePrice === null ? "" : item.framePrice}
+                  {item.framePrice === 0 ? "" : item.framePrice}
                 </Text>
                 <Text style={styles.cell}>
                   {" "}
@@ -178,7 +177,7 @@ const Invoicepage = () => {
                 data.product.map((item: AdProduct, idx: any) => (
                   <tr key={idx}>
                     <td className="pr-6 py-4 whitespace-nowrap">
-                      {item.title}, {item.frameName}
+                      {item.title},{item.frameName}
                     </td>
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {item.quantity}
@@ -186,7 +185,7 @@ const Invoicepage = () => {
 
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {item.discount === null ? item.price : item.discount},
-                      {item.framePrice === null ? "" : item.framePrice}
+                      {item.framePrice === 0 ? "" : item.framePrice}
                     </td>
                     <td className="pr-6 py-4 whitespace-nowrap">
                       {(item.discount === null

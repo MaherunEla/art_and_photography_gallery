@@ -1,17 +1,22 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { navigation, navsFooter } from "./sidebardata";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 const Sidebarpage = () => {
+  const { data: session, status } = useSession();
+  const defaultImage = "/assets/images/home/admin.jpg";
+
+  console.log({ session });
   return (
     <nav className="top-0 left-0 w-full h-full border-r bg-[#182237] space-y-8 sm:w-[290px]  border border-gray-900">
       <div className="flex flex-col h-full">
         <div className="py-10 px-4 ">
           <div className="flex items-center gap-x-4 relative">
             <Image
-              src="/assets/images/home/admin.jpg"
+              src={session?.user?.image || (defaultImage as any)}
               width={50}
               height={50}
               className="rounded-full border-4 border-gray-300"
