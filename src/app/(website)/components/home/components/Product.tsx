@@ -37,15 +37,22 @@ const Product = ({ Gallery }: any) => {
                       by {item.artist}
                     </span>
                   </div>
-
-                  <div className="flex flex-col items-end">
-                    {/* <span className="font-bold text-gray-600 lg:text-lg">
-                    ৳{item.discount.toFixed(2)}
-                  </span> */}
-                    <span className="font-bold text-gray-600 lg:text-lg line-through">
-                      ৳{item.price.toFixed(2)}
-                    </span>
-                  </div>
+                  {item?.discount === null ? (
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-gray-600 lg:text-lg ">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-end">
+                      <span className="font-bold text-gray-600 lg:text-lg">
+                        ৳{item.discount.toFixed(2)}
+                      </span>
+                      <span className="font-bold text-red-600 lg:text-lg line-through">
+                        ৳{item.price.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </Link>
             </div>

@@ -97,13 +97,7 @@ const Singleproduct = ({ Gallery }: Props) => {
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8  ">
-        <div
-          className={`grid gap-8 ${
-            Gallery.category === "Digitally Captured"
-              ? "grid-cols-3"
-              : "grid-cols-2"
-          } `}
-        >
+        <div className="grid grid-cols-3 gap-8 ">
           <div
             className="relative  overflow-hidden rounded-lg bg-gray-100 "
             onMouseEnter={() => setShowMagnifier(true)}
@@ -175,25 +169,6 @@ const Singleproduct = ({ Gallery }: Props) => {
               </h2>
             </div>
 
-            {/* <div className="mb-6 flex items-center gap-3 md:mb-10">
-            <div className="flex h-7 items-center gap-1 rounded-full bg-indigo-500 px-2 text-white">
-              <span className="text-sm">4.2</span>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-              </svg>
-            </div>
-
-            <span className="text-sm text-gray-500 transition duration-100">
-              56 ratings
-            </span>
-          </div> */}
-
             <div className="mt-2 md:mt-4 lg:mt-6">
               <div className="mb-3 text-lg font-semibold text-gray-800">
                 Description
@@ -230,13 +205,9 @@ const Singleproduct = ({ Gallery }: Props) => {
             <div className="mb-3 flex  items-center gap-2 text-gray-800">
               {selectedImagePrice === null ? (
                 <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
-                  {Gallery?.category === "Digitally Captured" ? (
-                    <p className="text-red-500">
-                      Select a frame before add to card
-                    </p>
-                  ) : (
-                    <></>
-                  )}
+                  <p className="text-red-500">
+                    Select a frame before add to card
+                  </p>
                 </div>
               ) : (
                 <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
@@ -252,128 +223,98 @@ const Singleproduct = ({ Gallery }: Props) => {
               )}
             </div>
 
-            {Gallery.category === "Digitally Captured" ? (
-              <div className="flex gap-2.5">
-                <button
-                  disabled={selectedImage === null}
-                  onClick={() => {
-                    dispatch(addCart(product));
-                    toast({
-                      title: " Item added to cart  ",
-                    });
-                  }}
-                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
-                >
-                  Add to cart
-                </button>
+            <div className="flex gap-2.5">
+              <button
+                disabled={
+                  selectedImage === null || Gallery.productstatus === "Sale"
+                }
+                onClick={() => {
+                  dispatch(addCart(product));
+                  toast({
+                    title: " Item added to cart  ",
+                  });
+                }}
+                className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
+              >
+                Add to cart
+              </button>
 
-                <a
-                  href="/cart"
-                  className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
-                >
-                  Buy now
-                </a>
-              </div>
-            ) : (
-              <div className="flex gap-2.5">
-                <button
-                  disabled={Gallery.productstatus === "Sale"}
-                  onClick={() => {
-                    dispatch(addCart(product));
-                    toast({
-                      title: " Item added to cart  ",
-                    });
-                  }}
-                  className="inline-block flex-1 rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 sm:flex-none md:text-base"
-                >
-                  Add to cart
-                </button>
+              <a
+                href="/cart"
+                className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
+              >
+                Buy now
+              </a>
+            </div>
+          </div>
 
-                <a
-                  href="/cart"
-                  className="inline-block rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
-                >
-                  Buy now
-                </a>
+          <div className="w-full h-full">
+            <h3 className="text-lg font-semibold">Selected Frame for Image:</h3>
+
+            {selectedImage && (
+              <div className="w-full h-full relative  ">
+                <Image
+                  src={
+                    data?.find((image: any) => image.id === selectedImage)!
+                      .frameimage
+                  }
+                  alt="Selected Image"
+                  fill
+                />
+                <div className="relative top-0 left-0 w-full h-full ">
+                  <Image
+                    src={Gallery.cimage} // Replace with the path to your overlay image
+                    alt="Overlay Image"
+                    fill
+                    className="w-full h-full p-[60px]"
+                  />
+                </div>
               </div>
             )}
           </div>
-          {Gallery.category === "Digitally Captured" ? (
-            <div className="w-full h-full">
-              <h3 className="text-lg font-semibold">
-                Selected Frame for Image:
-              </h3>
-
-              {selectedImage && (
-                <div className="w-full h-full relative  ">
-                  <Image
-                    src={
-                      data?.find((image: any) => image.id === selectedImage)!
-                        .frameimage
-                    }
-                    alt="Selected Image"
-                    fill
-                  />
-                  <div className="relative top-0 left-0 w-full h-full ">
-                    <Image
-                      src={Gallery.image} // Replace with the path to your overlay image
-                      alt="Overlay Image"
-                      fill
-                      className="w-full h-full p-[60px]"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <></>
-          )}
         </div>
-        {Gallery.category === "Digitally Captured" ? (
-          <div className="mt-5">
-            <h2 className="text-lg font-semibold">Select Frame for Image:</h2>
-            <form className="grid gap-8 grid-cols-3">
-              {data?.map((image: any) => (
-                <div
-                  key={image.id}
-                  className="flex  items-start justify-start gap-2"
-                >
-                  <input
-                    type="radio"
-                    id={`image-${image.id}`}
-                    name="selectedImage"
-                    value={image.id}
-                    checked={selectedImage === image.id}
-                    onChange={() =>
-                      handleImageChange(
-                        image.id,
-                        image.framename,
-                        image.frameprice,
-                        image.frameimage
-                      )
-                    }
+
+        <div className="mt-5">
+          <h2 className="text-lg font-semibold">Select Frame for Image:</h2>
+          <form className="grid gap-8 grid-cols-3">
+            {data?.map((image: any) => (
+              <div
+                key={image.id}
+                className="flex  items-start justify-start gap-2"
+              >
+                <input
+                  type="radio"
+                  id={`image-${image.id}`}
+                  name="selectedImage"
+                  value={image.id}
+                  checked={selectedImage === image.id}
+                  onChange={() =>
+                    handleImageChange(
+                      image.id,
+                      image.framename,
+                      image.frameprice,
+                      image.frameimage
+                    )
+                  }
+                />
+                <label htmlFor={`image-${image.id}`}>
+                  <Image
+                    src={image.frameimage}
+                    alt={`Image ${image.id}`}
+                    width={200}
+                    height={200}
                   />
-                  <label htmlFor={`image-${image.id}`}>
-                    <Image
-                      src={image.frameimage}
-                      alt={`Image ${image.id}`}
-                      width={200}
-                      height={200}
-                    />
-                    <p className="text-lg font-semibold py-2">
-                      Frame: {image.framename}
-                    </p>
-                    <p className="text-lg font-semibold">
-                      Price: {image.frameprice}
-                    </p>
-                  </label>
-                </div>
-              ))}
-            </form>
-          </div>
-        ) : (
-          <></>
-        )}
+                  <p className="text-lg font-semibold py-2">
+                    Frame: {image.framename}
+                  </p>
+                  <p className="text-lg font-semibold">
+                    Price: {image.frameprice}
+                  </p>
+                </label>
+              </div>
+            ))}
+          </form>
+        </div>
       </div>
     </div>
   );

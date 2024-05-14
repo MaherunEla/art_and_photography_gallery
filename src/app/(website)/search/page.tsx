@@ -67,7 +67,7 @@ const SearchPage = () => {
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 flex items-start justify-start gap-4">
         <div
           onClick={() => setCategoryQuery("Digitally Captured")}
-          className="w-[230px] h-[80px] bg-violet-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
+          className="w-[220px] h-[60px] pr-2 bg-violet-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
         >
           <div className="w-[50px] h-[50px] relative ">
             <Image
@@ -81,7 +81,7 @@ const SearchPage = () => {
         </div>
         <div
           onClick={() => setCategoryQuery("Color Painting")}
-          className="w-[200px] h-[80px] bg-pink-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
+          className="w-[190px] h-[60px] pr-2 bg-pink-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
         >
           <div className="w-[50px] h-[50px] relative ">
             <Image
@@ -92,6 +92,62 @@ const SearchPage = () => {
             />
           </div>
           <h3 className="text-base font-semibold">Color Painting</h3>
+        </div>
+        <div
+          onClick={() => setCategoryQuery("Water Color")}
+          className="w-[180px] h-[60px] pr-2 bg-orange-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
+        >
+          <div className="w-[50px] h-[50px] relative ">
+            <Image
+              src="/assets/images/home/watercolor.jpg"
+              fill
+              alt=""
+              className="rounded-full  "
+            />
+          </div>
+          <h3 className="text-base font-semibold">Water Color</h3>
+        </div>
+        <div
+          onClick={() => setCategoryQuery("Oil Painting")}
+          className="w-[170px] h-[60px] pr-2 bg-blue-300 rounded-full flex items-center justify-center gap-3 cursor-pointer"
+        >
+          <div className="w-[50px] h-[50px] relative ">
+            <Image
+              src="/assets/images/home/oilpainting.jpg"
+              fill
+              alt=""
+              className="rounded-full  "
+            />
+          </div>
+          <h3 className="text-base font-semibold">Oil Painting</h3>
+        </div>
+        <div
+          onClick={() => setCategoryQuery("Pencil Sketches")}
+          className="w-[200px] h-[60px] pr-2 bg-green-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
+        >
+          <div className="w-[50px] h-[50px] relative ">
+            <Image
+              src="/assets/images/home/pencil1.jpg"
+              fill
+              alt=""
+              className="rounded-full  "
+            />
+          </div>
+          <h3 className="text-base font-semibold">Pencil Sketches</h3>
+        </div>
+        <div
+          onClick={() => setCategoryQuery("Acrylic")}
+          className="w-[140px] h-[60px] pr-2 bg-yellow-200 rounded-full flex items-center justify-center gap-3 cursor-pointer"
+        >
+          <div className="w-[50px] h-[50px] relative ">
+            <Image
+              src="/assets/images/home/Acrylic1.jpg"
+              fill
+              alt=""
+              className="rounded-full  "
+            />
+          </div>
+          <h3 className="text-base font-semibold">Acrylic</h3>
         </div>
       </div>
       {/* <span className="text-xl">
