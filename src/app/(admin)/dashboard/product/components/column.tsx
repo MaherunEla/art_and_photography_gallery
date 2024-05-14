@@ -36,6 +36,10 @@ export const columns = [
     cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Description",
   }),
+  columnHelper.accessor("category", {
+    cell: (info) => <p>{info.getValue()}</p>,
+    header: () => "Category",
+  }),
   columnHelper.accessor("artist", {
     cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Author",

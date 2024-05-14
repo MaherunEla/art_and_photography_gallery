@@ -30,6 +30,7 @@ export interface Product {
   price: number;
   discount: number;
   artist: string;
+  category: string;
   productstatus: string;
   permission: string;
   view: any;

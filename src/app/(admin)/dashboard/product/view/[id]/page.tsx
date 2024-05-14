@@ -224,6 +224,11 @@ const Viewpage = () => {
                   </option>
                 ))}
               </select>
+              {errors.category && (
+                <p className="text-red-600">
+                  {errors.category.message as string}
+                </p>
+              )}
             </div>
 
             <div className="sm:col-span-2 ">
