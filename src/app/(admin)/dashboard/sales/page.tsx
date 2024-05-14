@@ -4,13 +4,10 @@ import DefaultTable from "../order/components/ordertable";
 import { columns } from "./components/column";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "antd";
-import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdOutlineFileDownload, MdSearch } from "react-icons/md";
 import { Order } from "@/types";
-import * as XLSX from "xlsx";
-import { format } from "date-fns";
 
 const fetchUpload = async () => {
   const { data } = await axios.get("/api/sales");
