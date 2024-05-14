@@ -83,40 +83,34 @@ const Carttablepage = () => {
                   </div>
                 </div>
 
-                {item.category === "Digitally Captured" ? (
-                  <>
-                    <div className="group relative block h-48 w-32 bg-gray-100 sm:h-56 sm:w-40">
-                      <div className="h-full w-full overflow-hidden relative flex items-center justify-center">
-                        <Image
-                          src={item?.frameImg || ""}
-                          loading="lazy"
-                          alt=""
-                          className=" object-cover object-center transition duration-200 group-hover:scale-110"
-                          width={160}
-                          height={224}
-                        />
-                      </div>
-                    </div>
-                    <div className="flex flex-1 flex-col justify-between py-4">
-                      <div>
-                        <a
-                          href="#"
-                          className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
-                        >
-                          {item.frameName}
-                        </a>
-                      </div>
+                <div className="group relative block h-48 w-32 bg-gray-100 sm:h-56 sm:w-40">
+                  <div className="h-full w-full overflow-hidden relative flex items-center justify-center">
+                    <Image
+                      src={item?.frameImg || ""}
+                      loading="lazy"
+                      alt=""
+                      className=" object-cover object-center transition duration-200 group-hover:scale-110"
+                      width={160}
+                      height={224}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col justify-between py-4">
+                  <div>
+                    <a
+                      href="#"
+                      className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
+                    >
+                      {item.frameName}
+                    </a>
+                  </div>
 
-                      <div>
-                        <span className="mb-1 block font-bold text-gray-800 md:text-lg">
-                          ৳{item?.framePrice?.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
+                  <div>
+                    <span className="mb-1 block font-bold text-gray-800 md:text-lg">
+                      ৳{item?.framePrice?.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
 
                 <div className="flex w-full justify-between border-t p-4 sm:w-auto sm:border-none sm:pl-0 lg:p-6 lg:pl-0">
                   <div className="flex flex-col items-start gap-2">
@@ -160,39 +154,25 @@ const Carttablepage = () => {
                     </button>
                   </div>
 
-                  {item.category === "Digitally Captured" ? (
-                    <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
-                      {item?.discount === null ? (
-                        <span className="block font-bold text-gray-800 md:text-lg">
-                          ৳
-                          {(
-                            (item.price + (item?.framePrice ?? 0)) *
-                            item.quantity
-                          ).toFixed(2)}
-                        </span>
-                      ) : (
-                        <span className="block font-bold text-gray-800 md:text-lg">
-                          ৳
-                          {(
-                            (item.discount + (item?.framePrice ?? 0)) *
-                            item.quantity
-                          ).toFixed(2)}
-                        </span>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
-                      {item?.discount === null ? (
-                        <span className="block font-bold text-gray-800 md:text-lg">
-                          ৳{(item.price * item.quantity).toFixed(2)}
-                        </span>
-                      ) : (
-                        <span className="block font-bold text-gray-800 md:text-lg">
-                          ৳{(item.discount * item.quantity).toFixed(2)}
-                        </span>
-                      )}
-                    </div>
-                  )}
+                  <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
+                    {item?.discount === null ? (
+                      <span className="block font-bold text-gray-800 md:text-lg">
+                        ৳
+                        {(
+                          (item.price + (item?.framePrice ?? 0)) *
+                          item.quantity
+                        ).toFixed(2)}
+                      </span>
+                    ) : (
+                      <span className="block font-bold text-gray-800 md:text-lg">
+                        ৳
+                        {(
+                          (item.discount + (item?.framePrice ?? 0)) *
+                          item.quantity
+                        ).toFixed(2)}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
