@@ -2,7 +2,11 @@
 import Image from "next/image";
 import Card from "./components/card/card";
 import { FaRegImage, FaUserAlt, FaUserCircle } from "react-icons/fa";
-import { MdAttachMoney, MdSupervisedUserCircle } from "react-icons/md";
+import {
+  MdAttachMoney,
+  MdFilterFrames,
+  MdSupervisedUserCircle,
+} from "react-icons/md";
 import Transactions from "./components/transactions/transactions";
 import Featured from "./components/featured/featured";
 
@@ -42,7 +46,7 @@ export default function Home() {
       title: "Total Frame",
       number: data?.data[10],
       change: data?.data[11],
-      icon: FcFrame,
+      icon: MdFilterFrames,
     },
     {
       id: 4,
