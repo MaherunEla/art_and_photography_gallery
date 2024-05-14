@@ -191,7 +191,14 @@ const Addpage = () => {
               <option selected value="0">
                 Select Category
               </option>
-              {["Digitally Captured", "Color Painting"].map((item, index) => (
+              {[
+                "Digitally Captured",
+                "Color Painting",
+                "Water Color",
+                "Oil Painting",
+                "Pencil Sketches",
+                "Acrylic",
+              ].map((item, index) => (
                 <option value={item} key={index}>
                   {item}
                 </option>

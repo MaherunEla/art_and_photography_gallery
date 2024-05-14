@@ -186,7 +186,7 @@ const Viewpage = () => {
 
             <div className="sm:col-span-2">
               <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">
-                Discount
+                Discounted
               </label>
               <input
                 type="text"
@@ -211,7 +211,14 @@ const Viewpage = () => {
                 <option selected value="0">
                   Select Category
                 </option>
-                {["Digitally Captured", "Color Painting"].map((item, index) => (
+                {[
+                  "Digitally Captured",
+                  "Color Painting",
+                  "Water Color",
+                  "Oil Painting",
+                  "Pencil Sketches",
+                  "Acrylic",
+                ].map((item, index) => (
                   <option value={item} key={index}>
                     {item}
                   </option>
