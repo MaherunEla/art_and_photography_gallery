@@ -16,9 +16,7 @@ const Navbar = () => {
         {pathname.split("/").pop()}
       </div>
       <div className="flex items-center gap-5">
-        <div className="flex gap-5">
-          <MdOutlineChat size={20} />
-        </div>
+        <div className="flex gap-5">{/* <MdOutlineChat size={20} /> */}</div>
       </div>
     </div>
   );

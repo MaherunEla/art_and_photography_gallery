@@ -238,7 +238,7 @@ const Invoicepage = () => {
         <div className="w-full flex items-start justify-start">
           <p className="py-4 ">Thank you for using Aesthete!</p>
         </div>
-        <div className="px-2 inline-block sm:col-span-2 rounded-lg bg-indigo-500  py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
+        {/* <div className="px-2 inline-block sm:col-span-2 rounded-lg bg-indigo-500  py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
           <PDFDownloadLink
             document={<InvoiceDocument data={data} />}
             fileName="invoice.pdf"
@@ -247,7 +247,11 @@ const Invoicepage = () => {
               loading ? "Loading document..." : "Download PDF"
             }
           </PDFDownloadLink>
-        </div>
+        </div> */}
+        {/* <ReactToPrint
+        trigger={() => <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Print</button>}
+        content={() => componentRef.current}
+      /> */}
       </div>
     </div>
   );

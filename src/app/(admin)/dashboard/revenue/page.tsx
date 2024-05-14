@@ -7,7 +7,8 @@ import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdOutlineFileDownload, MdSearch } from "react-icons/md";
-
+import dayjs, { Dayjs } from "dayjs";
+import { DatePicker } from "antd";
 import { Order } from "@/types";
 
 import * as XLSX from "xlsx";
@@ -17,9 +18,9 @@ const fetchSales = async () => {
   const { data } = await axios.get("/api/sales");
   return data;
 };
+const { RangePicker } = DatePicker;
 const Productpage = () => {
-  const [startingdate, setStartingdate] = useState("");
-  const [endingdate, setEndingdate] = useState("");
+  const [dates, setDates] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<Order[]>([]);
 
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
@@ -42,20 +43,29 @@ const Productpage = () => {
   const pdfFonts = require("pdfmake/build/vfs_fonts.js");
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-
-    const filteredOrders = data.filter((order: any) => {
-      // Extract the date from the order object
-      const orderDate = order.date;
-
-      // Check if the order date falls within the specified range
-      return orderDate >= startingdate && orderDate <= endingdate;
-    });
-    setFilteredData(filteredOrders);
+  const handleDateChange = (values: [Dayjs | null, Dayjs | null] | null) => {
+    if (values) {
+      const formattedDates: any = values.map((item: any) =>
+        item.format("YYYY-MM-DD")
+      );
+      setDates(formattedDates);
+      const [startDate, endDate] = formattedDates;
+      if (startDate && endDate) {
+        const filteredOrders = data.filter((order: any) => {
+          const orderDate = order.date;
+          return orderDate >= startDate && orderDate <= endDate;
+        });
+        setFilteredData(filteredOrders);
+      } else {
+        setFilteredData([]);
+      }
+    } else {
+      setDates([]);
+      setFilteredData([]);
+    }
   };
-  console.log({ filteredData });
 
+  console.log({ filteredData });
   const handleDownload = () => {
     // Convert data to a format compatible with Excel
     const dataToMap = filteredData.length === 0 ? tabledata : filteredData;
@@ -109,35 +119,7 @@ const Productpage = () => {
   return (
     <div className="bg-[#182237] p-5 rounded-[10px] mt-5">
       <div className="flex items-center justify-between">
-        <form onSubmit={handleSubmit} className="flex gap-2">
-          <div className="flex items-center gap-[10px] bg-[#2e374a] p-[10px] rounded-[10px] max-w-max">
-            <MdSearch />
-            <input
-              type="text"
-              value={startingdate}
-              onChange={(e) => setStartingdate(e.target.value)}
-              placeholder="Staring Date"
-              className="bg-transparent border-none text-white outline-none"
-            />
-          </div>
-
-          <div className="flex items-center gap-[10px] bg-[#2e374a] p-[10px] rounded-[10px] max-w-max">
-            <MdSearch />
-            <input
-              type="text"
-              value={endingdate}
-              onChange={(e) => setEndingdate(e.target.value)}
-              placeholder="Ending Date"
-              className="bg-transparent border-none text-white outline-none"
-            />
-          </div>
-          <button
-            className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
+        <RangePicker onChange={handleDateChange} />
         <button
           className="bg-blue-500 flex items-center justify-between gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={handleDownload}
