@@ -62,25 +62,50 @@ export function DropdownMenuDemo(user: any) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="flex items-center gap-1 font-semibold">
-            <FaRegUser size={15} />
-            <Link href={`/profile/${user?.user?.email}`}>Profile</Link>
+          <DropdownMenuItem>
+            <Link
+              href={`/profile/${user?.user?.email}`}
+              className="flex items-center gap-1 font-semibold"
+            >
+              <FaRegUser size={15} />
+              Profile
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-1 font-semibold">
-            <MdOutlineCloudUpload size={15} />
-            <Link href={`/upload/${user?.user?.email}`}>Upload</Link>
+          <DropdownMenuItem>
+            <Link
+              href={`/upload/${user?.user?.email}`}
+              className="flex items-center gap-1 font-semibold"
+            >
+              <MdOutlineCloudUpload size={15} />
+              Upload
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-1 font-semibold">
-            <GrGallery size={15} />
-            <Link href={`/mygallery/${user?.user?.email}`}>My Gallery</Link>
+          <DropdownMenuItem>
+            <Link
+              href={`/mygallery/${user?.user?.email}`}
+              className="flex items-center gap-1 font-semibold"
+            >
+              <GrGallery size={15} />
+              My Gallery
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-1 font-semibold">
-            <RiLuggageCartLine size={15} />
-            <Link href={`/order/${user?.user?.email}`}>Orders</Link>
+          <DropdownMenuItem>
+            <Link
+              href={`/order/${user?.user?.email}`}
+              className="flex items-center gap-1 font-semibold"
+            >
+              <RiLuggageCartLine size={15} />
+              Orders
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-1 font-semibold">
-            <TiShoppingCart size={15} />
-            <Link href={`/sales/${user?.user?.email}`}>Sales</Link>
+          <DropdownMenuItem>
+            <Link
+              href={`/sales/${user?.user?.email}`}
+              className="flex items-center gap-1 font-semibold"
+            >
+              <TiShoppingCart size={15} />
+              Sales
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
 

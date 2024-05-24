@@ -25,7 +25,7 @@ const uploadformSchema = z.object({
 
   artist: z.string().min(1, "Artist is required"),
   category: z.string().min(3, "Category is required"),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().min(1, "Description is required").optional(),
   image: z.string().min(1, "Image is required"),
 });
 
