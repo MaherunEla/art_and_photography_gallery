@@ -27,7 +27,7 @@ const uploadformSchema = z.object({
   category: z.string().min(3, "Category is required"),
   artist: z.string().min(1, "Artist is required"),
   permission: z.string().optional(),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().optional(),
   image: z.string().min(1, "Image is required"),
   cimage: z.string().min(1, "Water mark image is required").optional(),
   productstatus: z
@@ -164,11 +164,6 @@ const Viewpage = () => {
                 {...register("description")}
                 className="w-full px-2 py-2 bg-[#151c2c] text-white border-2 border-[#2e374a] rounded-[5px] outline-none"
               />
-              {errors.description && (
-                <p className="text-red-600">
-                  {errors.description.message as string}
-                </p>
-              )}
             </div>
             <div className="sm:col-span-2">
               <label className="mb-2 inline-block text-lg font-bold text-white sm:text-base">

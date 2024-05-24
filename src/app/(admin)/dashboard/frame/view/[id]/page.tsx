@@ -14,8 +14,13 @@ import { z } from "zod";
 const FrameSchema = z.object({
   framename: z.string().min(1, "Frame name is required"),
 
-  frameprice: z.string().transform((value) => parseFloat(value)),
-
+  frameprice: z
+    .union([
+      z.string().transform((value) => parseFloat(value)),
+      z.number(),
+      z.null(),
+    ])
+    .optional(),
   frameimage: z.string().min(1, "Image is required"),
   stockstatus: z.string().min(1, "Stock is required").optional(),
 });

@@ -116,10 +116,16 @@ const Productpage = () => {
     pdfMake.createPdf(pdfData).download("Revenue.pdf");
   };
 
+  const { RangePicker } = DatePicker;
+
+  const disabledDate = (current: any) => {
+    return current && current > dayjs().endOf("day");
+  };
+
   return (
     <div className="bg-[#182237] p-5 rounded-[10px] mt-5">
       <div className="flex items-center justify-between">
-        <RangePicker onChange={handleDateChange} />
+        <RangePicker onChange={handleDateChange} disabledDate={disabledDate} />
         <button
           className="bg-blue-500 flex items-center justify-between gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={handleDownload}
