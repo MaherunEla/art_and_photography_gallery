@@ -50,7 +50,7 @@ export default function Home() {
     },
     {
       id: 4,
-      title: "Revenue",
+      title: "Total Revenue",
       number: data?.data[2],
       change: data?.data[6],
       icon: MdAttachMoney,

@@ -22,7 +22,11 @@ const uploadformSchema = z.object({
     ])
     .optional(),
   discount: z
-    .union([z.string().transform((value) => parseFloat(value)), z.null()])
+    .union([
+      z.string().transform((value) => parseFloat(value)),
+      z.number(),
+      z.null(),
+    ])
     .optional(),
   category: z.string().min(3, "Category is required"),
   artist: z.string().min(1, "Artist is required"),

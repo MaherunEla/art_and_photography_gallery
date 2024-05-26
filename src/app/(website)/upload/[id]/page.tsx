@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -117,8 +117,14 @@ const Uploadpage = () => {
     }
   };
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
   const removeFile = () => {
     setFile({});

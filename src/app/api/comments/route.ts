@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req: any) => {
   const { searchParams } = new URL(req.url);
-  const productId = searchParams.get(" productId");
+  const productId = searchParams.get("productId");
 
   try {
     const comments = await prisma.comment.findMany({
@@ -31,6 +31,7 @@ export const POST = async (req: any) => {
       JSON.stringify({ message: "Not Authenticated!", status: 401 })
     );
   }
+
   try {
     const body = await req.json();
     const comment = await prisma.comment.create({

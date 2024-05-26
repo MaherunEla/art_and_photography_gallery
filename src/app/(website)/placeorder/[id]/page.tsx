@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoMdContact } from "react-icons/io";
 import { MdEventNote, MdPhoneAndroid } from "react-icons/md";
@@ -153,13 +153,22 @@ const Placeorderpage = () => {
         toast({
           title: "Order added Successfully",
         });
-        localStorage.clear();
 
         router.push(`/thankyou/${params.id}`);
       })
       .catch((err) => console.log({ err }));
   };
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
+  if (status !== "authenticated") {
+    return null;
+  }
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -420,7 +429,12 @@ const Placeorderpage = () => {
 
           <button
             type="submit"
-            className="inline-block sm:col-span-2 rounded-lg bg-indigo-500  py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+            disabled={cart.length === 0}
+            className={`inline-block sm:col-span-2 rounded-lg py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 ${
+              cart.length === 0
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-indigo-500 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+            }`}
           >
             Confirm Order
           </button>

@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TbMoodEdit } from "react-icons/tb";
 import { z } from "zod";
@@ -115,8 +115,15 @@ const Profileeditpage = () => {
 
   const router = useRouter();
   const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
 
   return (

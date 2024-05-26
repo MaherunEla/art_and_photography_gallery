@@ -15,13 +15,16 @@ const Sidebarpage = () => {
       <div className="flex flex-col h-full">
         <div className="py-10 px-4 ">
           <div className="flex items-center gap-x-4 relative">
-            <Image
-              src={session?.user?.image || (defaultImage as any)}
-              width={50}
-              height={50}
-              className="rounded-full border-4 border-gray-300"
-              alt=""
-            />
+            <div className="shrink-0 w-[50px] h-[50px] relative">
+              <Image
+                src={session?.user?.image || (defaultImage as any)}
+                width={50}
+                height={50}
+                className="rounded-full border-4 border-gray-300"
+                alt=""
+              />
+            </div>
+
             <div>
               <span className="block text-white text-sm font-semibold">
                 Admin

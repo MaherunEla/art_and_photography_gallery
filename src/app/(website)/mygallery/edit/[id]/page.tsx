@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -14,8 +14,13 @@ import { useSession } from "next-auth/react";
 const uploadformSchema = z.object({
   title: z.string().min(1, "Title is required"),
 
-  price: z.string().transform((value) => parseFloat(value)),
-
+  price: z
+    .union([
+      z.string().transform((value) => parseFloat(value)),
+      z.number(),
+      z.null(),
+    ])
+    .optional(),
   artist: z.string().min(1, "Artist is required"),
   category: z.string().min(3, "Category is required"),
 
@@ -114,12 +119,23 @@ const Uploadpage = () => {
       // Handle error gracefully
     }
   };
-
   const router = useRouter();
   const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
+
+  const removeFile = () => {
+    setFile({});
+    setValue("image", "");
+  };
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
@@ -237,7 +253,7 @@ const Uploadpage = () => {
               Upload .jpg or .png file with 16:9 ratio
             </p>
             <div className="progrss">
-              <Progress file={File} />
+              <Progress file={File} removeFile={removeFile} />
             </div>
           </div>
 

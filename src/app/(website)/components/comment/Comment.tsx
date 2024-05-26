@@ -31,6 +31,7 @@ const Comments = ({ productId }: Props) => {
       method: "POST",
       body: JSON.stringify({ text, productId }),
     });
+    setText("");
     mutate();
   };
   return (

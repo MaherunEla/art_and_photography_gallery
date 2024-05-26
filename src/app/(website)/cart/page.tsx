@@ -61,12 +61,9 @@ const Carttablepage = () => {
 
                 <div className="flex flex-1 flex-col justify-between py-4">
                   <div>
-                    <a
-                      href="#"
-                      className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
-                    >
+                    <p className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl">
                       {item.title}
-                    </a>
+                    </p>
                     <span className="block text-gray-500">By Jone deo </span>
                   </div>
 
@@ -97,12 +94,9 @@ const Carttablepage = () => {
                 </div>
                 <div className="flex flex-1 flex-col justify-between py-4">
                   <div>
-                    <a
-                      href="#"
-                      className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl"
-                    >
+                    <p className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl">
                       {item.frameName}
-                    </a>
+                    </p>
                   </div>
 
                   <div>
