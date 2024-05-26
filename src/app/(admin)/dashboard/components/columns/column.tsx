@@ -1,15 +1,9 @@
 import { Order } from "@/types";
-import { format } from "date-fns";
-import { AccessorFn, createColumnHelper } from "@tanstack/react-table";
-import Image from "next/image";
 
-import Link from "next/link";
+import { AccessorFn, createColumnHelper } from "@tanstack/react-table";
 
 const columnHelper = createColumnHelper<Order>();
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return format(date, "d MMM, yyyy");
-};
+
 export const columns = [
   // columnHelper.accessor("id", {
   //   header: () => "ID",
@@ -64,8 +58,8 @@ export const columns = [
     },
     header: () => "Status",
   }),
-  columnHelper.accessor("createdAt", {
-    cell: (info) => <p>{formatDate(info.getValue())}</p>,
+  columnHelper.accessor("date", {
+    cell: (info) => <p>{info.getValue()}</p>,
     header: () => "Date",
   }),
   columnHelper.accessor("total", {

@@ -124,8 +124,14 @@ const Productpage = () => {
       <div className="flex items-center justify-between">
         <RangePicker onChange={handleDateChange} disabledDate={disabledDate} />
         <button
-          className="bg-blue-500 flex items-center justify-between gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className={`flex items-center justify-between gap-1 text-white font-bold py-2 px-4 rounded
+    ${
+      dataToMap.length === 0
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-blue-500 hover:bg-blue-700"
+    }`}
           onClick={handleDownload}
+          disabled={dataToMap.length === 0}
         >
           Download
           <MdOutlineFileDownload className="mr-2" size={20} />

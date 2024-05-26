@@ -27,6 +27,7 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import { RiLuggageCartLine } from "react-icons/ri";
 import { TbLogout } from "react-icons/tb";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export function DropdownMenuDemo(user: any) {
   console.log("Image", user?.user?.image);
@@ -37,12 +38,18 @@ export function DropdownMenuDemo(user: any) {
   const router = useRouter();
   const { status } = useSession();
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   if (status === "loading") {
     return <div>Loading...</div>;
   }
 
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
 
   return (

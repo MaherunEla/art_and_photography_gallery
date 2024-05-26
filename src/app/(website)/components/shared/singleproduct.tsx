@@ -212,7 +212,7 @@ const Singleproduct = ({ Gallery }: Props) => {
               ) : (
                 <div className="text-lg font-semibold flex flex-col items-start justify-start gap-2">
                   <p> {selectedImageName}</p>
-                  <p>৳ {(1 + selectedImagePrice).toFixed(2)}</p>
+                  <p>৳ {(0 + selectedImagePrice).toFixed(2)}</p>
                   <p className="text-red-500">
                     <span className="text-gray-800"> Total: </span>৳{" "}
                     {Gallery?.discount === null

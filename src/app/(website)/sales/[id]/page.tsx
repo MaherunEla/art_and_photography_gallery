@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DefaultTable from "../../components/shared/DefaultTableOrder";
 import { columns } from "../column";
 import dayjs, { Dayjs } from "dayjs";
@@ -28,7 +28,12 @@ const Productpage = () => {
     queryKey: ["order-data"],
     queryFn: fetchUpload,
   });
-  const { RangePicker } = DatePicker;
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -128,16 +133,28 @@ const Productpage = () => {
   };
 
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
+
+  const { RangePicker } = DatePicker;
+
+  const disabledDate = (current: any) => {
+    return current && current > dayjs().endOf("day");
+  };
 
   return (
     <div className="mx-auto max-w-screen-2xl px-4 md:px-8p-5 p-5 rounded-[10px] mt-5">
       <div className="flex items-center justify-between">
-        <RangePicker onChange={handleDateChange} />
+        <RangePicker onChange={handleDateChange} disabledDate={disabledDate} />
         <button
-          className="bg-blue-500 flex items-center justify-between gap-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className={`flex items-center justify-between gap-1 text-white font-bold py-2 px-4 rounded
+    ${
+      dataToMap.length === 0
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-blue-500 hover:bg-blue-700"
+    }`}
           onClick={handleDownload}
+          disabled={dataToMap.length === 0}
         >
           Download
           <MdOutlineFileDownload className="mr-2" size={20} />

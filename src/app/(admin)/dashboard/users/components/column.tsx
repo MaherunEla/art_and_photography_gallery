@@ -1,5 +1,5 @@
 import { Users } from "@/types";
-import { format } from "date-fns";
+
 import { AccessorFn, createColumnHelper } from "@tanstack/react-table";
 import Image from "next/image";
 import Deletebutton from "./deletebutton";
@@ -12,10 +12,6 @@ const nameAndImageAccessor: AccessorFn<Users> = (row) => {
   return { name, image };
 };
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return format(date, "d MMM, yyyy");
-};
 export const columns = [
   // columnHelper.accessor("id", {
   //   header: () => "ID",
@@ -45,7 +41,7 @@ export const columns = [
     header: () => "Contact",
   }),
   columnHelper.accessor("createdat", {
-    cell: (info) => <p>{formatDate(info.getValue())}</p>,
+    cell: (info) => <p>{info.getValue().substring(0, 10)}</p>,
     header: () => "Created at",
   }),
   columnHelper.accessor("role", {

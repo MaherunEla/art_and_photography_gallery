@@ -15,6 +15,12 @@ const HomeArtist = () => {
     queryKey: ["signup-data"],
     queryFn: fetchProfile,
   });
+  const formatURL = (url) => {
+    if (!url) return "";
+    return url.startsWith("http://") || url.startsWith("https://")
+      ? url
+      : `https://${url}`;
+  };
 
   console.log({ data });
 
@@ -23,6 +29,9 @@ const HomeArtist = () => {
   }
   if (isError) {
     return <h2>{(error as any).message}</h2>;
+  }
+  if (!Array.isArray(data)) {
+    return <h2>Data is not in the expected format</h2>;
   }
 
   return (
@@ -68,7 +77,7 @@ const HomeArtist = () => {
                   <div className="flex justify-center">
                     <div className="flex gap-4">
                       <a
-                        href={item.socialaccountf || ""}
+                        href={formatURL(item?.socialaccountf)}
                         target="_blank"
                         className="text-gray-400 transition duration-100 hover:text-gray-500 active:text-gray-600"
                       >
@@ -85,7 +94,7 @@ const HomeArtist = () => {
                       </a>
 
                       <a
-                        href={item.socialaccountl || "#"}
+                        href={formatURL(item?.socialaccountl)}
                         target="_blank"
                         className="text-gray-400 transition duration-100 hover:text-gray-500 active:text-gray-600"
                       >

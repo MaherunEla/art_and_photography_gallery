@@ -2,13 +2,14 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import React, { useRef } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useRef } from "react";
 import { IoMdCloudDone } from "react-icons/io";
 import { format } from "date-fns";
 import { AdProduct } from "@/types";
 
 import ReactToPrint from "react-to-print";
+import { useSession } from "next-auth/react";
 
 const Invoicepage = () => {
   const params = useParams();
@@ -21,11 +22,19 @@ const Invoicepage = () => {
     return data;
   };
   const componentRef = useRef(null);
+  const router = useRouter();
+  const { status } = useSession();
 
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["order-data"],
     queryFn: fetchUpload,
   });
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -34,6 +43,9 @@ const Invoicepage = () => {
     return <h2>{(error as any).message}</h2>;
   }
   console.log({ data });
+  if (status !== "authenticated") {
+    return null;
+  }
 
   return (
     <div className=" py-6 sm:py-8 lg:py-12 mx-auto max-w-4xl ">

@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import DefaultTable from "../../shared/table/DefaultTable";
 
-import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
@@ -36,12 +35,6 @@ const Transactions = () => {
             Latest Transactions
           </p>
         </div>
-
-        {/* <Link href={url}>
-          <button className="p-[10px] bg-[#5d57c9] text-white border-none rounded-[5px] cursor-pointer">
-            Add New
-          </button>
-        </Link> */}
       </div>
       <div className="my-10">
         <DefaultTable

@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 const Mygallerypage = () => {
   const router = useRouter();
@@ -26,6 +26,12 @@ const Mygallerypage = () => {
 
   console.log({ data });
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
@@ -33,7 +39,7 @@ const Mygallerypage = () => {
     return <h2>{(error as any).message}</h2>;
   }
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
 
   return (

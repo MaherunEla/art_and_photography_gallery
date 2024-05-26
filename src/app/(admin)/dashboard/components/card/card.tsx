@@ -12,7 +12,7 @@ const Card = ({ item }: any) => {
         </span>
         <span className="text-white md:text-[16px] lg:text-[20px] font-light">
           <span className={item.change > 0 ? "text-green-400" : "text-red-500"}>
-            {item.change}%
+            {item?.change?.toFixed(2)}%
           </span>
           {item.change > 0 ? "more" : "less"} than previous week
         </span>

@@ -2,19 +2,23 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import React, { useRef } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdCloudDone } from "react-icons/io";
 import { format } from "date-fns";
 import { AdProduct } from "@/types";
 import ReactToPrint from "react-to-print";
+import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { clearCart } from "@/app/redux_store/cartAddSlice";
 
 const Invoicepage = () => {
   const params = useParams();
   console.log("param", params);
-
+  const [isCleared, setIsCleared] = useState(false);
   const encodedEmail: string = params.id as string;
   const decodedEmail: string = decodeURIComponent(encodedEmail);
+  const dispatch = useDispatch();
 
   const fetchUpload = async () => {
     const { data } = await axios.get(`/api/invoice/${decodedEmail}`);
@@ -26,6 +30,34 @@ const Invoicepage = () => {
     queryKey: ["order-data"],
     queryFn: fetchUpload,
   });
+  useEffect(() => {
+    if (data && !isCleared) {
+      console.log("Setting timer to clear localStorage");
+      const timer = setTimeout(() => {
+        console.log("Clearing localStorage");
+        localStorage.clear();
+        dispatch(clearCart());
+        setIsCleared(true);
+      }, 2000);
+
+      return () => {
+        console.log("Clearing timer on unmount");
+        clearTimeout(timer);
+      };
+    }
+  }, [data, isCleared, dispatch]);
+
+  const router = useRouter();
+  const { status } = useSession();
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
+  if (status !== "authenticated") {
+    return null;
+  }
 
   if (isLoading) {
     return <h2>Loading...</h2>;

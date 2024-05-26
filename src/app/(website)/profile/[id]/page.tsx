@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Profilepage = () => {
   const params = useParams();
@@ -26,8 +26,15 @@ const Profilepage = () => {
   const defaultImage = "/assets/images/home/defaultimage.jpg";
   const router = useRouter();
   const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
+
   if (status !== "authenticated") {
-    router.push("/");
+    return null;
   }
 
   return (
