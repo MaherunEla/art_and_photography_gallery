@@ -62,19 +62,19 @@ const Comments = ({ productId }: Props) => {
                 <div className="flex gap-5">
                   <div className="relative w-[60px] h-[60px]">
                     <Image
-                      src={item.user.image}
+                      src={item?.user?.image}
                       alt="image"
                       fill
                       className="rounded-full"
                     />
                   </div>
                   <div className="flex flex-col gap-2 ">
-                    <span className="font-medium">{item.user.name}</span>
-                    <p>{item.text}</p>
+                    <span className="font-medium">{item?.user?.name}</span>
+                    <p>{item?.text}</p>
                     {/* <span>{item.createdAt.substring(0, 10)}</span> */}
                   </div>
                 </div>
-                <span>{item.createdAt.substring(0, 10)}</span>
+                <span>{item?.createdAt.substring(0, 10)}</span>
               </div>
             ))}
       </div>

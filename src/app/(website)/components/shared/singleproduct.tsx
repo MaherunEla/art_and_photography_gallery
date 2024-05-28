@@ -174,7 +174,9 @@ const Singleproduct = ({ Gallery }: Props) => {
                 Description
               </div>
 
-              <p className="text-gray-500">{Gallery?.description}</p>
+              <p className="text-gray-500">
+                {Gallery?.description}({Gallery?.category})
+              </p>
 
               {Gallery.productstatus === "Sale" ? (
                 <p className="text-red-500 text-lg font-bold">Out of Stock</p>

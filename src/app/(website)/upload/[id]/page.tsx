@@ -104,6 +104,12 @@ const Uploadpage = () => {
       );
       console.log({ res });
 
+      if (res.data.secure_url) {
+        toast({
+          title: " Image Upload successfully  ",
+        });
+      }
+
       return {
         success: 1,
         url: res.data.secure_url,

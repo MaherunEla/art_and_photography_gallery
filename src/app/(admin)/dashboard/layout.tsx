@@ -14,6 +14,8 @@ const queryClient = new QueryClient();
 import { useSession } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
 import LogoutOnClose from "@/app/(website)/components/shared/Logoutclose";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RootLayout({
   children,
@@ -36,19 +38,21 @@ export default function RootLayout({
 function RootLayoutContent({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
 
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "loading") return;
+    if (!session || session.user?.role !== "Admin") {
+      router.push("/Adminlogin");
+    }
+  }, [session, status, router]);
+
   if (status === "loading") {
-    // Show loading indicator if session status is still loading
     return <div>Loading...</div>;
   }
 
-  // Check if the user is authenticated and has the "Admin" role
-  const isAdmin = session?.user?.role === "Admin";
-
-  if (!isAdmin) {
-    // If user is not authenticated or does not have the "Admin" role, redirect to login page
-    // You can replace "/login" with your actual login page URL
-    window.location.href = "/Adminlogin";
-    return null; // Ensure nothing else is rendered if redirecting
+  if (!session || session.user?.role !== "Admin") {
+    return null;
   }
 
   return (

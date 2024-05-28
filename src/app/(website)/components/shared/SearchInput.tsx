@@ -11,21 +11,26 @@ const SearchInput = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (search) {
+      setSearchQuery(search.get("q"));
+    }
+  }, [search]);
+
   const onSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (typeof searchQuery !== "string") {
-      return console.log("error");
+    if (!searchQuery) {
+      return;
     }
 
-    const encodedSearchQuery = encodeURI(searchQuery);
-
+    const encodedSearchQuery = encodeURIComponent(searchQuery);
     router.push(`/search?q=${encodedSearchQuery}`);
   };
 
   return (
-    <div className="mb-10 md:mb-16 flex items-center justify-center gap-4 ">
-      <form onSubmit={onSearch} className="px-4 mx-auto grow mt-12  gap-4">
+    <div className="mb-10 md:mb-16 flex items-center justify-center gap-4">
+      <form onSubmit={onSearch} className="px-4 mx-auto grow mt-12 gap-4">
         <div className="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +48,10 @@ const SearchInput = () => {
           </svg>
           <input
             type="text"
-            placeholder="Search By Title, Artist ,Description"
+            placeholder="Search By Title, Artist, Description"
             value={searchQuery || ""}
             onChange={(event) => setSearchQuery(event.target.value)}
-            className="w-full  py-3 pl-12 pr-4 text-gray-500 border rounded-full outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
+            className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-full outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
           />
         </div>
       </form>

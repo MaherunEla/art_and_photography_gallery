@@ -15,7 +15,7 @@ const HomeArtist = () => {
     queryKey: ["signup-data"],
     queryFn: fetchProfile,
   });
-  const formatURL = (url) => {
+  const formatURL = (url: any) => {
     if (!url) return "";
     return url.startsWith("http://") || url.startsWith("https://")
       ? url
