@@ -58,6 +58,9 @@ const Signuppage = () => {
         router.push("/login");
       })
       .catch((err) => console.log({ err }));
+    toast({
+      title: "Use different email",
+    });
   };
 
   return (
