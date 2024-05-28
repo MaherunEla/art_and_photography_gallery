@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import DefaultTable from "../shared/table/DefaultTable";
 import { columns } from "./components/column";
-import { defaultData } from "./components/UsersData";
-import UserNavbar from "./components/UserNavbar";
-import Search from "./components/search";
+
 import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";

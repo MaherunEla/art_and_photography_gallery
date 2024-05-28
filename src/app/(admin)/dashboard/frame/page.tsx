@@ -38,7 +38,7 @@ const Framepage = () => {
             type="text"
             value={filtering}
             onChange={(e) => setFiltering(e.target.value)}
-            placeholder="Search for a user ..."
+            placeholder="Search for a frame ..."
             className="bg-transparent border-none text-white outline-none"
           />
         </div>
