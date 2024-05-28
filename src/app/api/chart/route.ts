@@ -33,6 +33,7 @@ export const GET = async (req: any) => {
             gte: startDate,
             lte: endDate,
           },
+          status: "Deliverd",
         },
       });
 
