@@ -7,6 +7,8 @@ import Product from "../components/home/components/Product";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
+export const dynamic = "force-dynamic";
+
 const fetchPosts = async (url: string) => {
   const response = await fetch(url);
 
@@ -20,9 +22,24 @@ const fetchPosts = async (url: string) => {
 const SearchPage = () => {
   const [categoryQuery, setCategoryQuery] = useState("");
   const [productData, setProductData] = useState([]);
-  const search = useSearchParams();
-  const searchQuery = search ? search.get("q") : null;
+  // const search = useSearchParams();
+  // const searchQuery = search ? search.get("q") : null;
+
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q");
+
+      if (!query) {
+        router.push("/");
+      } else {
+        setSearchQuery(query);
+      }
+    }
+  }, [router]);
 
   useEffect(() => {
     if (!searchQuery) {
