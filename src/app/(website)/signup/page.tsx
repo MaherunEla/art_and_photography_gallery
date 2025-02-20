@@ -46,9 +46,10 @@ const Signuppage = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const onSubmit = async (data: FormValues) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
     console.log("Form submitted...", data);
     axios
-      .post("http://localhost:3000/api/signup", data)
+      .post(`${apiUrl}/api/signup`, data)
       .then((res) => {
         console.log({ res });
         queryClient.invalidateQueries({ queryKey: ["signup-data"] });
