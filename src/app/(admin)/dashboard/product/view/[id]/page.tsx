@@ -135,14 +135,19 @@ const Viewpage = () => {
     return <h2>{(error as any).message}</h2>;
   }
   return (
-    <div className="flex gap-[50px] mt-5">
-      <div className="flex-1 bg-[#182237] p-5 rounded-[10px] font-bold text-[#b7bac1] max-h-max">
-        <div className="w-[250px] h-[250px] md:w-[350px] md:h-[350px]  lg:w-[400px] lg:h-[400px] relative rounded-[10px] overflow-hidden mb-5">
-          <Image src={image || data?.image} alt="" fill />
+    <div className="flex flex-col gap-8 mt-5 md:flex-row md:gap-[50px]">
+      <div className="flex-1 bg-[#182237] p-5 rounded-[10px] font-bold text-[#b7bac1] w-full">
+        <div className="w-full max-w-[400px]  aspect-square relative rounded-[10px] overflow-hidden mb-5 ">
+          <Image
+            src={image || data?.image}
+            alt={data?.title}
+            fill
+            className="object-cover"
+          />
         </div>
         {data?.title}
       </div>
-      <div className="flex-3 bg-[#182237] p-5 rounded-[10px]">
+      <div className="flex-[2] bg-[#182237] p-5 rounded-[10px] w-full">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
           <div className="flex items-center justify-center pt-5"></div>
           <div className="mx-auto grid max-w-screen-md gap-4 sm:grid-cols-2">

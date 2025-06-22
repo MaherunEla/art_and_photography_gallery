@@ -184,7 +184,7 @@ const Placeorderpage = () => {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto grid w-[500px] gap-4 sm:grid-cols-2"
+          className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2"
         >
           <div className="relative sm:col-span-2 ">
             <IoMdContact className="w-6 h-6 text-black absolute left-3 inset-y-0 my-auto" />
@@ -222,14 +222,14 @@ const Placeorderpage = () => {
               <p className="text-red-600">{errors.address.message as string}</p>
             )}
           </div>
-          <div className="relative sm:col-span-2 ">
+          <div className="relative sm:col-span-2">
             {radio.map((item, idx) => (
               <div key={idx} className="py-2">
                 <label htmlFor={item.title} className="block relative">
                   <input
                     id={item.title}
                     type="radio"
-                    defaultChecked={idx == 1 ? true : false}
+                    defaultChecked={idx === 1}
                     className="sr-only peer"
                     value={item.price || 120}
                     {...register("deliverycharge")}
@@ -239,7 +239,8 @@ const Placeorderpage = () => {
                       {errors.deliverycharge.message as string}
                     </p>
                   )}
-                  <div className=" w-full flex gap-x-3 items-start p-4 cursor-pointer rounded-lg border bg-white shadow-sm ring-indigo-600 peer-checked:ring-2 duration-200">
+
+                  <div className="w-full flex gap-x-3 items-start p-4 cursor-pointer rounded-lg border bg-white shadow-sm ring-indigo-600 peer-checked:ring-2 hover:ring-1 hover:ring-gray-300 transition duration-200">
                     <div className="flex-none">{item.icon}</div>
                     <div>
                       <h3 className="leading-none text-gray-800 font-medium px-3">
@@ -247,19 +248,20 @@ const Placeorderpage = () => {
                       </h3>
                     </div>
                   </div>
-                  <div className="absolute top-4 right-[50px] flex-none flex items-center justify-center w-4 h-4  text-black">
-                    <h2 className=" font-semibold px-3">{item.price}Tk</h2>
+
+                  <div className="absolute top-4 right-[50px] flex items-center justify-center text-black">
+                    <h2 className="font-semibold px-3">{item.price} Tk</h2>
                   </div>
 
-                  <div className="absolute top-4 right-4 flex-none flex items-center justify-center w-4 h-4 rounded-full border peer-checked:bg-indigo-600 text-white peer-checked:text-white duration-200">
+                  <div className="absolute top-4 right-4 w-4 h-4 rounded-full border flex items-center justify-center text-transparent peer-checked:bg-indigo-600 peer-checked:text-white transition duration-200">
                     <svg className="w-2.5 h-2.5" viewBox="0 0 12 10">
                       <polyline
                         fill="none"
-                        stroke-width="2px"
+                        strokeWidth="2"
                         stroke="currentColor"
-                        stroke-dasharray="16px"
+                        strokeDasharray="16"
                         points="1.5 6 4.5 9 10.5 1"
-                      ></polyline>
+                      />
                     </svg>
                   </div>
                 </label>
@@ -275,165 +277,111 @@ const Placeorderpage = () => {
               className="w-full pl-12 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
             />
           </div>
-          <div className="relative sm:col-span-2  mb-6 flex flex-col gap-4 sm:mb-8 md:gap-6">
+          <div className="relative sm:col-span-2  flex flex-col gap-4">
             {cart.length > 0 &&
               cart?.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-wrap gap-x-4 overflow-hidden rounded-lg border sm:gap-y-4 lg:gap-6"
+                  className="relative flex flex-wrap gap-4 rounded-lg border p-2 "
                 >
                   <Link
                     href={`/gallery/${item.id}`}
-                    className="group relative block h-[50px] w-[50px] overflow-hidden bg-gray-100 sm:h-[120px] sm:w-[70px]"
+                    className="relative h-[90px] w-[70px]  sm:h-[120px] sm:w-[90px]"
                   >
                     <Image
                       src={item.cimage}
-                      loading="lazy"
                       alt=""
-                      className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                      className="object-cover rounded"
                       fill
                     />
-                    <span className="absolute right-0  rounded-l-lg bg-red-500 px-2 py-1 text-sm font-semibold uppercase tracking-wider text-white">
+                    <span className="absolute top-0 right-0  bg-red-500 rounded-bl px-2 py-1 text-sm text-white">
                       {item.quantity}
                     </span>
                   </Link>
 
-                  <div className="flex flex-1 flex-col justify-between py-4">
-                    <div>
-                      <a
-                        href="#"
-                        className="mb-1 inline-block text-sm font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-sm"
-                      >
-                        {item.title}
-                      </a>
-                      <span className="block text-gray-500 text-base">
-                        By {item.artist}
-                      </span>
-                    </div>
-
-                    <div>
-                      <span className="mb-1 block font-bold text-gray-800 md:text-sm">
-                        ৳
-                        {(
-                          (item.discount === null
-                            ? item.price
-                            : item.discount) * item.quantity
-                        ).toFixed(2)}
-                      </span>
-                    </div>
+                  <div className="flex flex-1 flex-col justify-between">
+                    <p className="text-sm font-bold sm:text-base">
+                      {item.title}
+                    </p>
+                    <p className=" text-gray-500 text-sm">By {item.artist}</p>
+                    <p className="font-bold text-sm">
+                      ৳
+                      {((item.discount ?? item.price) * item.quantity).toFixed(
+                        2
+                      )}
+                    </p>
                   </div>
 
-                  {item.category === "Digitally Captured" ? (
-                    <>
-                      <Link
-                        href={`/gallery/${item.id}`}
-                        className="group relative block  h-[50px] w-[50px] overflow-hidden bg-gray-100 sm:h-[120px] sm:w-[70px]"
-                      >
-                        <Image
-                          src={item.frameImg || ""}
-                          loading="lazy"
-                          alt=""
-                          className=" mt-8 object-cover object-center transition duration-200 group-hover:scale-110"
-                          width={160}
-                          height={240}
-                        />
-                        <span className="absolute right-0 top-0 rounded-l-lg bg-red-500 px-2 py-1 text-sm font-semibold uppercase tracking-wider text-white">
-                          {item.quantity}
-                        </span>
-                      </Link>
+                  <Link
+                    href={`/gallery/${item.id}`}
+                    className="relative  h-[90px] w-[70px]  sm:h-[120px] sm:w-[90px]"
+                  >
+                    <Image
+                      src={item.frameImg || ""}
+                      alt=""
+                      className="object-cover rounded"
+                      fill
+                    />
+                    <span className="absolute top-0 right-0  bg-red-500 rounded-bl px-2 py-1 text-sm text-white">
+                      {item.quantity}
+                    </span>
+                  </Link>
 
-                      <div className="flex flex-1 flex-col justify-between py-4">
-                        <div>
-                          <a
-                            href="#"
-                            className="mb-1 inline-block text-sm font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-sm"
-                          >
-                            {item.frameName}
-                          </a>
-                          <div>
-                            <span className="mb-1 block font-bold text-gray-800 md:text-sm">
-                              ৳
-                              {((item.framePrice ?? 0) * item.quantity).toFixed(
-                                2
-                              )}
-                            </span>
-                          </div>
-                        </div>
+                  <div className="flex flex-1 flex-col justify-between">
+                    <p className=" text-sm font-bold  sm:text-base">
+                      {item.frameName}
+                    </p>
 
-                        <div>
-                          <span className="mb-1 block font-bold text-red-800 md:text-lg">
-                            ৳
-                            {(item.discount === null
-                              ? (item?.price + (item?.framePrice ?? 0)) *
-                                item?.quantity
-                              : (item?.discount + (item?.framePrice ?? 0)) *
-                                item?.quantity
-                            ).toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                    <p className="font-bold text-sm">
+                      ৳{((item.framePrice ?? 0) * item.quantity).toFixed(2)}
+                    </p>
 
-                  <div className="flex w-full justify-between border-t px-2 sm:w-auto sm:border-none sm:pl-0  lg:pl-0">
-                    <div className="ml-4  md:ml-8  lg:ml-16">
-                      <span className="block font-bold text-gray-800 md:text-lg">
-                        <button
-                          onClick={() => {
-                            dispatch(removeCart(item.id));
-                          }}
-                          className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700"
-                        >
-                          <IoClose className="text-black " />
-                        </button>
-                      </span>
-                    </div>
+                    <p className="font-bold text-red-800 text-sm sm:text-base">
+                      ৳{" "}
+                      {((item.discount ?? item.price) +
+                        (item.framePrice ?? 0)) *
+                        Number(item.quantity.toFixed(2))}
+                    </p>
                   </div>
+
+                  <button
+                    onClick={() => {
+                      dispatch(removeCart(item.id));
+                    }}
+                    className="absolute top-2 right-2  text-indigo-600 hover:text-red-600 transition"
+                  >
+                    <IoClose className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </button>
                 </div>
               ))}
           </div>
           <div className="sm:col-span-2 mt-4  rounded-lg p-4 bg-gray-100 ">
-            <div className="flex  items-start justify-between gap-4 text-gray-500 py-1">
-              <span className="font-medium">Subtotal</span>
-
-              <span className="flex flex-col items-end">
-                <span className="font-medium text-sm">
-                  {total.toFixed(2)} ৳
-                </span>
-              </span>
+            <div className="flex justify-between text-sm text-gray-600 py-1">
+              <span>Subtotal</span>
+              <span>{total.toFixed(2)} ৳</span>
             </div>
-            <div className="flex  items-start justify-between gap-4 text-gray-500 py-1">
-              <span className="font-medium">Delivery Charge</span>
-
-              <span className="flex flex-col items-end">
-                <span className="text-sm font-medium">
-                  {deliveryCharge.toFixed(2)}৳
-                </span>
-              </span>
+            <div className="flex justify-between text-sm text-gray-500 py-1">
+              <span>Delivery Charge</span>
+              <span>{deliveryCharge.toFixed(2)}৳</span>
             </div>
-            <div className="flex mt-4 border-t pt-4  items-start justify-between gap-4 text-gray-800">
-              <span className="text-lg font-bold">Total</span>
-
-              <span className="flex flex-col items-end">
-                <span className="text-lg font-bold">
-                  {(total + deliveryCharge).toFixed(2)}৳
-                </span>
-                <span className="text-sm text-gray-500">
-                  including Delivery Charge
-                </span>
-              </span>
+            <div className="mt-4 border-t pt-4 text-lg font-bold">
+              <div className="flex justify-between">
+                <span>Total</span>
+                <span>{(total + deliveryCharge).toFixed(2)}৳</span>
+              </div>
+              <div className="text-sm text-gray-500 text-right">
+                including Delivery Charge
+              </div>
             </div>
           </div>
 
           <button
             type="submit"
             disabled={cart.length === 0}
-            className={`inline-block sm:col-span-2 rounded-lg py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 ${
+            className={`sm:col-span-2 mt-4 py-3 rounded-lg text-white font-semibold transition duration-100 text-center ${
               cart.length === 0
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-indigo-500 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
+                : "bg-indigo-500 hover:bg-indigo-600"
             }`}
           >
             Confirm Order

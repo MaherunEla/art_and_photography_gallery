@@ -13,7 +13,7 @@ const Featured = ({
   const percent = +(totalRevenueToday * 0.01).toFixed(2);
 
   return (
-    <div className="featured max-w-md">
+    <div className="featured ">
       <div className="top">
         <h1 className="title text-[24px]">Total Revenue</h1>
       </div>

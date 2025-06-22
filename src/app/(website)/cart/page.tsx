@@ -44,73 +44,70 @@ const Carttablepage = () => {
             cart?.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-wrap gap-x-4 overflow-hidden rounded-lg border sm:gap-y-4 lg:gap-6"
+                className="flex flex-col lg:flex-row flex-wrap gap-4  rounded-lg border p-4"
               >
                 <Link
                   href="#"
-                  className="group relative block h-48 w-32 overflow-hidden bg-gray-100 sm:h-56 sm:w-40"
+                  className="group relative w-full max-w-[160px] aspect-[3/4] sm:max-w-[180px] md:max-w-[200px] overflow-hidden bg-gray-100"
                 >
                   <Image
                     src={item.cimage}
                     loading="lazy"
                     alt=""
-                    className="h-full w-full object-cover object-center transition duration-200 group-hover:scale-110"
+                    sizes="(max-width:640px) 100vw, (max-width:768px) 50vw, 200px"
+                    className="object-contain object-center transition duration-200 group-hover:scale-110"
                     fill
                   />
                 </Link>
 
-                <div className="flex flex-1 flex-col justify-between py-4">
+                <div className="flex  flex-col justify-between flex-1">
                   <div>
-                    <p className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl">
+                    <p className="text-lg font-bold text-gray-800 lg:text-xl">
                       {item.title}
                     </p>
-                    <span className="block text-gray-500">By Jone deo </span>
+                    <span className="text-gray-500">By Jone deo </span>
                   </div>
 
                   <div>
-                    {item?.discount === null ? (
-                      <span className="mb-1 block font-bold text-gray-800 md:text-lg">
-                        ৳{item.price.toFixed(2)}
-                      </span>
-                    ) : (
-                      <span className="mb-1 block font-bold text-gray-800 md:text-lg">
-                        ৳{item.discount.toFixed(2)}
-                      </span>
-                    )}
+                    <span className="font-bold text-gray-800 md:text-lg">
+                      ৳
+                      {item.discount
+                        ? item.discount.toFixed(2)
+                        : item.price.toFixed(2)}
+                    </span>
                   </div>
                 </div>
 
-                <div className="group relative block h-48 w-32 bg-gray-100 sm:h-56 sm:w-40">
-                  <div className="h-full w-full overflow-hidden relative flex items-center justify-center">
-                    <Image
-                      src={item?.frameImg || ""}
-                      loading="lazy"
-                      alt=""
-                      className=" object-cover object-center transition duration-200 group-hover:scale-110"
-                      width={160}
-                      height={224}
-                    />
-                  </div>
+                <div className="group relative w-full max-w-[160px] aspect-[3/4]  bg-gray-100 overflow-hidden sm:max-w-[180px] md:max-w-[200px]">
+                  <Image
+                    src={item?.frameImg || ""}
+                    loading="lazy"
+                    alt=""
+                    className="object-cover object-center transition duration-200 group-hover:scale-110"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 200px"
+                  />
                 </div>
-                <div className="flex flex-1 flex-col justify-between py-4">
+
+                <div className="flex flex-col justify-between flex-1">
                   <div>
-                    <p className="mb-1 inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl">
+                    <p className="text-lg font-bold text-gray-800 lg:text-xl">
                       {item.frameName}
                     </p>
                   </div>
 
                   <div>
-                    <span className="mb-1 block font-bold text-gray-800 md:text-lg">
+                    <span className="font-bold text-gray-800 md:text-lg">
                       ৳{item?.framePrice?.toFixed(2)}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex w-full justify-between border-t p-4 sm:w-auto sm:border-none sm:pl-0 lg:p-6 lg:pl-0">
-                  <div className="flex flex-col items-start gap-2">
-                    {item?.category === "Digitally Captured" ? (
-                      <div className="flex h-12 w-20 overflow-hidden rounded border">
-                        <p className="w-full px-4 py-2 outline-none ring-inset ring-indigo-300 transition duration-100 focus:ring">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4 mt-4 border-t pt-4 sm:border-none sm:mt-0">
+                  <div className="flex flex-col gap-2">
+                    {item?.category === "Digitally Captured" && (
+                      <div className="flex h-12 w-24 overflow-hidden rounded border">
+                        <p className="w-full px-4 py-2 text-center">
                           {item?.quantity}
                         </p>
 
@@ -119,7 +116,7 @@ const Carttablepage = () => {
                             onClick={() => {
                               dispatch(addQuantity(item.id));
                             }}
-                            className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                            className="flex-1  hover:bg-gray-100"
                           >
                             +
                           </button>
@@ -128,44 +125,32 @@ const Carttablepage = () => {
                             onClick={() => {
                               dispatch(decrementQuantity(item.id));
                             }}
-                            className="flex w-6 flex-1 select-none items-center justify-center bg-white leading-none transition duration-100 hover:bg-gray-100 active:bg-gray-200"
+                            className="flex-1 hover:bg-gray-100"
                           >
                             -
                           </button>
                         </div>
                       </div>
-                    ) : (
-                      <></>
                     )}
 
                     <button
                       onClick={() => {
                         dispatch(removeCart(item.id));
                       }}
-                      className="select-none text-sm font-semibold text-indigo-500 transition duration-100 hover:text-indigo-600 active:text-indigo-700"
+                      className="text-sm font-semibold text-indigo-500  hover:text-indigo-600"
                     >
                       Delete
                     </button>
                   </div>
 
-                  <div className="ml-4 pt-3 md:ml-8 md:pt-2 lg:ml-16">
-                    {item?.discount === null ? (
-                      <span className="block font-bold text-gray-800 md:text-lg">
-                        ৳
-                        {(
-                          (item.price + (item?.framePrice ?? 0)) *
-                          item.quantity
-                        ).toFixed(2)}
-                      </span>
-                    ) : (
-                      <span className="block font-bold text-gray-800 md:text-lg">
-                        ৳
-                        {(
-                          (item.discount + (item?.framePrice ?? 0)) *
-                          item.quantity
-                        ).toFixed(2)}
-                      </span>
-                    )}
+                  <div className="text-right sm:text-left">
+                    <span className="font-bold text-gray-800 md:text-lg">
+                      ৳
+                      {(
+                        (item.discount ??
+                          item.price + (item?.framePrice ?? 0)) * item.quantity
+                      ).toFixed(2)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -174,22 +159,9 @@ const Carttablepage = () => {
 
         <div className="flex flex-col items-end gap-4">
           <div className="w-full rounded-lg bg-gray-100 p-4 sm:max-w-xs">
-            <div className="space-y-1">
-              {/* <div className="flex justify-between gap-4 text-gray-500">
-                <span>Subtotal</span>
-                <span>৳129.99</span>
-              </div> */}
-
-              {/* <div className="flex justify-between gap-4 text-gray-500">
-                  <span>Shipping</span>
-                  <span>৳4.99</span>
-                </div> */}
-            </div>
-
             <div className="mt-4 border-t pt-4">
-              <div className="flex items-start justify-between gap-4 text-gray-800">
+              <div className="flex items-start justify-between text-gray-800">
                 <span className="text-lg font-bold">Total</span>
-
                 <span className="flex flex-col items-end">
                   <span className="text-lg font-bold">
                     {total.toFixed(2)} ৳
@@ -203,24 +175,15 @@ const Carttablepage = () => {
           </div>
 
           {session ? (
-            <>
-              {/* <button
-                  onClick={() => signOut()}
-                  className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
-                >
-                  Log Out
-                </button> */}
-
-              <Link href={`/placeorder/${session?.user?.email}`}>
-                <button className="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base">
-                  Place Order
-                </button>
-              </Link>
-            </>
+            <Link href={`/placeorder/${session?.user?.email}`}>
+              <button className=" rounded-lg bg-indigo-500 px-8 py-3  text-white hover:bg-indigo-600">
+                Place Order
+              </button>
+            </Link>
           ) : (
             <Link
               href="/login"
-              className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
+              className="rounded-lg bg-gray-200 px-8 py-3  text-gray-500 hover:bg-gray-300"
             >
               Sign Up / Log In
             </Link>

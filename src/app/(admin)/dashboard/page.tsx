@@ -58,22 +58,26 @@ export default function Home() {
   ];
 
   return (
-    <main className="max-w-screen-xl ">
+    <main>
       <div className="flex flex-col gap-5 mt-5">
-        <div className="flex gap-5 justify-between">
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {cards.map((item) => (
             <Card item={item} key={item.id} />
           ))}
         </div>
 
-        <div className="flex flex-col md:flex-row items-center justify-between ">
-          <Featured
-            totalRevenueToday={data?.data[3]}
-            totalRevenueLastWeek={data?.data[4]}
-            totalRevenueLastMonth={data?.data[5]}
-          />
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div className="w-full md:w-[40%] ">
+            <Featured
+              totalRevenueToday={data?.data[3]}
+              totalRevenueLastWeek={data?.data[4]}
+              totalRevenueLastMonth={data?.data[5]}
+            />
+          </div>
 
-          <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+          <div className="w-full md:w-[60%] ">
+            <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
+          </div>
         </div>
         <div className="flex-1">
           <Transactions />
