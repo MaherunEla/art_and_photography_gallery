@@ -56,9 +56,8 @@ const Itempage = () => {
   }
 
   return (
-    <div>
+    <div className="px-4 sm:px-6 lg:px-8 space-y-12">
       <Singleproduct Gallery={Gallery} />
-
       <Comments productId={param.id} />
     </div>
   );

@@ -97,9 +97,9 @@ const Singleproduct = ({ Gallery }: Props) => {
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8  ">
-        <div className="grid grid-cols-3 gap-8 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ">
           <div
-            className="relative  overflow-hidden rounded-lg bg-gray-100 "
+            className="relative aspect-square w-full max-w-[400px] overflow-hidden rounded-lg"
             onMouseEnter={() => setShowMagnifier(true)}
             onMouseLeave={() => setShowMagnifier(false)}
             onMouseMove={handleMouseHover}
@@ -108,7 +108,7 @@ const Singleproduct = ({ Gallery }: Props) => {
               src={Gallery?.cimage}
               loading="lazy"
               alt="Photo by Himanshu Dewangan"
-              className=" h-full w-full object-cover object-center"
+              className="object-cover object-center"
               fill
             />
             {showMangnifier && (
@@ -174,9 +174,9 @@ const Singleproduct = ({ Gallery }: Props) => {
                 Description
               </div>
 
-              <p className="text-gray-500">
+              <div className="text-gray-500 max-w-prose">
                 {Gallery?.description}({Gallery?.category})
-              </p>
+              </div>
 
               {Gallery.productstatus === "Sale" ? (
                 <p className="text-red-500 text-lg font-bold">Out of Stock</p>
@@ -254,7 +254,7 @@ const Singleproduct = ({ Gallery }: Props) => {
             <h3 className="text-lg font-semibold">Selected Frame for Image:</h3>
 
             {selectedImage && (
-              <div className="w-full h-full relative  ">
+              <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px]">
                 <Image
                   src={
                     data?.find((image: any) => image.id === selectedImage)!
@@ -262,15 +262,15 @@ const Singleproduct = ({ Gallery }: Props) => {
                   }
                   alt="Selected Image"
                   fill
+                  className="object-cover"
                 />
-                <div className="relative top-0 left-0 w-full h-full ">
-                  <Image
-                    src={Gallery.cimage} // Replace with the path to your overlay image
-                    alt="Overlay Image"
-                    fill
-                    className="w-full h-full p-[60px]"
-                  />
-                </div>
+
+                <Image
+                  src={Gallery.cimage} // Replace with the path to your overlay image
+                  alt="Overlay Image"
+                  fill
+                  className="object-contain p-[60px]"
+                />
               </div>
             )}
           </div>
@@ -278,7 +278,7 @@ const Singleproduct = ({ Gallery }: Props) => {
 
         <div className="mt-5">
           <h2 className="text-lg font-semibold">Select Frame for Image:</h2>
-          <form className="grid gap-8 grid-cols-3">
+          <form className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {data?.map((image: any) => (
               <div
                 key={image.id}

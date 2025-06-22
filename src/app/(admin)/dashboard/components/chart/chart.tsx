@@ -29,7 +29,7 @@ const Chart = ({ aspect, title }: any) => {
   //   { name: "June", Total: 1700 },
   // ];
   return (
-    <div className="chart max-w-3xl">
+    <div className="chart">
       <div className="title">{title}</div>
       <ResponsiveContainer width="100%" aspect={aspect}>
         <AreaChart

@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 import { useSession } from "next-auth/react";
 import { SessionProvider } from "next-auth/react";
 import LogoutOnClose from "@/app/(website)/components/shared/Logoutclose";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function RootLayout({
@@ -56,14 +56,15 @@ function RootLayoutContent({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex ">
-      <div className="sticky w-[300px] p-5 min-h-screen bg-[#151c2c]">
+    <div className="flex min-h-screen bg-[#151c2c]">
+      <div className="hidden sm:flex w-[260px] p-5 min-h-screen bg-[#151c2c] border-r border-[#2e374a]">
         <Sidebarpage />
       </div>
-      <div className="flex-1  lg:p-5 bg-[#151c2c] ">
-        <div className="hidden sm:flex flex-col max-w-screen-xl px-5 ">
+
+      <div className="flex-1  lg:p-5">
+        <div className="flex flex-col px-5 ">
           <Navbar />
-          {children}
+          <main className="mt-4">{children}</main>
         </div>
       </div>
       <Toaster />
