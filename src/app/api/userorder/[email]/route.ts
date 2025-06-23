@@ -1,5 +1,4 @@
-import prisma from "@/app/utils/connect";
-import { Status, PrismaClient } from "@prisma/client";
+import { prisma } from "@/app/utils/connect";
 import { NextResponse } from "next/server";
 
 export const GET = async (req: any, { params }: any) => {

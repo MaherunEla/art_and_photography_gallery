@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
-import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/app/utils/connect";
+import { prisma } from "@/app/utils/connect";
 
 export const GET = async (req: any) => {
   try {
