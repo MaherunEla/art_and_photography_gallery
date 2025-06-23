@@ -26,8 +26,6 @@ const Framepage = () => {
   }
 
   const tabledata = data || [];
-  const adminemail: string = "meherunela2002@gmail.com";
-  const url = `/dashboard/product/add`;
 
   return (
     <div className="bg-[#182237] p-5 rounded-[10px] mt-5">

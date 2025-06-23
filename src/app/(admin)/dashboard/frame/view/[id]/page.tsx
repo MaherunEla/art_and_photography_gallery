@@ -98,10 +98,7 @@ const Viewpage = () => {
   const onSubmit = async (data: FormValues) => {
     console.log("Form submitted...", data);
     try {
-      const res = await axios.put(
-        `http://localhost:3000/api/frame/${params.id}`,
-        data
-      );
+      const res = await axios.put(`/api/frame/${params.id}`, data);
       console.log({ res });
       refetch();
       queryClient.invalidateQueries({ queryKey: ["frame-data"] });

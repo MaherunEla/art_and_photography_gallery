@@ -1,5 +1,5 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
-
+import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -41,32 +41,15 @@ export const options: NextAuthOptions = {
             },
           });
 
-          // Check if the user exists and if the provided password matches
-          if (user && user.password === password) {
-            return user; // Return the user object if authentication succeeds
+          if (user && bcrypt.compareSync(password, user.password)) {
+            return user;
           } else {
-            return null; // Return null if authentication fails
+            return null;
           }
         } catch (error) {
-          // Handle any errors that occur during the database query
           console.error("Error during authentication:", error);
-          return null; // Return null in case of errors
+          return null;
         }
-
-        // This is where you need to retrieve user data
-        // to verify with credentials
-        // Docs: https://next-auth.js.org/configuration/providers/credentials
-
-        //const user = { id: "42", name: "ela", password: "abc" };
-
-        // if (
-        //   credentials?.username === user.name &&
-        //   credentials?.password === user.password
-        // ) {
-        //   return user;
-        // } else {
-        //   return null;
-        // }
       },
     }),
   ],

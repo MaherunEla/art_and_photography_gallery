@@ -64,9 +64,9 @@ const Uploadpage = () => {
   const { toast } = useToast();
   const onSubmit = async (data: FormValues) => {
     console.log("Form submitted...", data);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
     axios
-      .post(`${apiUrl}/api/upload/${params.id}`, data)
+      .post("/api/upload/${params.id}", data)
       .then((res) => {
         console.log({ res });
         queryClient.invalidateQueries({ queryKey: ["upload-data"] });

@@ -100,10 +100,7 @@ const Viewpage = () => {
   const onSubmit = async (data: FormValues) => {
     console.log("Form submitted...", data);
     try {
-      const res = await axios.put(
-        `http://localhost:3000/api/signup/${decodedEmail}`,
-        data
-      );
+      const res = await axios.put(`/api/signup/${decodedEmail}`, data);
       console.log({ res });
       refetch();
       queryClient.invalidateQueries({ queryKey: ["signup-data"] });
