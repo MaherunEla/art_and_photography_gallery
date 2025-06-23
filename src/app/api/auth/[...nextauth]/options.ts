@@ -9,6 +9,11 @@ export const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
+    maxAge: 60 * 60,
+    updateAge: 15 * 60,
+  },
+  jwt: {
+    maxAge: 60 * 60,
   },
 
   pages: {
@@ -68,11 +73,37 @@ export const options: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+        token.accessTokenExpires = Math.floor(Date.now() / 1000) + 60 * 60;
+      }
+
+      if (
+        token.accessTokenExpires &&
+        Date.now() / 1000 > token.accessTokenExpires
+      ) {
+        return Promise.reject(new Error("Session expired"));
+      }
+
+      return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
+      session.user.id = token.id;
       session.user.role = token.role;
+      session.expires = new Date(token.accessTokenExpires * 1000).toISOString();
+
+      if (
+        token.accessTokenExpires &&
+        typeof token.accessTokenExpires === "number"
+      ) {
+        session.expires = new Date(
+          token.accessTokenExpires * 1000
+        ).toISOString();
+      } else {
+        session.expires = new Date().toISOString();
+      }
 
       return session;
     },
