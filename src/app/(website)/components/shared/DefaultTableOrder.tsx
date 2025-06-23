@@ -74,50 +74,49 @@ const DefaultTable: FC<{ data: any; columns: any }> = ({ data, columns }) => {
           ))}
         </tbody>
       </table>
-      <div className="pt-[50px] flex justify-between ">
+      <div className="pt-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <p className="tablep text-black">
+          <p className="text-gray-700 text-sm md:text-base">
             show {table.getState().pagination.pageSize} in {data.length} items
           </p>
         </div>
-        <div className="text-black">
+        <div className="flex items-center gap-2 text-sm text-gray-700">
           <label htmlFor="pageSize">Page Size: </label>
           <select
             id="pageSize"
             value={pageSize}
-            className="bg-white"
+            className="rounded-md border border-gray-300 px-2 py-1 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             onChange={handlePageSizeChange}
           >
             <option value="10">10</option>
             <option value="5">5</option>
             <option value="2">2</option>
-            {/* Add more options as needed */}
           </select>
         </div>
-        <div className="flex items-center gap-[10px]">
+        <div className="flex items-center gap-2">
           <button
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[100px] h-[30px] cursor-pointer"
+            className="px-3 py-1.5 rounded-md  bg-indigo-500 text-white hover:bg-indigo-600 transition cursor-pointer"
             onClick={() => table.setPageIndex(0)}
           >
             First Page
           </button>
           <button
             disabled={!table.getCanPreviousPage()}
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[30px] h-[30px] cursor-pointer"
+            className="p-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             onClick={() => table.previousPage()}
           >
-            <GrFormPrevious className="ml-[4px] text-[#151c2c]" />
+            <GrFormPrevious className="text-lg" />
           </button>
 
           <button
             disabled={!table.getCanNextPage()}
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[30px] h-[30px] cursor-pointer"
+            className="p-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-700 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             onClick={() => table.nextPage()}
           >
-            <MdNavigateNext className="ml-[4px] text-[#151c2c]" />
+            <MdNavigateNext className="text-lg" />
           </button>
           <button
-            className="border border-[#2e374a] active:border-[#2e374a] active:bg-[#151c2c]  bg-gray-300 w-[100px] h-[30px] cursor-pointer"
+            className="px-3 py-1.5 rounded-md  bg-indigo-500 text-white hover:bg-indigo-600 transition cursor-pointer"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           >
             Last Page

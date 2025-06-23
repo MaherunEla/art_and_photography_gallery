@@ -34,7 +34,7 @@ const Navbar = () => {
   return (
     <div className="bg-white pb-6 sm:pb-8 lg:pb-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
-        <header className="mb-8 flex items-center justify-between py-4 md:mb-12 md:py-8 xl:mb-16">
+        <header className="flex items-center justify-between py-4  md:py-8">
           <Link
             href="/"
             className="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl"
@@ -53,11 +53,11 @@ const Navbar = () => {
             Aesthete
           </Link>
 
-          <nav className="hidden gap-12  md:flex ">
+          <nav className="hidden md:flex items-center gap-10">
             {NavbarData.map((item, index) => (
               <Link
                 href={item.href}
-                className={`text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500  ${
+                className={`text-lg font-semibold text-gray-600 transition hover:text-indigo-500  ${
                   currentRoute === item.href ? "text-indigo-700" : " "
                 }`}
                 key={index}
@@ -67,49 +67,34 @@ const Navbar = () => {
             ))}
           </nav>
 
-          <div className="hidden md:flex gap-3 ">
-            <div className="flex items-center gap-3 ">
-              <Link
-                href="/cart"
-                className="flex w-12 h-12  flex-col items-center justify-center gap-1.5  "
+          <div className="hidden md:flex items-center gap-4 ">
+            <Link href="/cart" className="relative">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 w-8 text-gray-800"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-gray-800"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                />
+              </svg>
 
-                <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
-                  {cart?.length}
-                </span>
-              </Link>
-            </div>
+              <span className="absolute top-0 right-0 -mt-1 -mr-2 text-[12px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
+                {cart?.length}
+              </span>
+            </Link>
+
             {session ? (
-              <>
-                {/* <button
-                  onClick={() => signOut()}
-                  className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
-                >
-                  Log Out
-                </button> */}
-
-                <div>
-                  <DropdownMenuDemo user={session?.user} />
-                </div>
-              </>
+              <DropdownMenuDemo user={session?.user} />
             ) : (
               <Link
                 href="/login"
-                className="hidden rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:inline-block"
+                className="rounded-lg bg-gray-200 px-6 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-300"
               >
                 Log In
               </Link>
@@ -118,7 +103,7 @@ const Navbar = () => {
 
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-lg bg-gray-200 px-2.5 py-2 text-sm font-semibold text-gray-500 ring-indigo-300 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base md:hidden"
+            className="md:hidden inline-flex items-center gap-2 rounded-lg bg-gray-200 p-2 hover:bg-gray-300"
             onClick={() => setnavbar(!navbar)}
           >
             {navbar ? (
@@ -150,30 +135,24 @@ const Navbar = () => {
             )}
           </button>
         </header>
-        <nav
-          className={`flex flex-col items-center space-y-6  md:hidden ${
-            navbar ? "block" : "hidden"
-          }`}
-        >
-          {NavbarData.map((item, index) => (
-            <Link
-              href={item.href}
-              className={`text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500  ${
-                currentRoute === item.href ? "text-indigo-700" : " "
-              }`}
-              key={index}
-            >
-              {item.title}
-            </Link>
-          ))}
-          <div className="flex items-center gap-3 ">
-            <Link
-              href="/cart"
-              className="flex w-12 h-12  flex-col items-center justify-center gap-1.5  "
-            >
+        {navbar && (
+          <nav className="flex flex-col items-start space-y-4 mt-4  md:hidden">
+            {NavbarData.map((item, index) => (
+              <Link
+                href={item.href}
+                className={`text-base font-semibold text-gray-600 hover:text-indigo-500  ${
+                  currentRoute === item.href ? "text-indigo-700" : " "
+                }`}
+                key={index}
+              >
+                {item.title}
+              </Link>
+            ))}
+
+            <Link href="/cart" className="relative flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8 text-gray-800"
+                className="h-6 w-6 text-gray-800"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -186,19 +165,23 @@ const Navbar = () => {
                 />
               </svg>
 
-              <span className="absolute -mt-[18px] ml-[24px] text-[14px] bg-red-600 h-[18px] w-[18px]  rounded-full grid place-items-center text-white">
+              <span className="absolute -mt-2 ml-4 text-xs bg-red-600 h-5 w-5 rounded-full grid place-items-center text-white">
                 {cart?.length}
               </span>
             </Link>
-          </div>
 
-          <Link
-            href="/login"
-            className=" rounded-lg bg-gray-200 px-8 py-3 text-center text-sm font-semibold text-gray-500 outline-none ring-indigo-300 transition duration-100 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base lg:inline-block"
-          >
-            Log In
-          </Link>
-        </nav>
+            {session ? (
+              <DropdownMenuDemo user={session?.user} />
+            ) : (
+              <Link
+                href="/login"
+                className="rounded-lg bg-gray-200 px-6 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-300"
+              >
+                Log In
+              </Link>
+            )}
+          </nav>
+        )}
       </div>
     </div>
   );

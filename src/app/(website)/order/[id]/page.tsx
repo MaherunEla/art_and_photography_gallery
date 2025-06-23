@@ -21,7 +21,7 @@ const Productpage = () => {
   };
 
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["order-data"],
+    queryKey: ["order-data", params.id],
     queryFn: fetchUpload,
   });
 

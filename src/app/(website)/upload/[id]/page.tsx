@@ -42,7 +42,13 @@ const Uploadpage = () => {
     resolver: zodResolver(uploadformSchema),
   });
 
-  const [File, setFile] = useState({});
+  type UploadFile = {
+    FileName: string;
+    total: number;
+    percent: number;
+  };
+
+  const [File, setFile] = useState<UploadFile | null>(null);
   const router = useRouter();
 
   type url = {
@@ -68,7 +74,7 @@ const Uploadpage = () => {
           title: " Upload successfully  ",
         });
         reset();
-        setFile({});
+        setFile(null);
 
         // router.push(`/mygallery/${params.id}`);
       })
@@ -134,7 +140,7 @@ const Uploadpage = () => {
     return null;
   }
   const removeFile = () => {
-    setFile({});
+    setFile(null);
     setValue("image", "");
   };
 
@@ -281,9 +287,13 @@ const Uploadpage = () => {
             <p className="text-[12px] font-normal text-[#8897AE]">
               Upload .jpg or .png file with 16:9 ratio
             </p>
-            <div className="progrss">
-              <Progress file={File} removeFile={removeFile} />
-            </div>
+
+            {File && (
+              <div className="progrss">
+                <Progress file={File} removeFile={removeFile} />
+              </div>
+            )}
+
             {errors.image && (
               <p className="text-red-600">{errors.image.message as string}</p>
             )}

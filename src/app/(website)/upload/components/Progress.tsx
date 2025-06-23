@@ -1,7 +1,11 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 type Props = {
-  file: any;
+  file: {
+    FileName: string;
+    total: number;
+    percent: number;
+  };
   removeFile: () => void;
 };
 const Progress = ({ file, removeFile }: Props) => {

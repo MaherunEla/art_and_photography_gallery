@@ -69,46 +69,46 @@ export function DropdownMenuDemo(user: any) {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link
               href={`/profile/${user?.user?.email}`}
-              className="flex items-center gap-1 font-semibold"
+              className="flex items-center gap-1 font-semibold w-full cursor-pointer"
             >
               <FaRegUser size={15} />
               Profile
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link
               href={`/upload/${user?.user?.email}`}
-              className="flex items-center gap-1 font-semibold"
+              className="flex items-center gap-1 font-semibold w-full cursor-pointer"
             >
               <MdOutlineCloudUpload size={15} />
               Upload
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link
               href={`/mygallery/${user?.user?.email}`}
-              className="flex items-center gap-1 font-semibold"
+              className="flex items-center gap-1 font-semibold w-full cursor-pointer"
             >
               <GrGallery size={15} />
               My Gallery
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link
               href={`/order/${user?.user?.email}`}
-              className="flex items-center gap-1 font-semibold"
+              className="flex items-center gap-1 font-semibold w-full cursor-pointer"
             >
               <RiLuggageCartLine size={15} />
               Orders
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild>
             <Link
               href={`/sales/${user?.user?.email}`}
-              className="flex items-center gap-1 font-semibold"
+              className="flex items-center gap-1 font-semibold w-full cursor-pointer"
             >
               <TiShoppingCart size={15} />
               Sales
@@ -116,12 +116,14 @@ export function DropdownMenuDemo(user: any) {
           </DropdownMenuItem>
         </DropdownMenuGroup>
 
-        <DropdownMenuItem
-          onClick={() => signOut()}
-          className="flex items-center gap-1 font-semibold cursor-pointer"
-        >
-          <TbLogout size={15} />
-          Log out
+        <DropdownMenuItem asChild>
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-1 font-semibold cursor-pointer w-full"
+          >
+            <TbLogout size={15} />
+            Log out
+          </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
