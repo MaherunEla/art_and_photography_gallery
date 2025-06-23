@@ -7,6 +7,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdSearch } from "react-icons/md";
+import { useSession } from "next-auth/react";
 
 const fetchUpload = async () => {
   const { data } = await axios.get("/api/upload");
@@ -14,6 +15,8 @@ const fetchUpload = async () => {
 };
 const Productpage = () => {
   const [filtering, setFiltering] = useState("");
+  const { data: session, status } = useSession();
+
   const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
     queryKey: ["upload-data"],
     queryFn: fetchUpload,
@@ -27,7 +30,7 @@ const Productpage = () => {
   }
 
   const tabledata = data || [];
-  const adminemail: string = "meherunela2002@gmail.com";
+  const adminemail: string = session?.user.email || "admin12@gmail.com";
   const url = `/dashboard/product/add/${adminemail}`;
 
   return (

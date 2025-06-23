@@ -48,12 +48,17 @@ const Uploadpage = () => {
     formState: { errors },
   } = form;
 
-  const [File, setFile] = useState({});
-
   type url = {
     success: number;
     url: string | null;
   };
+
+  type UploadFile = {
+    FileName: string;
+    total: number;
+    percent: number;
+  };
+  const [File, setFile] = useState<UploadFile | null>(null);
 
   const uploadImages = async (file: File): Promise<url> => {
     try {
@@ -139,7 +144,7 @@ const Uploadpage = () => {
   }
 
   const removeFile = () => {
-    setFile({});
+    setFile(null);
     setValue("image", "");
   };
 
@@ -258,9 +263,11 @@ const Uploadpage = () => {
             <p className="text-[12px] font-normal text-[#8897AE]">
               Upload .jpg or .png file with 16:9 ratio
             </p>
-            <div className="progrss">
-              <Progress file={File} removeFile={removeFile} />
-            </div>
+            {File && (
+              <div className="progrss">
+                <Progress file={File} removeFile={removeFile} />
+              </div>
+            )}
           </div>
 
           <div className="flex items-center justify-between sm:col-span-2">

@@ -48,8 +48,7 @@ const Addpage = () => {
     success: number;
     url: string | null;
   };
-  //const adminemail = "admin@gmail.com";
-  const adminemail = "meherunela2002@gmail.com";
+
   const params = useParams();
   const encodedEmail = params.id as string;
   const decodedEmail = decodeURIComponent(encodedEmail);
@@ -61,7 +60,7 @@ const Addpage = () => {
   const onSubmit = async (data: FormValues) => {
     console.log("Form submitted...", data);
     axios
-      .post(`http://localhost:3000/api/upload/${decodedEmail}`, data)
+      .post(`/api/upload/${decodedEmail}`, data)
       .then((res) => {
         console.log({ res });
         queryClient.invalidateQueries({ queryKey: ["upload-data"] });
