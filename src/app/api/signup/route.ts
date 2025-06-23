@@ -1,11 +1,19 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "@/app/utils/connect";
+import { prisma } from "@/app/utils/connect";
 
-export const GET = async (req: any) => {
-  const signup = await prisma.signup.findMany();
-  return NextResponse.json(signup);
+export const GET = async () => {
+  try {
+    const signup = await prisma.signup.findMany();
+    return NextResponse.json(signup);
+  } catch (error) {
+    console.error("Error fetching signups:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 };
 
 export async function POST(req: Request) {

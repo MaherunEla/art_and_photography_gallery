@@ -1,6 +1,6 @@
 import { Status, PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import prisma from "@/app/utils/connect";
+import { prisma } from "@/app/utils/connect";
 export const GET = async (req: any, { params }: any) => {
   console.log(params);
 
