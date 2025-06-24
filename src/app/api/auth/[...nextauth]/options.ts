@@ -1,5 +1,5 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -41,7 +41,7 @@ export const options: NextAuthOptions = {
             },
           });
 
-          if (user && bcrypt.compareSync(password, user.password)) {
+          if (user && (await bcrypt.compare(password, user.password))) {
             return user;
           } else {
             return null;
