@@ -1,37 +1,149 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Art & Photography Gallery 🎨📸
 
-## Getting Started
+[Live Project](https://art-and-photography-gallery.vercel.app/)
 
-First, run the development server:
+A full-stack platform where artists and users can showcase, manage, and sell their creative work. Includes secure authentication, dynamic user profiles, product uploads, commenting, order management, and sales tracking.
+
+---
+
+## 🔧 Tech Stack
+
+- **Frontend:** Next.js 14, TypeScript, Redux Toolkit, shadcn/ui
+- **Backend:** Next.js API Routes, Prisma ORM, PostgreSQL (via Supabase)
+- **Storage:** Supabase Storage, Uploadthing
+- **Auth:** Custom email/password authentication built with NextAuth.js Credentials Provider, secured via JWT-based session cookies and Prisma Adapter.
+- **Deployment:** Vercel
+
+---
+
+## 🚀 Key Features
+
+### 🔐 User Authentication
+
+- Users can sign up using a valid, unique email address.
+- Requires name, email, password, and contact number.
+- Secure login with encrypted password and session handling.
+- Admin can inactivate users to prevent login and usage.
+
+### 👤 Profile Management
+
+- Dynamic profile with personal info, uploaded products, orders, and sales.
+- Users can update name, contact, email, profile picture, social links, etc.
+- View and manage all owned products and activity from one place.
+
+### 🎨 Product Management
+
+- Upload art/photography products with image and metadata.
+- Admin approves uploaded products before they appear in the gallery.
+- Users can edit and manage their own products.
+- Users can comment on both their own and others' products.
+
+### 📦 Order Management
+
+- View all orders placed by the user.
+- Print/download invoices of each order.
+- Check live order status from the dashboard.
+
+### 💸 Sale Management
+
+- Track sales made by the user (if they're a seller/artist).
+- Search and filter sales data by date.
+- Download sales reports for record-keeping.
+
+---
+
+## 🛡️ Security Features
+
+- Unique email and username validation.
+- Secure authentication via bcrypt and JWT cookie sessions.
+- Inactive users are blocked from login and platform access.
+- Only verified users can view and update their profile or products.
+
+---
+
+## 📦 Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/MaherunEla/art_and_photography_gallery.git
+cd art_and_photography_gallery
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🧪 Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a .env.local file and add:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```env
 
-## Learn More
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
 
-To learn more about Next.js, take a look at the following resources:
+DATABASE_URL=postgresql://user:pass@localhost:5432/authflow
+DIRECT_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+UPLOADTHING_SECRET=your_uploading_secret
+UPLOADTHING_APP_ID=your_uploading_app_id
+PRISMA_CLIENT_ENGINE_TYPE=library
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
 
-## Deploy on Vercel
+### 🧱 Prisma Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx prisma db push
+npx prisma generate
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-![alt text](public/assets/images/home/1.jpg)
+```
+
+### ▶️ Running Locally
+
+npm run dev
+
+```
+
+### 🧪 Testing
+
+ You can test APIs using tools like:
+
+-Postman
+
+-Thunder Client
+
+-insomnia
+
+-fetch/axios in your browser dev tools or internal routes
+
+
+### 🌍 Deployment (Vercel)
+
+✅ This project is ready for Vercel.
+
+1.Push to GitHub
+
+2.Go to vercel.com
+
+3.Import your repo → Set environment variables
+
+4.Click Deploy
+
+```
+
+## 📷 Screenshots
+
+![Hero](public/assets/images/Hero.jpg)
+![Features](public/assets/images/features.jpg)
+![Gallery](public/assets/images/Gallery.jpg)
+![ProductDetails](public/assets/images/productdetails.jpg)
+![Cart](public/assets/images/cart.jpg)
+
+## 🙋‍♂️ Author
+
+** Maherun Nessa Ela **
+📧 meherunela2002@gmail.com
+🌍[LinkedIn](www.linkedin.com/in/maherun-nessa-ela)
+
+---
+
+```
+
+```
