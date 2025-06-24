@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@/app/utils/connect";
 
