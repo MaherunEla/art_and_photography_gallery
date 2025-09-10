@@ -140,7 +140,7 @@ npm run dev
 ![Hero](public/assets/images/Hero.jpg)
 ![Features](public/assets/images/features.jpg)
 ![Gallery](public/assets/images/Gallery.jpg)
-![Fuzzy search with pg_trgm](<public/assets/images/fuzzy search.jpg>)
+![Fuzzy search with pg_trgm](<public/assets/images/fuzzy search with pg_trgm.jpg>)
 ![ProductDetails](public/assets/images/productdetails.jpg)
 ![Cart](public/assets/images/cart.jpg)
 
