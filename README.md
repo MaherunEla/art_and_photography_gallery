@@ -38,6 +38,13 @@ A full-stack platform where artists and users can showcase, manage, and sell the
 - Users can edit and manage their own products.
 - Users can comment on both their own and others' products.
 
+### 🔍 Search & Filtering
+
+- Fuzzy search powered by PostgreSQL `pg_trgm` for typo-tolerance.
+- Real-time search result highlighting.
+- Input debouncing for performance optimization.
+- Pagination for search results to handle large datasets efficiently.
+
 ### 📦 Order Management
 
 - View all orders placed by the user.
@@ -133,6 +140,7 @@ npm run dev
 ![Hero](public/assets/images/Hero.jpg)
 ![Features](public/assets/images/features.jpg)
 ![Gallery](public/assets/images/Gallery.jpg)
+![Fuzzy search with pg_trgm](<public/assets/images/fuzzy search.jpg>)
 ![ProductDetails](public/assets/images/productdetails.jpg)
 ![Cart](public/assets/images/cart.jpg)
 
