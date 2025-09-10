@@ -1,9 +1,14 @@
 "use client";
+import { highlightText } from "@/app/utils/highlight";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-const Product = ({ Gallery }: any) => {
+type ProductProps = {
+  Gallery: any[];
+  query?: string;
+};
+const Product = ({ Gallery, query = "" }: ProductProps) => {
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 ">
@@ -30,12 +35,18 @@ const Product = ({ Gallery }: any) => {
 
                 <div className="flex items-start justify-between gap-2 rounded-b-lg bg-gray-100 p-4">
                   <div className="flex flex-col">
-                    <div className="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg">
-                      {item.title}
-                    </div>
-                    <span className="text-sm text-gray-500 lg:text-base">
-                      by {item.artist}
-                    </span>
+                    <div
+                      className="font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-lg"
+                      dangerouslySetInnerHTML={{
+                        __html: highlightText(item.title, query),
+                      }}
+                    />
+                    <span
+                      className="text-sm text-gray-500 lg:text-base"
+                      dangerouslySetInnerHTML={{
+                        __html: `by ${highlightText(item.artist, query)}`,
+                      }}
+                    />
                   </div>
                   {item?.discount === null ? (
                     <div className="flex flex-col items-end">

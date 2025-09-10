@@ -1,38 +1,25 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
+
+import React, { useEffect, useMemo, useState } from "react";
 // import { HomeGalleryData } from "../components/home/components/HomeGallery";
 import { AdProduct } from "@/types";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import SearchInput from "../components/shared/SearchInput";
 import { HomeGalleryData } from "../components/home/components/HomeGallery";
+import SearchResult from "../components/shared/SearchResults";
+import { SkeletonCard } from "../components/shared/SearchSkeleton";
 
-const fetchUpload = async () => {
-  const { data } = await axios.get("/api/upload/gallery");
-  return data;
-};
 const Gallerypage = () => {
-  const { isLoading, data, isError, error, isFetching, refetch } = useQuery({
-    queryKey: ["upload-data"],
-    queryFn: fetchUpload,
-  });
+  const [query, setQuery] = useState("");
 
-  console.log({ data });
-
-  if (isLoading) {
-    return <h2>Loading...</h2>;
-  }
-  if (isError) {
-    return <h2>{(error as any).message}</h2>;
-  }
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8 ">
-        <SearchInput />
+        <SearchInput onSearch={setQuery} />
+        <SearchResult query={query} />
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {/* <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {data?.map((item: any, index: any) => (
             <div key={index}>
               <Link href={`/gallery/${item.id}`}>
@@ -83,7 +70,7 @@ const Gallerypage = () => {
               </Link>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );

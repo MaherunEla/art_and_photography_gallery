@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import React from "react";
+import { SkeletonArtist } from "../../shared/ArtistSkeleton";
 // import { HomeArtistData } from "./HomeArtistdata";
 
 const HomeArtist = () => {
@@ -25,7 +26,15 @@ const HomeArtist = () => {
   console.log({ data });
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="mx-auto max-w-screen-2xl px-4 md:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="flex flex-wrap justify-center gap-4">
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <SkeletonArtist key={idx} />
+          ))}
+        </div>
+      </div>
+    );
   }
   if (isError) {
     return <h2>{(error as any).message}</h2>;

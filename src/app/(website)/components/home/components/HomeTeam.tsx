@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
+import { SkeletonTeam } from "../../shared/TeamSkeleton";
 
 const HomeTeam = () => {
   const fetchCalculation = () => {
@@ -13,6 +14,18 @@ const HomeTeam = () => {
     queryFn: fetchCalculation,
   });
   console.log(data?.data[0]);
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto max-w-screen-2xl px-4 md:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="flex flex-wrap justify-center gap-4">
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <SkeletonTeam key={idx} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">

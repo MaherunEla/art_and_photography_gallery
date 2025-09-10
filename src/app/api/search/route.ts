@@ -5,64 +5,64 @@ import { NextResponse } from "next/server";
 export const GET = async (req: Request) => {
   try {
     const url = new URL(req.url);
-    const query = url.searchParams.get("q");
-
-    if (typeof query !== "string") {
-      throw new Error("Invalid request");
+    const query = url.searchParams.get("q") || "";
+    const page = parseInt(url.searchParams.get("page") || "1", 10);
+    const limit = parseInt(url.searchParams.get("limit") || "10", 10);
+    const offset = (page - 1) * limit;
+    if (!query) {
+      return NextResponse.json({ results: [], total: 0, page, limit });
     }
-
-    const words = query.split(" ").filter(Boolean); // Split query string into individual words
-    const products = await Promise.all(
-      words.map(async (word) => {
-        return await prisma.upload.findMany({
-          where: {
-            AND: [
-              { permission: "Accepted" },
-              {
-                cimage: { not: null }, // Condition for cimage not being null
-              },
-              {
-                OR: [
-                  {
-                    title: {
-                      contains: word,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    artist: {
-                      contains: word,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    description: {
-                      contains: word,
-                      mode: "insensitive",
-                    },
-                  },
-                  {
-                    category: {
-                      contains: word,
-                      mode: "insensitive",
-                    },
-                  },
-                ],
-              },
-            ],
-          },
-        });
-      })
+    const results = await prisma.$queryRawUnsafe(
+      `
+  SELECT *
+  FROM "Upload"
+  WHERE "permission" = 'Accepted'
+    AND "cimage" IS NOT NULL
+    AND (
+      similarity(title, $1) > 0.3
+      OR similarity(artist, $1) > 0.3
+      OR similarity(description, $1) > 0.3
+      OR similarity(category, $1) > 0.3
+    )
+  ORDER BY GREATEST(
+    similarity(title, $1),
+    similarity(artist, $1),
+    similarity(description, $1),
+    similarity(category, $1)
+  ) DESC
+  LIMIT $2
+  OFFSET $3
+  `,
+      query,
+      limit,
+      offset
     );
 
-    const uniqueProducts = products.flat().filter((product, index, self) => {
-      return (
-        index ===
-        self.findIndex((p) => p.id === product.id && p.title === product.title)
-      );
-    });
+    const totalCountResult = await prisma.$queryRawUnsafe<{ count: number }[]>(
+      `
+  SELECT COUNT(*)::int AS count
+  FROM "Upload"
+  WHERE "permission" = 'Accepted'
+    AND "cimage" IS NOT NULL
+    AND (
+      similarity(title, $1) > 0.3
+      OR similarity(artist, $1) > 0.3
+      OR similarity(description, $1) > 0.3
+      OR similarity(category, $1) > 0.3
+    )
+  `,
+      query
+    );
 
-    return NextResponse.json({ product: uniqueProducts, status: 200 });
+    const total = totalCountResult[0]?.count || 0;
+
+    return NextResponse.json({
+      results,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ message: "Something went wrong", status: 500 });

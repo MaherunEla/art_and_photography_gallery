@@ -1,36 +1,21 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const SearchInput = () => {
-  const search = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState<string | null>(
-    search ? search.get("q") : ""
-  );
+type Props = {
+  onSearch: (query: string) => void;
+};
+const SearchInput = ({ onSearch }: Props) => {
+  const [query, setQuery] = useState("");
 
-  const router = useRouter();
-
-  useEffect(() => {
-    if (search) {
-      setSearchQuery(search.get("q"));
-    }
-  }, [search]);
-
-  const onSearch = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!searchQuery) {
-      return;
-    }
-
-    const encodedSearchQuery = encodeURIComponent(searchQuery);
-    router.push(`/search?q=${encodedSearchQuery}`);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    onSearch(e.target.value);
   };
 
   return (
     <div className="mb-10 md:mb-16 flex items-center justify-center gap-4">
-      <form onSubmit={onSearch} className="px-4 mx-auto grow mt-12 gap-4">
+      <div className="px-4 mx-auto grow mt-12 gap-4">
         <div className="relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,13 +33,13 @@ const SearchInput = () => {
           </svg>
           <input
             type="text"
-            placeholder="Search By Title, Artist, Description"
-            value={searchQuery || ""}
-            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Search By artworks....."
+            value={query}
+            onChange={handleChange}
             className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-full outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 };

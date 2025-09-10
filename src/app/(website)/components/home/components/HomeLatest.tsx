@@ -5,6 +5,7 @@ import React from "react";
 import { HomeGalleryData } from "./HomeGallery";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { SkeletonCard } from "../../shared/SearchSkeleton";
 
 const fetchUpload = async () => {
   const { data } = await axios.get("/api/upload/latest");
@@ -19,14 +20,21 @@ const HomeLatest = () => {
   console.log({ data });
 
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return (
+      <div className="mx-auto max-w-screen-2xl px-4 md:px-8 py-6 sm:py-8 lg:py-12">
+        <div className="flex flex-wrap justify-center gap-4">
+          {Array.from({ length: 4 }).map((_, idx) => (
+            <SkeletonCard key={idx} />
+          ))}
+        </div>
+      </div>
+    );
   }
+
   if (isError) {
     return <h2>{(error as any).message}</h2>;
   }
-  if (isFetching) {
-    return <h2>data is fatching...</h2>;
-  }
+
   return (
     <div className="bg-white py-6 sm:py-8 lg:py-12">
       <div className="mx-auto max-w-screen-2xl px-4 md:px-8">
