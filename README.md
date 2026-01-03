@@ -143,6 +143,12 @@ npm run dev
 ![Fuzzy search with pg_trgm](<public/assets/images/fuzzy search with pg_trgm.jpg>)
 ![ProductDetails](public/assets/images/productdetails.jpg)
 ![Cart](public/assets/images/cart.jpg)
+![Admin Login](public/assets/images/adminlogin.jpg)
+![Dashboard](public/assets/images/dashboard.jpg)
+![User](public/assets/images/User.jpg)
+![Add New User](public/assets/images/addnewuser.jpg)
+![Product](public/assets/images/product.jpg)
+![Frame](public/assets/images/frame.jpg)
 
 ## 🙋‍♂️ Author
 
